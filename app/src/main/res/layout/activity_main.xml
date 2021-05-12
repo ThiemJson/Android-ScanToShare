@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradiant_background"
     tools:context=".MainActivity"
-    tools:ignore="ExtraText"
-    android:background="@color/blue_primary">
+    tools:ignore="ExtraText">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -19,26 +19,65 @@
             android:id="@+id/mToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:layout_weight="1"
+            android:background="@drawable/gradiant_background"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="15dp" android:layout_weight="1">
+            tools:layout_editor_absoluteY="15dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/phetsarath"
+                android:gravity="center"
                 android:text="Welcome"
                 android:textAlignment="center"
-                android:gravity="center"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="21dp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <Button
+        android:id="@+id/btn_main_ac_register_facebook"
+        android:layout_width="343dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="10dp"
+        android:width="250dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/phetsarath"
+        android:maxWidth="250dp"
+        android:minWidth="200dp"
+        android:text="Skip"
+        android:textColor="@color/gray_dark"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/btn_main_ac_skip"
+        app:layout_constraintEnd_toEndOf="@id/btn_main_ac_skip"
+        app:layout_constraintStart_toStartOf="@id/btn_main_ac_skip"
+        tools:layout_editor_absoluteX="74dp"
+        tools:layout_editor_absoluteY="605dp" />
+
+    <Button
+        android:id="@+id/btn_main_ac_skip"
+        android:layout_width="343dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="25dp"
+        android:width="250dp"
+        android:background="@drawable/custom_button_facbook"
+        android:fontFamily="@font/phetsarath"
+        android:maxWidth="250dp"
+        android:minWidth="200dp"
+        android:text="Connect with Facebook"
+        android:textColor="@color/white"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

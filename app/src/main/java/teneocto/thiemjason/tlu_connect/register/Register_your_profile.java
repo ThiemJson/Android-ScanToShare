@@ -1,11 +1,12 @@
-package teneocto.thiemjason.tlu_connect;
+package teneocto.thiemjason.tlu_connect.register;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import teneocto.thiemjason.tlu_connect.R;
+
+public class Register_your_profile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

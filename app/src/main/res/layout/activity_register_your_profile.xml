@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_third_light"
+    tools:context=".register.Register_your_profile">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/register_mToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue_third_light"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/phetsarath"
+                android:gravity="center"
+                android:text="Your Profile"
+                android:textAlignment="center"
+                android:textColor="@color/blue_text"
+                android:textSize="21dp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/register_profile_image"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="120dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:civ_border_color="@color/blue_text"
+        app:civ_border_width="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/table_layout_background"
+        android:maxHeight="400dp"
+        android:weightSum="5"
+        app:layout_constraintBottom_toTopOf="@+id/register_btn_main_ac_skip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_profile_image"
+        app:layout_constraintVertical_bias="0.267">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:width="0dp"
+                    android:fontFamily="@font/phetsarath"
+                    android:gravity="center_vertical"
+                    android:paddingStart="13dp"
+                    android:text="First name"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray_light"
+                    android:textSize="13dp" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:width="0dp"
+                    android:background="@drawable/table_edittext"
+                    android:hint="Enter your first name"
+                    android:maxLength="15"
+                    android:singleLine="true"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray_dark"
+                    android:textColorHint="@drawable/table_edittext_hint"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/table_layout_list_item_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:width="0dp"
+                    android:fontFamily="@font/phetsarath"
+                    android:gravity="center_vertical"
+                    android:paddingStart="13dp"
+                    android:text="Last name"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray_light"
+                    android:textSize="13dp" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:width="0dp"
+                    android:background="@drawable/table_edittext"
+                    android:hint="Enter your last name"
+                    android:maxLength="15"
+                    android:singleLine="true"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray_dark"
+                    android:textColorHint="@drawable/table_edittext_hint"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:width="0dp"
+                    android:fontFamily="@font/phetsarath"
+                    android:gravity="center_vertical"
+                    android:paddingStart="13dp"
+                    android:text="Position"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray_light"
+                    android:textSize="13dp" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:width="0dp"
+                    android:background="@drawable/table_edittext"
+                    android:hint="Enter your position"
+                    android:maxLength="15"
+                    android:singleLine="true"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray_dark"
+                    android:textColorHint="@drawable/table_edittext_hint"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/table_layout_list_item_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:width="0dp"
+                    android:fontFamily="@font/phetsarath"
+                    android:gravity="center_vertical"
+                    android:paddingStart="13dp"
+                    android:text="Email"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray_light"
+                    android:textSize="13dp" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:width="0dp"
+                    android:background="@drawable/table_edittext"
+                    android:hint="Enter your email address"
+                    android:maxLength="25"
+                    android:singleLine="true"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray_dark"
+                    android:textColorHint="@drawable/table_edittext_hint"
+                    android:textSize="12dp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:width="0dp"
+                    android:fontFamily="@font/phetsarath"
+                    android:gravity="center_vertical"
+                    android:paddingStart="13dp"
+                    android:text="Company"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray_light"
+                    android:textSize="13dp" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="2"
+                    android:width="0dp"
+                    android:background="@drawable/table_edittext"
+                    android:hint="Enter your company"
+                    android:maxLength="15"
+                    android:singleLine="true"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray_dark"
+                    android:textColorHint="@drawable/table_edittext_hint"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/register_btn_main_ac_skip"
+        android:layout_width="343dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="25dp"
+        android:width="250dp"
+        android:background="@drawable/custom_button_facbook"
+        android:fontFamily="@font/phetsarath"
+        android:maxWidth="250dp"
+        android:minWidth="200dp"
+        android:text="Done"
+        android:textColor="@color/white"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
