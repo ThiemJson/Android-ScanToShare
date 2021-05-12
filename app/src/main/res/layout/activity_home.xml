@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradiant_background"
+    tools:context=".home.Home">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/home_appbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradiant_background"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:weightSum="4">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_baseline_menu"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/phetsarath"
+                    android:gravity="center"
+                    android:text="TLU Connect"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/toolbar_overflow_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_baseline_notifications"
+                    android:paddingEnd="10dp" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_appbarlayout"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="217dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/loading_profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="3"
+            android:paddingStart="-35dp"
+            android:src="@drawable/logo"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="-40dp"
+            android:layout_weight="7"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:textAlignment="gravity">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/phetsarath"
+                android:paddingBottom="3dp"
+                android:singleLine="true"
+                android:text="NguyenCaoThiem"
+                android:textColor="@color/white"
+                android:textFontWeight="700"
+                android:textSize="23dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/phetsarath"
+                android:paddingBottom="3dp"
+                android:singleLine="true"
+                android:text="Developer"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/phetsarath"
+                android:singleLine="true"
+                android:text="Teneocto Technologies CO, LTD."
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
