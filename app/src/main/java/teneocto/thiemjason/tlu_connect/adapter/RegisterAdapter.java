@@ -1,8 +1,6 @@
-package teneocto.thiemjason.tlu_connect.register;
+package teneocto.thiemjason.tlu_connect.adapter;
 
 import android.content.Context;
-import android.service.autofill.TextValueSanitizer;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SocialNetwork;
-import teneocto.thiemjason.tlu_connect.recycleview.SocialRecVAdapter;
 
 public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHolder> {
     OnItemClickListener onItemClickListener;
@@ -45,7 +42,6 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        Log.i("==>COUNT", "" + socialNetworks.size());
         return socialNetworks.size();
     }
 

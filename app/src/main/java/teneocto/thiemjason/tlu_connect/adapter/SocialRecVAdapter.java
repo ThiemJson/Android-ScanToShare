@@ -1,13 +1,11 @@
-package teneocto.thiemjason.tlu_connect.recycleview;
+package teneocto.thiemjason.tlu_connect.adapter;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import teneocto.thiemjason.tlu_connect.R;

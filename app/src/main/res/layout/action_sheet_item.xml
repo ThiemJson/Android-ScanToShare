@@ -10,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/list_item_logo"
+        android:id="@+id/action_item_logo"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_gravity="center"
@@ -21,6 +21,7 @@
         app:srcCompat="@drawable/facebook" />
 
     <TextView
+        android:id="@+id/action_item_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

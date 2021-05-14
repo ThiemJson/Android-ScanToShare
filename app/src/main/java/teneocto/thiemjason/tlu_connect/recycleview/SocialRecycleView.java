@@ -1,20 +1,18 @@
 package teneocto.thiemjason.tlu_connect.recycleview;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.adapter.SocialRecVAdapter;
 
 public class SocialRecycleView extends AppCompatActivity {
     RecyclerView recyclerView;
