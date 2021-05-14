@@ -20,7 +20,6 @@ public class SocialRecVAdapter extends RecyclerView.Adapter<SocialRecVAdapter.vi
         this.context = context;
     }
 
-
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,7 +44,7 @@ public class SocialRecVAdapter extends RecyclerView.Adapter<SocialRecVAdapter.vi
         public viewHolder(@NonNull View itemView) {
             super(itemView);
 
-            viewHolderDelete = itemView.findViewById(R.id.list_item_delete);
+//            viewHolderDelete = itemView.findViewById(R.id.list_item_delete);
             itemView.setOnClickListener(this);
             viewHolderDelete.setOnClickListener(this);
         }

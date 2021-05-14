@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_third_light"
+    tools:context=".register.RegisterProfile">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/register_social_appbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/register_social_mToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/gradiant_background"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/phetsarath"
+                android:gravity="center"
+                android:text="Social Infomation"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="21dp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/register_social_slogan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/phetsarath"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:text="Let’s fill up your profile \n to share with everyone in easiest way"
+        android:textAlignment="center"
+        android:textColor="@color/gray_light"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/register_social_appbarlayout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/register_social_recycle_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_register_social_facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_social_slogan"
+        app:layout_constraintVertical_bias="0.716" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_register_social_add"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="20dp"
+        app:backgroundTint="#2f7eba"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register_social_facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="40dp"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <Button
+        android:id="@+id/btn_register_social_facebook"
+        android:layout_width="343dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="17dp"
+        android:width="250dp"
+        android:background="@drawable/custom_button_facbook"
+        android:fontFamily="@font/phetsarath"
+        android:maxWidth="250dp"
+        android:minWidth="200dp"
+        android:text="Connect with Facebook"
+        android:textColor="@color/white"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/btn_register_social_skip"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btn_register_social_skip"
+        android:layout_width="343dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="25dp"
+        android:width="250dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/phetsarath"
+        android:maxWidth="250dp"
+        android:minWidth="200dp"
+        android:text="Done"
+        android:textColor="@color/gray_dark"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        android:windowSoftInputMode="adjustNothing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

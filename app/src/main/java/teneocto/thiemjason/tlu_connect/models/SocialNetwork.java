@@ -2,20 +2,20 @@ package teneocto.thiemjason.tlu_connect.models;
 
 import android.widget.ImageView;
 
-public class Social {
-    ImageView logo;
+public class SocialNetwork {
+    Integer logo;
     String link;
 
-    public Social(ImageView logo, String link) {
+    public SocialNetwork(int logo, String link) {
         this.logo = logo;
         this.link = link;
     }
 
-    public ImageView getLogo() {
+    public Integer getLogo() {
         return logo;
     }
 
-    public void setLogo(ImageView logo) {
+    public void setLogo(Integer logo) {
         this.logo = logo;
     }
 

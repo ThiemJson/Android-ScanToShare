@@ -9,11 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TLUConnect">
-        <activity android:name=".recycleview.SocialRecycleView"></activity>
+        <activity android:name=".register.RegisterSocialNetwork"></activity>
+        <activity android:name=".recycleview.SocialRecycleView" />
         <activity android:name=".notification.Notification" />
         <activity android:name=".home.Home" />
         <activity android:name=".loading.Launcher" />
-        <activity android:name=".register.Register_your_profile" />
+        <activity android:name=".register.RegisterProfile" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

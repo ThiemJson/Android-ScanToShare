@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import teneocto.thiemjason.tlu_connect.R;
 
-public class Register_your_profile extends AppCompatActivity {
+public class RegisterProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

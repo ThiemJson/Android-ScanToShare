@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import teneocto.thiemjason.tlu_connect.recycleview.SocialRecycleView;
+import teneocto.thiemjason.tlu_connect.register.RegisterSocialNetwork;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Intent intent = new Intent(this, SocialRecycleView.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, RegisterSocialNetwork.class);
+        startActivity(intent);
     }
 }
