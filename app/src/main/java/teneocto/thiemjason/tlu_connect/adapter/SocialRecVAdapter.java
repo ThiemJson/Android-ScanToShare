@@ -1,13 +1,11 @@
-package teneocto.thiemjason.tlu_connect.recycleview;
+package teneocto.thiemjason.tlu_connect.adapter;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import teneocto.thiemjason.tlu_connect.R;
@@ -19,7 +17,6 @@ public class SocialRecVAdapter extends RecyclerView.Adapter<SocialRecVAdapter.vi
     public SocialRecVAdapter(Context context) {
         this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -45,7 +42,7 @@ public class SocialRecVAdapter extends RecyclerView.Adapter<SocialRecVAdapter.vi
         public viewHolder(@NonNull View itemView) {
             super(itemView);
 
-            viewHolderDelete = itemView.findViewById(R.id.list_item_delete);
+//            viewHolderDelete = itemView.findViewById(R.id.list_item_delete);
             itemView.setOnClickListener(this);
             viewHolderDelete.setOnClickListener(this);
         }

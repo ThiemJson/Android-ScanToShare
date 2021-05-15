@@ -15,7 +15,7 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <ImageView
-        android:id="@+id/list_item_logo"
+        android:id="@+id/image_list_item_logo"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
@@ -25,7 +25,7 @@
         app:srcCompat="@drawable/instagram" />
 
     <EditText
-        android:id="@+id/list_item_url"
+        android:id="@+id/edit_list_item_url"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -43,7 +43,7 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/list_item_delete"
+        android:id="@+id/image_list_item_delete"
         android:layout_width="10dp"
         android:layout_height="23dp"
         android:layout_gravity="center"
