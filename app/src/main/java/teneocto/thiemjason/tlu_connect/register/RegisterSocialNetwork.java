@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,12 +25,12 @@ public class RegisterSocialNetwork extends AppCompatActivity {
     public static String TAG = "==> Register Social Network";
 
     FloatingActionButton mainFAB;
-    BottomSheetDialog bottomSheetDialog;
+    BottomSheetFragment bottomSheetFragment;
 
     // Main recycle view
     RecyclerView recyclerView;
     RegisterAdapter registerAdapter;
-    ArrayList<SocialNetwork>  socialNetwork;
+    ArrayList<SocialNetwork> socialNetwork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +74,24 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         this.registerAdapter.notifyItemRemoved(position);
     }
 
-    public void addItem(int positionn) {
-        this.socialNetwork.add(new SocialNetwork(R.drawable.facebook, "fb.com/thiemtinhte"));
+    public void addItem(String name) {
+        switch (name) {
+            case "Facebook":
+                this.socialNetwork.add(new SocialNetwork(R.drawable.facebook, "fb.com/thiemtinhte"));
+                break;
+            case "Instagram":
+                this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemjason"));
+                break;
+            case "Twitter":
+                this.socialNetwork.add(new SocialNetwork(R.drawable.twiiter, "twitter.com/thiemtinhte"));
+                break;
+            case "Snapchat":
+                this.socialNetwork.add(new SocialNetwork(R.drawable.sapchat, "snapchat.com/thiem"));
+                break;
+            case "LinkedIn":
+                this.socialNetwork.add(new SocialNetwork(R.drawable.linkedin, "linkedIn.com/thiemtinhte"));
+                break;
+        }
         this.registerAdapter.notifyItemInserted(this.socialNetwork.size());
     }
 
@@ -86,16 +103,6 @@ public class RegisterSocialNetwork extends AppCompatActivity {
 
         this.socialNetwork.add(new SocialNetwork(R.drawable.facebook, "fb.com/thiemtinhte"));
         this.socialNetwork.add(new SocialNetwork(R.drawable.linkedin, "linkedin.com/thiemjason"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.sapchat, "snapchat.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.twiiter, "twitter.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemtinhte"));
     }
 
     /**
@@ -103,19 +110,21 @@ public class RegisterSocialNetwork extends AppCompatActivity {
      */
 
     private void fabOnClick() {
-//        this.bottomSheetDialog = new BottomSheetDialog(RegisterSocialNetwork.this, R.style.Theme_Design_BottomSheetDialog);
-//        View bottomSheetView = getLayoutInflater().from(RegisterSocialNetwork.this).inflate(R.layout.bottom_sheet, findViewById(R.id.bottom_sheet_container));
-//        bottomSheetDialog.setContentView(bottomSheetView);
-//        bottomSheetDialog.show();
-
-        BottomSheetFragment bottomSheetDialog = BottomSheetFragment.newInstance();
-        bottomSheetDialog.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+        this.bottomSheetFragment = new BottomSheetFragment(this, new BottomSheetFragment.OnItemClick() {
+            @Override
+            public void onItemClick(View view, int position) {
+                bottomSheetItemClick(view, position);
+            }
+        });
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
     }
 
     /**
-     * handler when user click on bottomsheet item
+     * On BottomSheetItem click
      */
-    private void bottomItemClick( BottomSheetItem item ) {
-        this.bottomSheetDialog.dismiss();
+    private void bottomSheetItemClick(View view, int position) {
+        TextView name = view.findViewById(R.id.action_item_name);
+        this.bottomSheetFragment.dismiss();
+        addItem(name.getText().toString());
     }
 }
