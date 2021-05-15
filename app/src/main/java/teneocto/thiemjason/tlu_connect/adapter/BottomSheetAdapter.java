@@ -23,6 +23,11 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     ArrayList<BottomSheetItem> bottomSheetItems;
     OnItemClickListener onItemClickListener;
 
+    /**
+     * Constructor
+     * @param context
+     * @param bottomSheetItems
+     */
     public BottomSheetAdapter(Context context, ArrayList<BottomSheetItem> bottomSheetItems){
         this.context = context;
         this.bottomSheetItems = bottomSheetItems;
