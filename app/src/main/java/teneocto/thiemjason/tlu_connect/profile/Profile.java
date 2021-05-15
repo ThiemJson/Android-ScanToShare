@@ -30,6 +30,10 @@ public class Profile extends AppCompatActivity {
     ViewPager viewPager;
     MainAdapter adapter;
 
+    /**
+     * Constructor
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +42,16 @@ public class Profile extends AppCompatActivity {
         this.initialTabLayout();
     }
 
+    /**
+     * Init tablayout
+     */
     private void initialTabLayout() {
         tabLayout = findViewById(R.id.profile_tablayout);
         viewPager = findViewById(R.id.profile_view_paper);
 
         adapter = new MainAdapter(getSupportFragmentManager(), 12);
 
+        // Add fragment
         adapter.AddFragment(new ProfileSocialNetwork(), "Social Network");
         adapter.AddFragment(new ProfileInfomation(), "Infomation");
 

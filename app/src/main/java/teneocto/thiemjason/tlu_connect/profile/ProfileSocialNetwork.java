@@ -28,12 +28,10 @@ import teneocto.thiemjason.tlu_connect.models.SocialNetwork;
  * create an instance of this fragment.
  */
 public class ProfileSocialNetwork extends Fragment {
-    // recycleview adapter
     RecyclerView socialRecyclerView;
     RegisterAdapter socialAdapter;
     ArrayList<SocialNetwork> socialNetwork;
 
-    // Floating action button
     FloatingActionButton fab;
     BottomSheetFragment bottomSheetFragment;
 
@@ -81,7 +79,6 @@ public class ProfileSocialNetwork extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile_social_network, container, false);
 
         this.initRecycleView(view);
@@ -90,7 +87,6 @@ public class ProfileSocialNetwork extends Fragment {
 
     private void initDummyData() {
         this.socialNetwork = new ArrayList<SocialNetwork>();
-
         this.socialNetwork.add(new SocialNetwork(R.drawable.facebook, "fb.com/thiemtinhte"));
         this.socialNetwork.add(new SocialNetwork(R.drawable.linkedin, "linkedin.com/thiemjason"));
     }
