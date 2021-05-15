@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.widget.SimpleAdapter;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SliderItem;
@@ -21,11 +22,9 @@ import java.util.ArrayList;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHoler> {
     private ArrayList<SliderItem> sliderItems;
-    private ViewPager2 viewPager2;
 
     public SliderAdapter(ArrayList<SliderItem> sliderItems, ViewPager2 viewPager2) {
         this.sliderItems = sliderItems;
-        this.viewPager2 = viewPager2;
     }
 
     @NonNull
@@ -42,7 +41,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     @Override
     public void onBindViewHolder(@NonNull SliderViewHoler holder, int position) {
-        holder.setImage(sliderItems.get(position));
+        holder.imageView.setImageResource(sliderItems.get(position).getImage());
     }
 
     @Override
@@ -52,15 +51,11 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     class SliderViewHoler extends RecyclerView.ViewHolder {
 
-        private RoundedImageView imageView;
+        RoundedImageView imageView;
 
         public SliderViewHoler(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageSlider);
-        }
-
-        void setImage(SliderItem sliderItem) {
-            imageView.setImageResource(sliderItem.getImage());
         }
     }
 }
