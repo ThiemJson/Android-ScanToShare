@@ -11,12 +11,15 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import java.time.Duration;
 import java.util.ArrayList;
 
+import teneocto.thiemjason.tlu_connect.home.Home;
 import teneocto.thiemjason.tlu_connect.imageslider.ImageSliderTest;
+import teneocto.thiemjason.tlu_connect.loading.Launcher;
 import teneocto.thiemjason.tlu_connect.main.MainSliderAdapter;
 import teneocto.thiemjason.tlu_connect.models.MainSliderItem;
 import teneocto.thiemjason.tlu_connect.profile.Profile;
@@ -33,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Intent intent = new Intent(this, ImageSliderTest.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+        finish();
         initSlider();
     }
 
@@ -91,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     private Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
+            Log.i("Main", "Running");
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
         }
     };

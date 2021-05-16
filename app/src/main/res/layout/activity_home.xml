@@ -71,6 +71,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/home_user_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -141,4 +142,36 @@
         </LinearLayout>
     </LinearLayout>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/home_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_user_information"
+        app:tabGravity="center"
+        app:tabIndicator="@drawable/home_tab_view_item"
+        app:tabIndicatorAnimationDuration="500"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorGravity="stretch"
+        app:tabMinWidth="150dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="@color/blue_primary"
+        app:tabTextAppearance="@style/tab_text"
+        app:tabTextColor="#99FFFFFF"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="401dp">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR List" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan QR" />
+    </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
