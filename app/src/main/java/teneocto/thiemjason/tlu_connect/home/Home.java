@@ -23,6 +23,10 @@ public class Home extends AppCompatActivity {
     ViewPager viewPager;
     HomeAdapter adapter;
 
+    // Fragment
+    HomeQRImage homeQRImage;
+    HomeQRScanner homeQRScanner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +44,39 @@ public class Home extends AppCompatActivity {
 
         adapter = new Home.HomeAdapter(getSupportFragmentManager(), 12);
 
-        adapter.AddFragment(new HomeQRImage() , "QR List");
-        adapter.AddFragment(new HomeQRScanner() , "Scan QR");
+        homeQRImage = new HomeQRImage();
+        homeQRScanner = new HomeQRScanner();
+        adapter.AddFragment(homeQRImage , "QR List");
+        adapter.AddFragment(homeQRScanner , "Scan QR");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
+       homeQRScanner.onPause();
+
+       tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+           @Override
+           public void onTabSelected(TabLayout.Tab tab) {
+               switch(tab.getPosition()) {
+                   case 0:
+                       homeQRScanner.onPause();
+                       break;
+                   case 1:
+                       homeQRScanner.startPreview();
+                       break;
+               }
+           }
+
+           @Override
+           public void onTabUnselected(TabLayout.Tab tab) {
+
+           }
+
+           @Override
+           public void onTabReselected(TabLayout.Tab tab) {
+
+           }
+       });
     }
 
     private class HomeAdapter extends FragmentPagerAdapter {
