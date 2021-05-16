@@ -4,10 +4,17 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.vision.barcode.Barcode;
+
+import java.util.List;
+
+import info.androidhive.barcode.BarcodeReader;
 import teneocto.thiemjason.tlu_connect.R;
 
 /**
@@ -15,12 +22,14 @@ import teneocto.thiemjason.tlu_connect.R;
  * Use the {@link HomeQRScanner#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeQRScanner extends Fragment {
+public class HomeQRScanner extends Fragment implements BarcodeReader.BarcodeReaderListener {
+    BarcodeReader barcodeReader;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "SCANNER FRAGMENT";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,6 +70,32 @@ public class HomeQRScanner extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
+        View view =  inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
+        barcodeReader = (BarcodeReader) getChildFragmentManager().findFragmentById(R.id.home_fragment_qr_scanner);
+        Log.i("qe", "Start scanner");
+        return view;
+    }
+
+    @Override
+    public void onScanned(Barcode barcode) {
+        Log.i(HomeQRScanner.TAG, barcode.displayValue);
+
+        // playing barcode reader beep sound
+        barcodeReader.playBeep();
+    }
+
+    @Override
+    public void onScannedMultiple(List<Barcode> barcodes) {
+
+    }
+
+    @Override
+    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+
+    }
+
+    @Override
+    public void onScanError(String errorMessage) {
+
     }
 }

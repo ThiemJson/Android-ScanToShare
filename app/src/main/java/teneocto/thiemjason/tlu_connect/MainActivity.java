@@ -65,20 +65,20 @@ public class MainActivity extends AppCompatActivity {
         compositePageTransformer.addTransformer(new MarginPageTransformer(40));
 
         compositePageTransformer.addTransformer((page, position) -> {
-//            float r = 1 - Math.abs(position);
-//            page.setScaleY(0.85f + r * 0.15f);
-            float myOffset = position * -(2 * 10 + 50);
-            if (position < -1) {
-                page.setTranslationX(-myOffset);
-            } else if (position <= 1) {
-                float scaleFactor = Math.max(0.7f, 1 - Math.abs(position - 0.14285715f));
-                page.setTranslationX(myOffset);
-                page.setScaleY(scaleFactor);
-                page.setAlpha(scaleFactor);
-            } else {
-                page.setAlpha(0);
-                page.setTranslationX(myOffset);
-            }
+            float r = 1 - Math.abs(position);
+            page.setScaleY(0.85f + r * 0.15f);
+//            float myOffset = position * -(2 * 10 + 50);
+//            if (position < -1) {
+//                page.setTranslationX(-myOffset);
+//            } else if (position <= 1) {
+//                float scaleFactor = Math.max(0.7f, 1 - Math.abs(position - 0.14285715f));
+//                page.setTranslationX(myOffset);
+//                page.setScaleY(scaleFactor);
+//                page.setAlpha(scaleFactor);
+//            } else {
+//                page.setAlpha(0);
+//                page.setTranslationX(myOffset);
+//            }
         });
 
         viewPager.setPageTransformer(compositePageTransformer);
