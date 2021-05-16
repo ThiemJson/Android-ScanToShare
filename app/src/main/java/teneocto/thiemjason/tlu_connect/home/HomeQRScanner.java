@@ -1,7 +1,13 @@
 package teneocto.thiemjason.tlu_connect.home;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -9,8 +15,13 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.zxing.Result;
 
 import java.util.List;
 
@@ -22,8 +33,8 @@ import teneocto.thiemjason.tlu_connect.R;
  * Use the {@link HomeQRScanner#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeQRScanner extends Fragment implements BarcodeReader.BarcodeReaderListener {
-    BarcodeReader barcodeReader;
+public class HomeQRScanner extends Fragment {
+    private CodeScanner mCodeScanner;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,33 +80,38 @@ public class HomeQRScanner extends Fragment implements BarcodeReader.BarcodeRead
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
-        barcodeReader = (BarcodeReader) getChildFragmentManager().findFragmentById(R.id.home_fragment_qr_scanner);
-        Log.i("qe", "Start scanner");
-        return view;
+        View root = inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
+        CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
+        mCodeScanner = new CodeScanner(getActivity(), scannerView);
+        mCodeScanner.setDecodeCallback(new DecodeCallback() {
+            @Override
+            public void onDecoded(@NonNull final Result result) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+        });
+        scannerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCodeScanner.startPreview();
+            }
+        });
+        return root;
     }
 
     @Override
-    public void onScanned(Barcode barcode) {
-        Log.i(HomeQRScanner.TAG, barcode.displayValue);
-
-        // playing barcode reader beep sound
-        barcodeReader.playBeep();
+    public void onResume() {
+        super.onResume();
+        mCodeScanner.startPreview();
     }
 
     @Override
-    public void onScannedMultiple(List<Barcode> barcodes) {
-
-    }
-
-    @Override
-    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
-
-    }
-
-    @Override
-    public void onScanError(String errorMessage) {
-
+    public void onPause() {
+        mCodeScanner.releaseResources();
+        super.onPause();
     }
 }
