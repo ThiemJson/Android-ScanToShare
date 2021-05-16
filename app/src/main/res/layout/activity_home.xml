@@ -170,6 +170,7 @@
         android:layout_height="400dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:background="@drawable/home_fragment_background"
         android:adjustViewBounds="true"
         android:clipChildren="true"
         app:layout_constraintCircleRadius="20dp"

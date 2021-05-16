@@ -3,12 +3,22 @@ package teneocto.thiemjason.tlu_connect.home;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.home.slider.HomeSliderAdapter;
+import teneocto.thiemjason.tlu_connect.models.HomeSliderItem;
+import teneocto.thiemjason.tlu_connect.models.MainSliderItem;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +26,8 @@ import teneocto.thiemjason.tlu_connect.R;
  * create an instance of this fragment.
  */
 public class HomeQRImage extends Fragment {
+    public ArrayList<HomeSliderItem> homeSliderItems;
+    public ViewPager2 viewPager2;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +73,70 @@ public class HomeQRImage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_q_r_image, container, false);
+        View view = inflater.inflate(R.layout.home_slider_contaiter, container, false);
+        this.initSlider(view);
+        return view;
+    }
+
+    private void initSlider(View view) {
+        viewPager2 = view.findViewById(R.id.home_view_slider_container);
+
+        homeSliderItems = new ArrayList<>();
+        homeSliderItems.add(new HomeSliderItem(R.drawable.facebook, "Facebook", 12, "NguyenCaoThiem"));
+        homeSliderItems.add(new HomeSliderItem(R.drawable.linkedin, "LinkedIn", 12, "NguyenCaoThiem"));
+        homeSliderItems.add(new HomeSliderItem(R.drawable.sapchat, "Snapchat", 12, "NguyenCaoThiem"));
+        homeSliderItems.add(new HomeSliderItem(R.drawable.twiiter, "Twitter", 12, "NguyenCaoThiem"));
+        homeSliderItems.add(new HomeSliderItem(R.drawable.instagram, "Instagram", 12, "NguyenCaoThiem"));
+
+        HomeSliderAdapter homeSliderAdapter = new HomeSliderAdapter(homeSliderItems, viewPager2);
+        viewPager2.setAdapter(homeSliderAdapter);
+        viewPager2.setClipToPadding(false);
+        viewPager2.setClipChildren(false);
+        viewPager2.setOffscreenPageLimit(3);
+        viewPager2.setOrientation(viewPager2.ORIENTATION_HORIZONTAL);
+        viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_ALWAYS);
+
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(1));
+
+        compositePageTransformer.addTransformer((page, position) -> {
+            float r = 1 - Math.abs(position);
+            page.setScaleY(1f + r * 0.2f);
+            page.setScaleX(1f + r * 0.2f);
+        });
+
+        viewPager2.setPageTransformer(compositePageTransformer);
+
+        // Back - Forward button
+        ImageView backButton = view.findViewById(R.id.home_back_arrow);
+        ImageView forwardButton = view.findViewById(R.id.home_forward_arrow);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backButtonOnLick();
+            }
+        });
+        forwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forwardButtonOnLick();
+            }
+        });
+    }
+    /**
+     * Back or forward by button
+     */
+    private void backButtonOnLick() {
+        if (viewPager2.getCurrentItem() == 0 ){
+            return;
+        }
+        viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
+    }
+
+    private void forwardButtonOnLick() {
+        if (viewPager2.getCurrentItem() == homeSliderItems.size() ){
+            return;
+        }
+        viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
     }
 }

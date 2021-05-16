@@ -106,11 +106,19 @@ public class HomeQRScanner extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    public void startPreview() {
         mCodeScanner.startPreview();
     }
 
     @Override
     public void onPause() {
+        if (mCodeScanner == null ){
+            super.onPause();
+            return;
+        }
+
         mCodeScanner.releaseResources();
         super.onPause();
     }
