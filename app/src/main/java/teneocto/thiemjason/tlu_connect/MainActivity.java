@@ -21,6 +21,7 @@ import android.view.View;
 import java.time.Duration;
 import java.util.ArrayList;
 
+import teneocto.thiemjason.tlu_connect.about.AboutDialog;
 import teneocto.thiemjason.tlu_connect.home.Home;
 import teneocto.thiemjason.tlu_connect.imageslider.ImageSliderTest;
 import teneocto.thiemjason.tlu_connect.loading.Launcher;
@@ -44,10 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
         this.setUpPermission();
 
-        Intent intent = new Intent(this, Support.class);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(this, Support.class);
+//        startActivity(intent);
+//        finish();
 //        initSlider();
+
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.showDialog(this);
+
     }
 
     public void initSlider() {
