@@ -1,5 +1,7 @@
 package teneocto.thiemjason.tlu_connect.home;
 
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,13 +10,20 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.home.slider.HomeSliderAdapter;
 import teneocto.thiemjason.tlu_connect.models.HomeSliderItem;
@@ -28,6 +37,12 @@ import teneocto.thiemjason.tlu_connect.models.MainSliderItem;
 public class HomeQRImage extends Fragment {
     public ArrayList<HomeSliderItem> homeSliderItems;
     public ViewPager2 viewPager2;
+    public Gson gson;
+
+    // Element
+    TextView itemName;
+    TextView itemUrl;
+    ImageView qrImage;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,20 +89,20 @@ public class HomeQRImage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_slider_contaiter, container, false);
+
+        itemName = view.findViewById(R.id.home_slider_item_name);
+        qrImage = view.findViewById(R.id.home_qr_image);
+        itemUrl = view.findViewById(R.id.home_url_text);
+
         this.initSlider(view);
         return view;
     }
 
     private void initSlider(View view) {
+        this.gson = new Gson();
         viewPager2 = view.findViewById(R.id.home_view_slider_container);
 
-        homeSliderItems = new ArrayList<>();
-        homeSliderItems.add(new HomeSliderItem(R.drawable.facebook, "Facebook", 12, "NguyenCaoThiem"));
-        homeSliderItems.add(new HomeSliderItem(R.drawable.linkedin, "LinkedIn", 12, "NguyenCaoThiem"));
-        homeSliderItems.add(new HomeSliderItem(R.drawable.sapchat, "Snapchat", 12, "NguyenCaoThiem"));
-        homeSliderItems.add(new HomeSliderItem(R.drawable.twiiter, "Twitter", 12, "NguyenCaoThiem"));
-        homeSliderItems.add(new HomeSliderItem(R.drawable.instagram, "Instagram", 12, "NguyenCaoThiem"));
-
+        this.initalData();
         HomeSliderAdapter homeSliderAdapter = new HomeSliderAdapter(homeSliderItems, viewPager2);
         viewPager2.setAdapter(homeSliderAdapter);
         viewPager2.setClipToPadding(false);
@@ -106,6 +121,13 @@ public class HomeQRImage extends Fragment {
         });
 
         viewPager2.setPageTransformer(compositePageTransformer);
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+                pageChange();
+            }
+        });
 
         // Back - Forward button
         ImageView backButton = view.findViewById(R.id.home_back_arrow);
@@ -123,20 +145,70 @@ public class HomeQRImage extends Fragment {
             }
         });
     }
+
     /**
      * Back or forward by button
      */
     private void backButtonOnLick() {
-        if (viewPager2.getCurrentItem() == 0 ){
+        if (viewPager2.getCurrentItem() == 0) {
             return;
         }
         viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
     }
 
     private void forwardButtonOnLick() {
-        if (viewPager2.getCurrentItem() == homeSliderItems.size() ){
+        if (viewPager2.getCurrentItem() == homeSliderItems.size()) {
             return;
         }
         viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
+    }
+
+    private void initalData() {
+        homeSliderItems = new ArrayList<>();
+        homeSliderItems.add(new HomeSliderItem(R.drawable.facebook, "Facebook",
+                serializeQREncoder(generateQRCodeFromContent("https://facebook.com/thiemtinhte")),
+                "https://facebook.com/thiemtinhte"));
+        homeSliderItems.add(new HomeSliderItem(R.drawable.linkedin, "LinkedIn",
+                serializeQREncoder(generateQRCodeFromContent("https://www.linkedin.com/in/cao-thiem-nguyen-628945206/")),
+                "https://www.linkedin.com/in/cao-thiem-nguyen-628945206/"));
+        homeSliderItems.add(new HomeSliderItem(R.drawable.sapchat, "Snapchat",
+                serializeQREncoder(generateQRCodeFromContent("https://www.snapchat.com/add/magicmenlive")),
+                "https://www.snapchat.com/add/magicmenlive"));
+        homeSliderItems.add(new HomeSliderItem(R.drawable.twiiter, "Twitter",
+                serializeQREncoder(generateQRCodeFromContent("https://twitter.com/ThiemJaso")),
+                "https://twitter.com/ThiemJason"));
+        homeSliderItems.add(new HomeSliderItem(R.drawable.instagram, "Instagram",
+                serializeQREncoder(generateQRCodeFromContent("https://www.instagram.com/thiemjason/")),
+                "https://www.instagram.com/thiemjason/"));
+
+        pageChange();
+    }
+
+    private QRGEncoder generateQRCodeFromContent(String content) {
+        DisplayMetrics lDisplayMetrics = getResources().getDisplayMetrics();
+        int widthPixels = lDisplayMetrics.widthPixels;
+        int heightPixels = lDisplayMetrics.heightPixels;
+        Integer qrCodeContentWidth = (int) Math.round(widthPixels * 1);
+
+        return new QRGEncoder(content, null, QRGContents.Type.TEXT, qrCodeContentWidth);
+    }
+
+    private String serializeQREncoder(QRGEncoder qrgEncoder) {
+        return this.gson.toJson(qrgEncoder);
+    }
+
+    private QRGEncoder deserialQREncoder(String qrEncoder) {
+        return this.gson.fromJson(qrEncoder, QRGEncoder.class);
+    }
+
+    private void pageChange() {
+        int position = viewPager2.getCurrentItem();
+
+        itemUrl.setText(homeSliderItems.get(position).getUrl());
+        itemName.setText(homeSliderItems.get(position).getName());
+
+        String qrgEncoderJson = homeSliderItems.get(position).getQrImage();
+        QRGEncoder qrgEncoder = this.gson.fromJson(qrgEncoderJson, QRGEncoder.class);
+        qrImage.setImageBitmap(qrgEncoder.getBitmap());
     }
 }

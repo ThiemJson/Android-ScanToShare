@@ -5,12 +5,12 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/home_slider_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         android:weightSum="10"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,23 +23,13 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/home_arrow_forward"
-            android:rotation="180"/>
+            android:rotation="180"
+            app:srcCompat="@drawable/home_arrow_forward" />
 
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8">
-
-            <!--            <View-->
-            <!--                android:layout_width="80dp"-->
-            <!--                android:layout_height="80dp"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:layout_margin="10dp"-->
-            <!--                android:background="@drawable/home_slider_item_selected"-->
-            <!--                android:elevation="10dp"-->
-            <!--                android:translationZ="10dp"-->
-            <!--                />-->
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/home_view_slider_container"
@@ -53,6 +43,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <FrameLayout
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center"
+                android:background="@drawable/home_slider_item_selected"
+                android:elevation="20dp"
+                android:outlineAmbientShadowColor="@color/gray_light"
+                android:outlineSpotShadowColor="@color/gray_light"
+                android:padding="18dp"
+                android:translationZ="20dp" />
+
         </FrameLayout>
 
         <ImageView
@@ -63,4 +64,63 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/home_arrow_forward" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/home_slider_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/phetsarath"
+        android:text="Facebook"
+        android:textAlignment="center"
+        android:textFontWeight="700"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_slider_linearlayout" />
+
+    <ImageView
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:id="@+id/home_qr_image"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="6dp"
+        android:layout_weight="2"
+        android:background="@drawable/corner_radius_image"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_slider_item_name"
+        app:srcCompat="@drawable/facebook" />
+
+    <include
+        android:id="@+id/home_view_url_container"
+        layout="@layout/home_url_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_qr_image" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:drawableStart="@drawable/ic_baseline_share_24"
+        android:fontFamily="@font/phetsarath"
+        android:text="Share"
+        android:textAlignment="center"
+        android:textColor="#5BABBA"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_view_url_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>
