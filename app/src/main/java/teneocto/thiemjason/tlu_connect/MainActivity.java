@@ -21,6 +21,7 @@ import android.view.View;
 import java.time.Duration;
 import java.util.ArrayList;
 
+import teneocto.thiemjason.tlu_connect.about.AboutDialog;
 import teneocto.thiemjason.tlu_connect.home.Home;
 import teneocto.thiemjason.tlu_connect.imageslider.ImageSliderTest;
 import teneocto.thiemjason.tlu_connect.loading.Launcher;
@@ -30,6 +31,8 @@ import teneocto.thiemjason.tlu_connect.profile.Profile;
 import teneocto.thiemjason.tlu_connect.recycleview.SocialRecycleView;
 import teneocto.thiemjason.tlu_connect.register.RegisterProfile;
 import teneocto.thiemjason.tlu_connect.register.RegisterSocialNetwork;
+import teneocto.thiemjason.tlu_connect.scanninghistory.ScanningHistory;
+import teneocto.thiemjason.tlu_connect.support.Support;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager2 viewPager;
@@ -42,10 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
         this.setUpPermission();
 
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-        finish();
-        initSlider();
+//        Intent intent = new Intent(this, Support.class);
+//        startActivity(intent);
+//        finish();
+//        initSlider();
+
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.showDialog(this);
+
     }
 
     public void initSlider() {
