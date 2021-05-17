@@ -31,6 +31,7 @@ import teneocto.thiemjason.tlu_connect.recycleview.SocialRecycleView;
 import teneocto.thiemjason.tlu_connect.register.RegisterProfile;
 import teneocto.thiemjason.tlu_connect.register.RegisterSocialNetwork;
 import teneocto.thiemjason.tlu_connect.scanninghistory.ScanningHistory;
+import teneocto.thiemjason.tlu_connect.support.Support;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager2 viewPager;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.setUpPermission();
 
-        Intent intent = new Intent(this, ScanningHistory.class);
+        Intent intent = new Intent(this, Support.class);
         startActivity(intent);
         finish();
 //        initSlider();
