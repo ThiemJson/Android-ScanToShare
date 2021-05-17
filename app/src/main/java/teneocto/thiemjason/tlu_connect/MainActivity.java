@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
         this.setUpPermission();
 
-//        Intent intent = new Intent(this, Support.class);
-//        startActivity(intent);
-//        finish();
+        Intent intent = new Intent(this, RegisterSocialNetwork.class);
+        startActivity(intent);
+        finish();
 //        initSlider();
 
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.showDialog(this);
+//        AboutDialog aboutDialog = new AboutDialog();
+//        aboutDialog.showDialog(this);
 
     }
 
@@ -80,18 +80,6 @@ public class MainActivity extends AppCompatActivity {
         compositePageTransformer.addTransformer((page, position) -> {
             float r = 1 - Math.abs(position);
             page.setScaleY(0.85f + r * 0.15f);
-//            float myOffset = position * -(2 * 10 + 50);
-//            if (position < -1) {
-//                page.setTranslationX(-myOffset);
-//            } else if (position <= 1) {
-//                float scaleFactor = Math.max(0.7f, 1 - Math.abs(position - 0.14285715f));
-//                page.setTranslationX(myOffset);
-//                page.setScaleY(scaleFactor);
-//                page.setAlpha(scaleFactor);
-//            } else {
-//                page.setAlpha(0);
-//                page.setTranslationX(myOffset);
-//            }
         });
 
         viewPager.setPageTransformer(compositePageTransformer);

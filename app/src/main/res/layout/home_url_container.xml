@@ -22,12 +22,14 @@
             android:fontFamily="@font/phetsarath"
             android:paddingTop="3dp"
             android:text="Profile URL"
+            android:textAllCaps="false"
             android:textAlignment="center"
             android:textFontWeight="700"
-            android:textSize="12dp"
+            android:textSize="14dp"
             android:textStyle="bold" />
 
         <TextView
+            android:textAllCaps="false"
             android:id="@+id/home_url_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
