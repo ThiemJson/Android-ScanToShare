@@ -3,10 +3,10 @@ package teneocto.thiemjason.tlu_connect.models;
 public class HomeSliderItem {
     private int image;
     private String name;
-    private int qrImage;
+    private String qrImage;
     private String url;
 
-    public HomeSliderItem(int image, String name, int qrImage, String url) {
+    public HomeSliderItem(int image, String name, String qrImage, String url) {
         this.image = image;
         this.name = name;
         this.qrImage = qrImage;
@@ -29,11 +29,11 @@ public class HomeSliderItem {
         this.name = name;
     }
 
-    public int getQrImage() {
+    public String getQrImage() {
         return qrImage;
     }
 
-    public void setQrImage(int qrImage) {
+    public void setQrImage(String qrImage) {
         this.qrImage = qrImage;
     }
 
