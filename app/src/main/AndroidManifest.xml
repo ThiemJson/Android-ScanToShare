@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TLUConnect">
-        <activity android:name=".imageslider.ImageSliderTest"></activity>
+        <activity android:name=".scanninghistory.ScanningHistory"></activity>
+        <activity android:name=".imageslider.ImageSliderTest" />
         <activity android:name=".profile.Profile" />
         <activity android:name=".register.RegisterSocialNetwork" />
         <activity android:name=".recycleview.SocialRecycleView" />
