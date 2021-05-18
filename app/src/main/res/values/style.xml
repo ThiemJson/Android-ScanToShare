@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="BottomDialogTheme" parent="Theme.Design.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomDialogStyle </item>
+        <item name="bottomSheetStyle">@style/BottomDialogStyle</item>
     </style>
+
     <style name="BottomDialogStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/white</item>
     </style>
+
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/phetsarath</item>
         <item name="android:textSize">14dp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="menu_item" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/phetsarath</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:color">@color/gray_dark</item>
     </style>
 </resources>

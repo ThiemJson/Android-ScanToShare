@@ -49,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
 //        initSlider();
-
-//        AboutDialog aboutDialog = new AboutDialog();
-//        aboutDialog.showDialog(this);
-
     }
 
     public void initSlider() {
