@@ -45,14 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         this.setUpPermission();
 
-        Intent intent = new Intent(this, RegisterSocialNetwork.class);
+        Intent intent = new Intent(this, Profile.class);
         startActivity(intent);
         finish();
 //        initSlider();
-
-//        AboutDialog aboutDialog = new AboutDialog();
-//        aboutDialog.showDialog(this);
-
     }
 
     public void initSlider() {

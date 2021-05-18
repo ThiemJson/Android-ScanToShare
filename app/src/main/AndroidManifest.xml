@@ -14,7 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TLUConnect">
-        <activity android:name=".policies.PoliciesAndTerm"></activity>
+        <activity android:name=".navigation.Drawer">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".policies.PoliciesAndTerm" />
         <activity android:name=".support.Support" />
         <activity android:name=".scanninghistory.ScanningHistory" />
         <activity android:name=".imageslider.ImageSliderTest" />
@@ -25,13 +32,7 @@
         <activity android:name=".home.Home" />
         <activity android:name=".loading.Launcher" />
         <activity android:name=".register.RegisterProfile" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

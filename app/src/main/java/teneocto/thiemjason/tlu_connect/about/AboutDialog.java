@@ -3,6 +3,7 @@ package teneocto.thiemjason.tlu_connect.about;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -29,12 +30,18 @@ public class AboutDialog implements View.OnClickListener {
         viewLicenses = dialog.findViewById(R.id.about_view_licenses);
         viewDev = dialog.findViewById(R.id.about_view_dev);
         dialog.show();
+
+        closeButton.setOnClickListener(v -> {
+            Log.i("AboutDialog", " Close");
+            dialog.dismiss();
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.about_view_close:
+                Log.i("AboutDialog", " Close");
                 dialog.dismiss();
                 break;
             case R.id.about_view_dev:
