@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".policies.PoliciesAndTermFragment">
+    tools:context=".ui.policies.PoliciesAndTermFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".policies.PoliciesAndTerm">
+        tools:context=".ui.policies.PoliciesAndTerm">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

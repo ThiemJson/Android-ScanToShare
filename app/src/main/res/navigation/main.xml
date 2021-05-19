@@ -7,32 +7,32 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="teneocto.thiemjason.tlu_connect.home.HomeFragment"
+        android:name="teneocto.thiemjason.tlu_connect.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="teneocto.thiemjason.tlu_connect.profile.ProfileFragment"
+        android:name="teneocto.thiemjason.tlu_connect.ui.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/policiesAndTermFragment"
-        android:name="teneocto.thiemjason.tlu_connect.policies.PoliciesAndTermFragment"
+        android:name="teneocto.thiemjason.tlu_connect.ui.policies.PoliciesAndTermFragment"
         android:label="Policies and Term"
         tools:layout="@layout/fragment_policies_and_term" />
     <fragment
         android:id="@+id/scanningHistoryFragment"
-        android:name="teneocto.thiemjason.tlu_connect.scanninghistory.ScanningHistoryFragment"
+        android:name="teneocto.thiemjason.tlu_connect.ui.scanninghistory.ScanningHistoryFragment"
         android:label="Scanning History"
         tools:layout="@layout/fragment_scanning_history" />
     <activity
         android:id="@+id/support"
-        android:name="teneocto.thiemjason.tlu_connect.support.Support"
+        android:name="teneocto.thiemjason.tlu_connect.ui.support.Support"
         android:label="activity_support"
         tools:layout="@layout/activity_support" />
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="teneocto.thiemjason.tlu_connect.about.AboutFragment"
+        android:name="teneocto.thiemjason.tlu_connect.ui.about.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
 </navigation>

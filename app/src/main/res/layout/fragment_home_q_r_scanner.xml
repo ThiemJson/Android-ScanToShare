@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:adjustViewBounds="true"
     android:background="@drawable/home_fragment_background"
-    tools:context=".home.HomeQRScanner">
+    tools:context=".ui.home.HomeQRScanner">
 
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/scanner_view"

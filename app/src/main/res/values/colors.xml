@@ -14,8 +14,8 @@
     <color name="blue_drawer">#5CC5F0</color>
     <color name="blue_text">#48B2DD</color>
     <color name="gray_dark">#58686F</color>
+    <color name="image_gray_light">#d3d3d3</color>
     <color name="gray_light">#A6BCC6</color>
     <color name="blue_facebook">#0085FF</color>
     <color name="drawer_item">#5ab5de</color>
-
 </resources>

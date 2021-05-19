@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_third_light"
-    tools:context=".notification.Notification">
+    tools:context=".ui.notification.Notification">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/home_appbarlayout"
+        android:id="@+id/notification_appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,36 +16,34 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/noti_mToolbar"
+            android:id="@+id/mToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/gradiant_background"
             android:minHeight="?attr/actionBarSize"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteY="15dp">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:weightSum="4">
+                android:layout_marginEnd="10dp">
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/notification_menu_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_baseline_arrow_back_ios_new_24"
+                    android:padding="5dp"
+                    android:background="@drawable/home_arrow_back"
                     android:textColor="@color/white" />
 
                 <TextView
+                    android:id="@+id/nav_app_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -59,19 +57,12 @@
                     android:textSize="21dp"
                     android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/toolbar_overflow_menu_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_baseline_error"
-                    android:paddingEnd="10dp" />
-            </LinearLayout>
+            </FrameLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
-        app:layout_constraintTop_toBottomOf="@+id/home_appbarlayout"
+        app:layout_constraintTop_toBottomOf="@+id/notification_appbar_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textColor="#959191"
+        android:textColor="#d3d3d3"
         android:textSize="28dp"
         android:textFontWeight="700"
         android:text="Notification is Empty"
