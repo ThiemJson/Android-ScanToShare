@@ -4,14 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+
+import com.google.gson.internal.$Gson$Preconditions;
 
 import teneocto.thiemjason.tlu_connect.R;
 
 public class Support extends AppCompatActivity {
     WebView webView;
+    Button mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,14 @@ public class Support extends AppCompatActivity {
 
         webView.setWebViewClient(new Callback());
         webView.loadUrl("https://facebook.com/thiemtinhte");
+
+        mButton = findViewById(R.id.support_menu_icon);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public static class Callback extends WebViewClient {

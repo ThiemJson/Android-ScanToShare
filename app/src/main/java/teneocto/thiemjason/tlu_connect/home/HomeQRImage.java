@@ -48,6 +48,7 @@ public class HomeQRImage extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "==> HOME QR IMAGE";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -82,6 +83,47 @@ public class HomeQRImage extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Log.i(TAG, "On Create");
+    }
+
+    /**
+     * Life cycle
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "On Start");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Log.i(TAG, "On Pause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "On Stop");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "On Resume");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "On Destroy");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "On DestroyView");
     }
 
     @Override
@@ -93,7 +135,7 @@ public class HomeQRImage extends Fragment {
         itemName = view.findViewById(R.id.home_slider_item_name);
         qrImage = view.findViewById(R.id.home_qr_image);
         itemUrl = view.findViewById(R.id.home_url_text);
-
+        Log.i(TAG, "On View Create");
         this.initSlider(view);
         return view;
     }

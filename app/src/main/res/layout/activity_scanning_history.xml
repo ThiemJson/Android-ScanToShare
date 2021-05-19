@@ -6,12 +6,133 @@
     android:layout_height="match_parent"
     tools:context=".scanninghistory.ScanningHistory">
 
-    <include
-        android:id="@+id/scanning_his_search_bar_containerinclude"
-        layout="@layout/scanning_history_search_barcontainer"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/scanning_history_Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradiant_background"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <Button
+                    android:id="@+id/scanning_menu_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_arrow_back"
+                    android:padding="5dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/nav_app_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/phetsarath"
+                    android:gravity="center"
+                    android:text="Scanning History"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scanning_his_search_bar_containerinclude"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginTop="5dp"
+        android:background="#f2f2f2"
+        android:paddingStart="12dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scanning_history_Toolbar"
+        tools:context=".scanninghistory.ScanningHistory">
+
+        <LinearLayout
+            android:id="@+id/scanning_his_search_bar_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/scanning_history_search_bar"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:weightSum="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:textAlignment="center"
+                app:srcCompat="@drawable/scanning_history_search" />
+
+            <EditText
+                android:id="@+id/scanning_history_editext"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:background="@drawable/scanning_history_edittext_search"
+                android:fontFamily="@font/phetsarath"
+                android:hint="Enter keyword"
+                android:maxLength="40"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp"
+                android:singleLine="true"
+                android:textColor="@color/gray_dark"
+                android:textColorHint="@color/gray_light"
+                android:textSize="12dp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:background="@color/blue_primary"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/scanning_history_btn_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/scanning_history_search_button"
+                android:fontFamily="@font/phetsarath"
+                android:text="Search"
+                android:textAllCaps="false"
+                android:textColor="@color/blue_primary"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/scanning_history_image_contact"

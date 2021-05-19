@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,6 +41,13 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         this.initialTabLayout();
+        Button backbutton = findViewById(R.id.profile_menu_icon);
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     /**

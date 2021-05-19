@@ -40,7 +40,7 @@ public class HomeQRScanner extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String TAG = "SCANNER FRAGMENT";
+    private static final String TAG = "==> SCANNER ";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -75,14 +75,48 @@ public class HomeQRScanner extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Log.i(TAG, "On create");
+    }
+
+    /**
+     * Life cycle
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "On Start");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "On Stop");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "On Destroy");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "On DestroyView");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(TAG, "On create view");
         View root = inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(getActivity(), scannerView);
+
+        if(mCodeScanner == null ){
+            Log.i(TAG, " NULL OBJECT");
+        }
+
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
@@ -105,7 +139,9 @@ public class HomeQRScanner extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
+        Log.i(TAG, "On Resume");
     }
 
     public void startPreview() {
@@ -118,7 +154,7 @@ public class HomeQRScanner extends Fragment {
             super.onPause();
             return;
         }
-
+        Log.i(TAG, "On Pause");
         mCodeScanner.releaseResources();
         super.onPause();
     }

@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -79,34 +81,34 @@ public class Home extends AppCompatActivity {
        });
     }
 
-    private class HomeAdapter extends FragmentPagerAdapter {
-        ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
-        ArrayList<String> stringArrayList = new ArrayList<>();
+private class HomeAdapter extends FragmentPagerAdapter {
+    ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
+    ArrayList<String> stringArrayList = new ArrayList<>();
 
-        public HomeAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
-        }
-
-        public void AddFragment(Fragment fragment, String s) {
-            fragmentArrayList.add(fragment);
-            stringArrayList.add(s);
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentArrayList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-             return fragmentArrayList.size();
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return stringArrayList.get(position);
-        }
+    public HomeAdapter(@NonNull FragmentManager fm, int behavior) {
+        super(fm, behavior);
     }
+
+    public void AddFragment(Fragment fragment, String s) {
+        fragmentArrayList.add(fragment);
+        stringArrayList.add(s);
+    }
+
+    @NonNull
+    @Override
+    public Fragment getItem(int position) {
+        return fragmentArrayList.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return fragmentArrayList.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return stringArrayList.get(position);
+    }
+}
 }

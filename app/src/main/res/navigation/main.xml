@@ -25,4 +25,14 @@
         android:name="teneocto.thiemjason.tlu_connect.scanninghistory.ScanningHistoryFragment"
         android:label="Scanning History"
         tools:layout="@layout/fragment_scanning_history" />
+    <activity
+        android:id="@+id/support"
+        android:name="teneocto.thiemjason.tlu_connect.support.Support"
+        android:label="activity_support"
+        tools:layout="@layout/activity_support" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="teneocto.thiemjason.tlu_connect.about.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

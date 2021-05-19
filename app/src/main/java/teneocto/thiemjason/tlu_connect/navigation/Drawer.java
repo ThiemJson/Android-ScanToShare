@@ -12,6 +12,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -22,20 +23,24 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.home.Home;
+import teneocto.thiemjason.tlu_connect.policies.PoliciesAndTerm;
+import teneocto.thiemjason.tlu_connect.profile.Profile;
+import teneocto.thiemjason.tlu_connect.scanninghistory.ScanningHistory;
+import teneocto.thiemjason.tlu_connect.support.Support;
 
 public class Drawer extends AppCompatActivity {
     private static String TAG = "Drawer ";
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private DrawerController drawerController;
     private NavController navController;
+    private DrawerController drawerController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
-        drawerController = new DrawerController(this, this);
         this.initDrawerLayout();
         this.drawerListener();
     }
@@ -47,19 +52,43 @@ public class Drawer extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
         Button openDrawer = findViewById(R.id.home_menu_icon);
+        drawerController = new DrawerController(this, this);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         NavigationUI.setupWithNavController(navigationView, navController);
         openDrawer.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-
-        final TextView navAppTile = findViewById(R.id.nav_app_title);
-        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getLabel() == "Home"){
-                navAppTile.setText("TLU Connect");
-                return;
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.homeFragment:
+                        drawerLayout.close();
+                        break;
+                    case R.id.profileFragment:
+                        startActivity(new Intent(getApplicationContext(), Profile.class));
+                        break;
+                    case R.id.scanningHistoryFragment:
+                        startActivity(new Intent(getApplicationContext(), ScanningHistory.class));
+                        break;
+                    case R.id.policiesAndTermFragment:
+                        startActivity(new Intent(getApplicationContext(), PoliciesAndTerm.class));
+                        break;
+                    case R.id.support:
+                        startActivity(new Intent(getApplicationContext(), Support.class));
+                        break;
+                    case R.id.aboutFragment:
+                        drawerController.onAboutClick();
+                        break;
+                }
+                return true;
             }
-            navAppTile.setText(destination.getLabel());
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        item.setChecked(false);
+        return super.onOptionsItemSelected(item);
     }
 
     private void drawerListener() {
@@ -71,7 +100,6 @@ public class Drawer extends AppCompatActivity {
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-
             }
 
             @Override
