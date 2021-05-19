@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     android:adjustViewBounds="true"
     android:background="@drawable/home_fragment_background"
-    tools:context=".home.HomeQRImage">
+    tools:context=".ui.home.HomeQRImage">
 
 </FrameLayout>

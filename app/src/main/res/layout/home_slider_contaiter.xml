@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/home_slider_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
@@ -44,14 +44,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <FrameLayout
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_gravity="center"
                 android:background="@drawable/home_slider_item_selected"
                 android:elevation="20dp"
                 android:outlineAmbientShadowColor="@color/gray_light"
                 android:outlineSpotShadowColor="@color/gray_light"
-                android:padding="18dp"
                 android:translationZ="20dp" />
 
         </FrameLayout>
