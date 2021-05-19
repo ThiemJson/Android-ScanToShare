@@ -8,15 +8,26 @@
     android:fitsSystemWindows="true"
     tools:context=".navigation.Drawer">
 
-    <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".support.Support">
 
-        <include layout="@layout/activity_home" />
-    </FrameLayout>
-    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
+        <include
+            android:id="@+id/drawer_appbar_include"
+            layout="@layout/drawer_appbar" />
+
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/drawer_appbar_include"
+            app:navGraph="@navigation/main" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

@@ -30,7 +30,7 @@ public class Support extends AppCompatActivity {
         webView.loadUrl("https://facebook.com/thiemtinhte");
     }
 
-    private class Callback extends WebViewClient {
+    public static class Callback extends WebViewClient {
         @Override
         public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
             return super.shouldOverrideKeyEvent(view, event);

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="teneocto.thiemjason.tlu_connect.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="teneocto.thiemjason.tlu_connect.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/policiesAndTermFragment"
+        android:name="teneocto.thiemjason.tlu_connect.policies.PoliciesAndTermFragment"
+        android:label="Policies and Term"
+        tools:layout="@layout/fragment_policies_and_term" />
+    <fragment
+        android:id="@+id/scanningHistoryFragment"
+        android:name="teneocto.thiemjason.tlu_connect.scanninghistory.ScanningHistoryFragment"
+        android:label="Scanning History"
+        tools:layout="@layout/fragment_scanning_history" />
+</navigation>

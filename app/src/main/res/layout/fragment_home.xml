@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradiant_background"
+        tools:context=".home.Home">
+
+        <LinearLayout
+            android:id="@+id/home_user_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="204dp"
+            tools:layout_editor_absoluteY="217dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/loading_profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="3"
+                android:paddingStart="-35dp"
+                android:src="@drawable/logo"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="-40dp"
+                android:layout_weight="7"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:textAlignment="gravity">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/phetsarath"
+                    android:paddingBottom="3dp"
+                    android:singleLine="true"
+                    android:text="NguyenCaoThiem"
+                    android:textColor="@color/white"
+                    android:textFontWeight="700"
+                    android:textSize="23dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/phetsarath"
+                    android:paddingBottom="3dp"
+                    android:singleLine="true"
+                    android:text="Developer"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/phetsarath"
+                    android:singleLine="true"
+                    android:text="Teneocto Technologies CO, LTD."
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/home_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_user_information"
+            app:tabGravity="center"
+            app:tabIndicator="@drawable/home_tab_view_item"
+            app:tabIndicatorAnimationDuration="500"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorGravity="stretch"
+            app:tabMinWidth="150dp"
+            app:tabMode="fixed"
+            app:tabRippleColor="@null"
+            app:tabSelectedTextColor="@color/blue_primary"
+            app:tabTextAppearance="@style/tab_text"
+            app:tabTextColor="#99FFFFFF"
+            tools:layout_editor_absoluteX="5dp"
+            tools:layout_editor_absoluteY="401dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/home_view_paper"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="50dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/home_fragment_background"
+            android:clipChildren="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintCircleRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_tablayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

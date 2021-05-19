@@ -7,15 +7,15 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_home_icon"
+                    android:id="@+id/homeFragment"
                     android:icon="@drawable/nav_home_icon"
                     android:title="Home" />
                 <item
-                    android:id="@+id/nav_profile"
+                    android:id="@+id/profileFragment"
                     android:icon="@drawable/nav_person_icon"
                     android:title="Profile" />
                 <item
-                    android:id="@+id/nav_scanning_history"
+                    android:id="@+id/scanningHistoryFragment"
                     android:icon="@drawable/nav_history"
                     android:title="Scanning History" />
             </group>
@@ -29,7 +29,7 @@
                     android:icon="@drawable/nav_support"
                     android:title="Support" />
                 <item
-                    android:id="@+id/nav_policies_term"
+                    android:id="@+id/policiesAndTermFragment"
                     android:icon="@drawable/nav_policies_term"
                     android:title="Policies and Term" />
                 <item
