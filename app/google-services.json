@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "491385787653",
+    "project_id": "tluconnect",
+    "storage_bucket": "tluconnect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491385787653:android:bbc3ec9fc833d3b147d36c",
+        "android_client_info": {
+          "package_name": "teneocto.thiemjason.tlu_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491385787653-pcniu3j9e665nseitn6njbm0f4n7cac7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPFnOneCRSFXwOS7iN52R-ucG3_N8xICo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491385787653-pcniu3j9e665nseitn6njbm0f4n7cac7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

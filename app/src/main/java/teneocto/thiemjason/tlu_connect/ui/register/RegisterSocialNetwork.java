@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
+import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.models.SocialNetwork;
 
 public class RegisterSocialNetwork extends AppCompatActivity {
@@ -28,6 +31,10 @@ public class RegisterSocialNetwork extends AppCompatActivity {
     RegisterAdapter mRegisterAdapter;
     ArrayList<SocialNetwork> socialNetwork;
 
+    // Buttons
+    Button mBackButton;
+    Button mNextButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +43,13 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         this.initRecycleView();
 
         this.mFloatingButton = findViewById(R.id.btn_register_social_add);
-        this.mFloatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fabOnClick();
-            }
-        });
+        this.mFloatingButton.setOnClickListener(v -> fabOnClick());
+
+        mBackButton = findViewById(R.id.btn_register_social_back);
+        mNextButton = findViewById(R.id.btn_register_social_facebook_next);
+
+        mBackButton.setOnClickListener(v -> backButton());
+        mNextButton.setOnClickListener(v -> nextButton());
     }
 
 
@@ -122,5 +130,15 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         TextView name = view.findViewById(R.id.action_item_name);
         this.mBottomSheetFragment.dismiss();
         addItem(name.getText().toString());
+    }
+
+    void backButton() {
+        finish();
+    }
+
+    void nextButton() {
+        Intent intent = new Intent(this, Drawer.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

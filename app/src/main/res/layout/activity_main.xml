@@ -9,6 +9,7 @@
     tools:ignore="ExtraText">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +57,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="FULL_BANNER"
+        ads:adUnitId="@string/banner_app_ads_unit"
+        ads:layout_constraintTop_toBottomOf="@id/main_appbar_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -81,8 +92,10 @@
         android:maxWidth="250dp"
         android:minWidth="200dp"
         android:text="Connect with Facebook"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="11dp"
+        android:textFontWeight="700"
+        android:textSize="17dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/btn_main_ac_skip"
         app:layout_constraintEnd_toEndOf="@id/btn_main_ac_skip"
@@ -100,9 +113,11 @@
         android:fontFamily="@font/phetsarath"
         android:maxWidth="250dp"
         android:minWidth="200dp"
-        android:text="Skip"
+        android:text="SKIP"
+        android:textAllCaps="false"
         android:textColor="@color/gray_dark"
-        android:textSize="11dp"
+        android:textFontWeight="700"
+        android:textSize="17dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

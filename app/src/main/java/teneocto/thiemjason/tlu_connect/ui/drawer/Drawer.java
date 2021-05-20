@@ -20,6 +20,7 @@ import android.widget.Button;
 
 import com.google.android.material.navigation.NavigationView;
 
+import teneocto.thiemjason.tlu_connect.MainActivity;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.notification.Notification;
 import teneocto.thiemjason.tlu_connect.ui.policies.PoliciesAndTerm;
@@ -46,12 +47,9 @@ public class Drawer extends AppCompatActivity {
         this.drawerListener();
 
         mNotification = findViewById(R.id.home_notification_icon);
-        mNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Notification.class);
-                startActivity(intent);
-            }
+        mNotification.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), Notification.class);
+            startActivity(intent);
         });
     }
 

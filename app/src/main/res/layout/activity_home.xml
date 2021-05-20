@@ -115,12 +115,14 @@
                 android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:text="NguyenCaoThiem"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textFontWeight="700"
                 android:textSize="23dp"
                 android:textStyle="bold" />
 
             <TextView
+                android:textAllCaps="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/phetsarath"
@@ -131,6 +133,7 @@
                 android:textSize="17dp" />
 
             <TextView
+                android:textAllCaps="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/phetsarath"

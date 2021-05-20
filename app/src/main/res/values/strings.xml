@@ -2,4 +2,11 @@
     <string name="app_name">TLU Connect</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+<!--    APP CONFIG -->
+    <string name="app_ads">google.com, pub-9031583899744313, DIRECT, f08c47fec0942fa0</string>
+
+    <string name="google_ad_app_id">ca-app-pub-9031583899744313~5153778581</string>
+    <string name="banner_app_ads_unit">ca-app-pub-9031583899744313/2691266770</string>
+    <string name="interstitial_app_ads_unit">ca-app-pub-9031583899744313/6695759263</string>
 </resources>

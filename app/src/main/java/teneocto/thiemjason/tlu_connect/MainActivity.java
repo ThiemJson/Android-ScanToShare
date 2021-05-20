@@ -10,26 +10,46 @@ import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.ui.main.MainSliderAdapter;
 import teneocto.thiemjason.tlu_connect.ui.models.MainSliderItem;
+import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager2 mViewPager;
     Handler mSliderHandler = new Handler();
+    AdView adView;
 
+    // Button
+    Button mConnectFacebook;
+    Button mSkip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         this.setUpPermission();
+        loadAd();
+        initSlider();
+
+        mConnectFacebook = findViewById(R.id.btn_main_ac_register_facebook);
+        mSkip = findViewById(R.id.btn_main_ac_skip);
+
+        mConnectFacebook.setOnClickListener(v -> connectFacebook());
+        mSkip.setOnClickListener(v -> skip());
     }
 
     public void initSlider() {
@@ -93,5 +113,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    void loadAd() {
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+
+        adView = findViewById(R.id.main_adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+    }
+
+    void connectFacebook(){
+
+    }
+
+    void skip(){
+        Intent intent = new Intent(this, RegisterProfile.class);
+        startActivity(intent);
     }
 }
