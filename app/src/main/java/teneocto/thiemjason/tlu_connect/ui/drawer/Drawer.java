@@ -20,6 +20,7 @@ import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.notification.Notification;
 import teneocto.thiemjason.tlu_connect.ui.policies.PoliciesAndTerm;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
+import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
 import teneocto.thiemjason.tlu_connect.ui.scanninghistory.ScanningHistory;
 import teneocto.thiemjason.tlu_connect.ui.support.Support;
 

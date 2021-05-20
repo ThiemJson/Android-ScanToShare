@@ -1,23 +1,35 @@
 package teneocto.thiemjason.tlu_connect.ui.home;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -40,6 +52,12 @@ public class HomeQRImage extends Fragment {
     TextView itemName;
     TextView itemUrl;
     ImageView qrImage;
+    View mRULContainer;
+    Button mSharImageBtn;
+
+    // URL container
+    private ClipboardManager mClipboard;
+    private ClipData mClipData;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -132,6 +150,11 @@ public class HomeQRImage extends Fragment {
         itemName = view.findViewById(R.id.home_slider_item_name);
         qrImage = view.findViewById(R.id.home_qr_image);
         itemUrl = view.findViewById(R.id.home_url_text);
+        mRULContainer = view.findViewById(R.id.home_view_url_container);
+        mSharImageBtn = view.findViewById(R.id.home_slider_share_image);
+        mRULContainer.setOnClickListener(v -> copyDataToClipboard());
+        mSharImageBtn.setOnClickListener(v -> shareImage(container.getContext()));
+
         Log.i(TAG, "On View Create");
         this.initSlider(view);
         return view;
@@ -249,5 +272,33 @@ public class HomeQRImage extends Fragment {
         String qrgEncoderJson = homeSliderItems.get(position).getQrImage();
         QRGEncoder qrgEncoder = this.gson.fromJson(qrgEncoderJson, QRGEncoder.class);
         qrImage.setImageBitmap(qrgEncoder.getBitmap());
+    }
+
+    private void copyDataToClipboard(){
+        ClipboardManager _clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Nothing", itemUrl.getText());
+        _clipboard.setPrimaryClip(clip);
+        Toast.makeText(getActivity(), "Copy to clipboard", Toast.LENGTH_SHORT).show();
+    }
+
+    private void shareImage(Context context){
+        int position = viewPager2.getCurrentItem();
+        String qrgEncoderJson = homeSliderItems.get(position).getQrImage();
+        QRGEncoder qrgEncoder = this.gson.fromJson(qrgEncoderJson, QRGEncoder.class);
+
+        Uri uri = getImageUri(context, qrgEncoder.getBitmap());
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.setType("image/jpeg");
+        startActivity(Intent.createChooser(shareIntent, "Select"));
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Image", null);
+        return Uri.parse(path);
     }
 }

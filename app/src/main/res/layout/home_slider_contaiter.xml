@@ -108,6 +108,7 @@
         app:layout_constraintTop_toBottomOf="@id/home_qr_image" />
 
     <Button
+        android:id="@+id/home_slider_share_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
