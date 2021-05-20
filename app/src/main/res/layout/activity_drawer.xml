@@ -44,5 +44,4 @@
         app:itemTextAppearance="@style/menu_item"
         app:itemTextColor="@color/gray_dark"
         app:menu="@menu/drawer_list_item" />
-
 </androidx.drawerlayout.widget.DrawerLayout>

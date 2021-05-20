@@ -8,6 +8,7 @@
     tools:context=".ui.register.RegisterProfile">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/notification_appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,30 +16,48 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/register_mToolbar"
+            android:id="@+id/mToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@drawable/gradiant_background"
             android:minHeight="?attr/actionBarSize"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteY="15dp">
 
-            <TextView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/phetsarath"
-                android:gravity="center"
-                android:text="Your Profile"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="21dp"
-                android:textStyle="bold" />
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <Button
+                    android:id="@+id/register_profile_menu_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_arrow_back"
+                    android:padding="5dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/nav_app_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/phetsarath"
+                    android:gravity="center"
+                    android:text="Your Profile"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -319,9 +338,11 @@
         android:fontFamily="@font/phetsarath"
         android:maxWidth="250dp"
         android:minWidth="200dp"
-        android:text="Done"
+        android:text="NEXT"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="11dp"
+        android:textFontWeight="700"
+        android:textSize="17dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

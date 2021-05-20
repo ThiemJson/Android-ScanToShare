@@ -14,25 +14,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TLUConnect">
-        <activity android:name=".ui.drawer.Drawer">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/google_ad_app_id" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.drawer.Drawer" />
         <activity android:name=".ui.policies.PoliciesAndTerm" />
         <activity android:name=".ui.support.Support" />
         <activity android:name=".ui.scanninghistory.ScanningHistory" />
         <activity android:name=".ui.imageslider.ImageSliderTest" />
         <activity android:name=".ui.profile.Profile" />
         <activity android:name=".ui.register.RegisterSocialNetwork" />
-        <activity android:name=".recycleview.SocialRecycleView" />
         <activity android:name=".ui.notification.Notification" />
         <activity android:name=".ui.home.Home" />
         <activity android:name=".ui.loading.Launcher" />
         <activity android:name=".ui.register.RegisterProfile" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
