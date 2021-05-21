@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         mSkip.setOnClickListener(v -> skip());
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSliderHandler.removeCallbacks(sliderRunnable);
+    }
+
     public void initSlider() {
         mViewPager = findViewById(R.id.main_slider_container);
 

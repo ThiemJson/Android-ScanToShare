@@ -164,7 +164,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="FULL_BANNER"
-        ads:adUnitId="@string/banner_app_ads_unit"
+        ads:adUnitId="ca-app-pub-9031583899744313/4157032314"
         app:layout_constraintTop_toBottomOf="@+id/drawer_appbar_include"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
