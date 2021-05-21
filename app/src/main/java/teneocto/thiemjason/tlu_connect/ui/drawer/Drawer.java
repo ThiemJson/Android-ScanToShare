@@ -64,31 +64,28 @@ public class Drawer extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(mNavigationView, mNavController);
         openDrawer.setOnClickListener(v -> mDrawerLayout.openDrawer(GravityCompat.START));
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.homeFragment:
-                        break;
-                    case R.id.profileFragment:
-                        startActivity(new Intent(getApplicationContext(), Profile.class));
-                        break;
-                    case R.id.scanningHistoryFragment:
-                        startActivity(new Intent(getApplicationContext(), ScanningHistory.class));
-                        break;
-                    case R.id.policiesAndTermFragment:
-                        startActivity(new Intent(getApplicationContext(), PoliciesAndTerm.class));
-                        break;
-                    case R.id.support:
-                        startActivity(new Intent(getApplicationContext(), Support.class));
-                        break;
-                    case R.id.aboutFragment:
-                        mDrawerController.onAboutClick();
-                        break;
-                }
-                mDrawerLayout.close();
-                return true;
+        mNavigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.homeFragment:
+                    break;
+                case R.id.profileFragment:
+                    startActivity(new Intent(getApplicationContext(), Profile.class));
+                    break;
+                case R.id.scanningHistoryFragment:
+                    startActivity(new Intent(getApplicationContext(), ScanningHistory.class));
+                    break;
+                case R.id.policiesAndTermFragment:
+                    startActivity(new Intent(getApplicationContext(), PoliciesAndTerm.class));
+                    break;
+                case R.id.support:
+                    startActivity(new Intent(getApplicationContext(), Support.class));
+                    break;
+                case R.id.aboutFragment:
+                    mDrawerController.onAboutClick();
+                    break;
             }
+            mDrawerLayout.close();
+            return true;
         });
     }
 

@@ -334,7 +334,7 @@
         android:layout_height="43dp"
         android:layout_marginBottom="25dp"
         android:width="250dp"
-        android:background="@drawable/custom_button_facbook"
+        android:background="@drawable/custom_button_facebook"
         android:fontFamily="@font/phetsarath"
         android:maxWidth="250dp"
         android:minWidth="200dp"

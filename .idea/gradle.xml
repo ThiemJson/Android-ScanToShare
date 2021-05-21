@@ -12,6 +12,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/facebook" />
+            <option value="$PROJECT_DIR$/facebook-core" />
+            <option value="$PROJECT_DIR$/facebook-login" />
+            <option value="$PROJECT_DIR$/facebook-messenger" />
+            <option value="$PROJECT_DIR$/facebook-share" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

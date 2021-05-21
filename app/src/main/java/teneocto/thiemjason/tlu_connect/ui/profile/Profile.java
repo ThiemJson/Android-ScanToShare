@@ -8,21 +8,29 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.BitSet;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.ui.models.User;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
 public class Profile extends AppCompatActivity {
     TabLayout mTabLayout;
@@ -51,6 +59,8 @@ public class Profile extends AppCompatActivity {
                 finish();
             }
         });
+
+        this.getDataFromSharedPrefer();
     }
 
     /**
@@ -124,5 +134,16 @@ public class Profile extends AppCompatActivity {
             uri = data.getData();
             mImagePicker.setImageURI(uri);
         }
+    }
+
+    void getDataFromSharedPrefer(){
+        Gson gson = new Gson();
+        SharedPreferences prefs =  getSharedPreferences(AppConst.mainSharedPrefer,
+                Context.MODE_PRIVATE);
+        String userJson = prefs.getString("USERDATA", "NULL");
+        User user = gson.fromJson(userJson, User.class);
+
+        Bitmap bitmap =  AppConst.StringToBitMap(user.getBitmap());
+        mImagePicker.setImageBitmap(bitmap);
     }
 }

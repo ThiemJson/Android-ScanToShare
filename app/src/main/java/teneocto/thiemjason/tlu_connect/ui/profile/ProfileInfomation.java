@@ -1,5 +1,7 @@
 package teneocto.thiemjason.tlu_connect.ui.profile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import com.google.gson.Gson;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.ui.models.User;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +68,30 @@ public class ProfileInfomation extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_infomation, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_infomation, container, false);
+        getDataFromSharedPrefer(view);
+        return view;
+    }
+
+    void getDataFromSharedPrefer(View viewGroup){
+        Gson gson = new Gson();
+        SharedPreferences prefs =  viewGroup.getContext().getSharedPreferences(AppConst.mainSharedPrefer,
+                Context.MODE_PRIVATE);
+        String userJson = prefs.getString("USERDATA", "NULL");
+        User user = gson.fromJson(userJson, User.class);
+
+        EditText firstName = viewGroup.findViewById(R.id.profile_frag_first_name);
+        EditText lastName = viewGroup.findViewById(R.id.profile_frag_last_name);
+        EditText email = viewGroup.findViewById(R.id.profile_frag_email);
+        EditText company = viewGroup.findViewById(R.id.profile_frag_company);
+        EditText position = viewGroup.findViewById(R.id.profile_frag_position);
+
+        firstName.setText(user.getFirstName());
+        lastName.setText(user.getLastName());
+        email.setText(user.getEmail());
+        company.setText(user.getLocation());
+        position.setText(user.getLocation());
+        position.setText(user.getLocation());
+
     }
 }

@@ -50,6 +50,7 @@
                     android:textSize="13dp" />
 
                 <EditText
+                    android:id="@+id/profile_frag_first_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
@@ -94,6 +95,7 @@
                     android:textSize="13dp" />
 
                 <EditText
+                    android:id="@+id/profile_frag_last_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
@@ -137,6 +139,7 @@
                     android:textSize="13dp" />
 
                 <EditText
+                    android:id="@+id/profile_frag_position"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
@@ -181,6 +184,7 @@
                     android:textSize="13dp" />
 
                 <EditText
+                    android:id="@+id/profile_frag_email"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
@@ -224,6 +228,7 @@
                     android:textSize="13dp" />
 
                 <EditText
+                    android:id="@+id/profile_frag_company"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"

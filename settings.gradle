@@ -1,2 +1,7 @@
+include ':facebook-messenger'
+include ':facebook-share'
+include ':facebook-login'
+include ':facebook-core'
+include ':facebook'
 include ':app'
 rootProject.name = "TLU-Connect"

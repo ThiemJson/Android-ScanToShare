@@ -11,31 +11,66 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import teneocto.thiemjason.tlu_connect.ui.main.MainSliderAdapter;
 import teneocto.thiemjason.tlu_connect.ui.models.MainSliderItem;
+import teneocto.thiemjason.tlu_connect.ui.models.User;
 import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
 public class MainActivity extends AppCompatActivity {
+    public static String TAG = "Main activity";
     ViewPager2 mViewPager;
     Handler mSliderHandler = new Handler();
     AdView adView;
 
     // Button
-    Button mConnectFacebook;
     Button mSkip;
+    CallbackManager callbackManager;
+    LoginButton mLoginButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +79,9 @@ public class MainActivity extends AppCompatActivity {
         this.setUpPermission();
         loadAd();
         initSlider();
+        initFacebookLogin();
 
-        mConnectFacebook = findViewById(R.id.btn_main_ac_register_facebook);
         mSkip = findViewById(R.id.btn_main_ac_skip);
-
-        mConnectFacebook.setOnClickListener(v -> connectFacebook());
         mSkip.setOnClickListener(v -> skip());
     }
 
@@ -56,6 +89,102 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mSliderHandler.removeCallbacks(sliderRunnable);
+    }
+
+    private void initFacebookLogin() {
+        mLoginButton = findViewById(R.id.facebook_login_button);
+        callbackManager = CallbackManager.Factory.create();
+        mLoginButton.setPermissions(Arrays.asList("user_gender", "user_friends", "email", "user_status", "user_location"));
+        mLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.i(TAG, "Login Facebook successfully");
+            }
+
+            @Override
+            public void onCancel() {
+                Log.i(TAG, "Login Facebook cancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.i(TAG, "Login Facebook failure");
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+
+        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), (object, response) -> {
+            Log.i(TAG, object.toString());
+            try {
+                String name = object.getString("name");
+                String id = object.getString("id");
+                Picasso.get().load("https://graph.facebook.com/" + id + "/picture?type=large").into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        Log.i(TAG, "Bitmap: " + bitmap);
+
+                        Gson gson = new Gson();
+                        User user;
+                        try {
+                            user = new User(object.getString("first_name"),
+                                    object.getString("last_name"),
+                                    AppConst.BitMapToString(bitmap),
+                                    object.getString("location"),
+                                    object.getString("email"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            user = null;
+                        }
+
+                        String dataJson = gson.toJson(user);
+                        Log.i(TAG, "DataJson: " + dataJson);
+                        SharedPreferences sharedPreferences = getSharedPreferences(AppConst.mainSharedPrefer, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("USERDATA", dataJson);
+                        editor.apply();
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Bundle bundle = new Bundle();
+        bundle.putString("fields", "gender ,email, name,id,first_name, last_name, location");
+
+        graphRequest.setParameters(bundle);
+        graphRequest.executeAsync();
+    }
+
+    AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+            if (currentAccessToken == null) {
+                LoginManager.getInstance().logOut();
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        accessTokenTracker.stopTracking();
     }
 
     public void initSlider() {
@@ -130,11 +259,7 @@ public class MainActivity extends AppCompatActivity {
         adView.loadAd(adRequest);
     }
 
-    void connectFacebook(){
-
-    }
-
-    void skip(){
+    void skip() {
         Intent intent = new Intent(this, RegisterProfile.class);
         startActivity(intent);
     }
