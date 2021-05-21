@@ -42,7 +42,6 @@ public class Drawer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
-        this.setUpPermission();
         this.initDrawerLayout();
         this.drawerListener();
 
@@ -120,21 +119,5 @@ public class Drawer extends AppCompatActivity {
 
             }
         });
-    }
-
-    void setUpPermission() {
-        int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            makeRequest();
-        }
-    }
-
-    void makeRequest() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1888);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
