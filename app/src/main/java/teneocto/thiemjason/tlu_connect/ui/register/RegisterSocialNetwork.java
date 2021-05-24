@@ -18,7 +18,7 @@ import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
 import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
-import teneocto.thiemjason.tlu_connect.ui.models.SocialNetwork;
+import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
 
 public class RegisterSocialNetwork extends AppCompatActivity {
     public static String TAG = "==> Register Social Network";
@@ -29,7 +29,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
     // Main recycle view
     RecyclerView mRecyclerView;
     RegisterAdapter mRegisterAdapter;
-    ArrayList<SocialNetwork> socialNetwork;
+    ArrayList<SocialNetworkDTO> socialNetworkDTO;
 
     // Buttons
     Button mBackButton;
@@ -58,7 +58,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
      */
     private void initRecycleView() {
         this.mRecyclerView = findViewById(R.id.register_social_recycle_view);
-        this.mRegisterAdapter = new RegisterAdapter(this, this.socialNetwork);
+        this.mRegisterAdapter = new RegisterAdapter(this, this.socialNetworkDTO);
         this.mRecyclerView.setAdapter(this.mRegisterAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -69,39 +69,39 @@ public class RegisterSocialNetwork extends AppCompatActivity {
      * Add / remove item func
      */
     public void removeItem(int position) {
-        socialNetwork.remove(position);
+        socialNetworkDTO.remove(position);
         this.mRegisterAdapter.notifyItemRemoved(position);
     }
 
     public void addItem(String name) {
         switch (name) {
             case "Facebook":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.facebook, "fb.com/thiemtinhte"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.facebook, "fb.com/thiemtinhte"));
                 break;
             case "Instagram":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemjason"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.instagram, "instagram.com/thiemjason"));
                 break;
             case "Twitter":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.twiiter, "twitter.com/thiemtinhte"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.twiiter, "twitter.com/thiemtinhte"));
                 break;
             case "Snapchat":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.sapchat, "snapchat.com/thiem"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.sapchat, "snapchat.com/thiem"));
                 break;
             case "LinkedIn":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.linkedin, "linkedIn.com/thiemtinhte"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.linkedin, "linkedIn.com/thiemtinhte"));
                 break;
         }
-        this.mRegisterAdapter.notifyItemInserted(this.socialNetwork.size());
+        this.mRegisterAdapter.notifyItemInserted(this.socialNetworkDTO.size());
     }
 
     /**
      * DUMMY DATA
      */
     private void initDummyData() {
-        this.socialNetwork = new ArrayList<SocialNetwork>();
+        this.socialNetworkDTO = new ArrayList<SocialNetworkDTO>();
 
-        this.socialNetwork.add(new SocialNetwork(R.drawable.facebook, "fb.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.linkedin, "linkedin.com/thiemjason"));
+        this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.facebook, "fb.com/thiemtinhte"));
+        this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.linkedin, "linkedin.com/thiemjason"));
     }
 
     /**
@@ -119,7 +119,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
     }
 
     /**
-     * On BottomSheetItem click
+     * On BottomSheetItemDTO click
      */
     private void bottomSheetItemClick(View view, int position) {
         TextView name = view.findViewById(R.id.action_item_name);

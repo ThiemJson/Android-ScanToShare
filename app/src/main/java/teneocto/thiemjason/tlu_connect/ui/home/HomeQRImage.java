@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
@@ -36,7 +34,7 @@ import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.home.slider.HomeSliderAdapter;
-import teneocto.thiemjason.tlu_connect.ui.models.HomeSliderItem;
+import teneocto.thiemjason.tlu_connect.ui.models.HomeSliderItemDTO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +42,7 @@ import teneocto.thiemjason.tlu_connect.ui.models.HomeSliderItem;
  * create an instance of this fragment.
  */
 public class HomeQRImage extends Fragment {
-    public ArrayList<HomeSliderItem> homeSliderItems;
+    public ArrayList<HomeSliderItemDTO> homeSliderItemDTOS;
     public ViewPager2 viewPager2;
     public Gson gson;
 
@@ -165,7 +163,7 @@ public class HomeQRImage extends Fragment {
         viewPager2 = view.findViewById(R.id.home_view_slider_container);
 
         this.initalData();
-        HomeSliderAdapter homeSliderAdapter = new HomeSliderAdapter(homeSliderItems, viewPager2);
+        HomeSliderAdapter homeSliderAdapter = new HomeSliderAdapter(homeSliderItemDTOS, viewPager2);
         viewPager2.setAdapter(homeSliderAdapter);
         viewPager2.setClipToPadding(false);
         viewPager2.setClipChildren(false);
@@ -219,27 +217,27 @@ public class HomeQRImage extends Fragment {
     }
 
     private void forwardButtonOnLick() {
-        if (viewPager2.getCurrentItem() == homeSliderItems.size()) {
+        if (viewPager2.getCurrentItem() == homeSliderItemDTOS.size()) {
             return;
         }
         viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
     }
 
     private void initalData() {
-        homeSliderItems = new ArrayList<>();
-        homeSliderItems.add(new HomeSliderItem(R.drawable.facebook, "Facebook",
+        homeSliderItemDTOS = new ArrayList<>();
+        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.facebook, "Facebook",
                 serializeQREncoder(generateQRCodeFromContent("https://facebook.com/thiemtinhte")),
                 "https://facebook.com/thiemtinhte"));
-        homeSliderItems.add(new HomeSliderItem(R.drawable.linkedin, "LinkedIn",
+        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.linkedin, "LinkedIn",
                 serializeQREncoder(generateQRCodeFromContent("https://www.linkedin.com/in/cao-thiem-nguyen-628945206/")),
                 "https://www.linkedin.com/in/cao-thiem-nguyen-628945206/"));
-        homeSliderItems.add(new HomeSliderItem(R.drawable.sapchat, "Snapchat",
+        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.sapchat, "Snapchat",
                 serializeQREncoder(generateQRCodeFromContent("https://www.snapchat.com/add/magicmenlive")),
                 "https://www.snapchat.com/add/magicmenlive"));
-        homeSliderItems.add(new HomeSliderItem(R.drawable.twiiter, "Twitter",
+        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.twiiter, "Twitter",
                 serializeQREncoder(generateQRCodeFromContent("https://twitter.com/ThiemJaso")),
                 "https://twitter.com/ThiemJason"));
-        homeSliderItems.add(new HomeSliderItem(R.drawable.instagram, "Instagram",
+        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.instagram, "Instagram",
                 serializeQREncoder(generateQRCodeFromContent("https://www.instagram.com/thiemjason/")),
                 "https://www.instagram.com/thiemjason/"));
 
@@ -266,10 +264,10 @@ public class HomeQRImage extends Fragment {
     private void pageChange() {
         int position = viewPager2.getCurrentItem();
 
-        itemUrl.setText(homeSliderItems.get(position).getUrl());
-        itemName.setText(homeSliderItems.get(position).getName());
+        itemUrl.setText(homeSliderItemDTOS.get(position).getUrl());
+        itemName.setText(homeSliderItemDTOS.get(position).getName());
 
-        String qrgEncoderJson = homeSliderItems.get(position).getQrImage();
+        String qrgEncoderJson = homeSliderItemDTOS.get(position).getQrImage();
         QRGEncoder qrgEncoder = this.gson.fromJson(qrgEncoderJson, QRGEncoder.class);
         qrImage.setImageBitmap(qrgEncoder.getBitmap());
     }
@@ -283,7 +281,7 @@ public class HomeQRImage extends Fragment {
 
     private void shareImage(Context context){
         int position = viewPager2.getCurrentItem();
-        String qrgEncoderJson = homeSliderItems.get(position).getQrImage();
+        String qrgEncoderJson = homeSliderItemDTOS.get(position).getQrImage();
         QRGEncoder qrgEncoder = this.gson.fromJson(qrgEncoderJson, QRGEncoder.class);
 
         Uri uri = getImageUri(context, qrgEncoder.getBitmap());

@@ -1,12 +1,12 @@
 package teneocto.thiemjason.tlu_connect.ui.models;
 
-public class BottomSheetItem {
+public class SocialNetworkDTO {
     Integer logo;
-    String name;
+    String link;
 
-    public BottomSheetItem(Integer logo, String name) {
+    public SocialNetworkDTO(int logo, String link) {
         this.logo = logo;
-        this.name = name;
+        this.link = link;
     }
 
     public Integer getLogo() {
@@ -17,11 +17,11 @@ public class BottomSheetItem {
         this.logo = logo;
     }
 
-    public String getName() {
-        return name;
+    public String getLink() {
+        return link;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLink(String link) {
+        this.link = link;
     }
 }

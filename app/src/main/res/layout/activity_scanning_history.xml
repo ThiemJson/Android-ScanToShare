@@ -143,10 +143,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="10dp"
-        ads:layout_constraintBottom_toTopOf="@id/adView"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toBottomOf="@id/scanning_his_search_bar_containerinclude"
+        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scanning_his_search_bar_containerinclude"
         tools:layout_editor_absoluteX="130dp"
         tools:layout_editor_absoluteY="299dp" />
 

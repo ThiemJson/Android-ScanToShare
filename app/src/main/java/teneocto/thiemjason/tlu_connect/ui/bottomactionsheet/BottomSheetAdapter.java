@@ -7,20 +7,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import teneocto.thiemjason.tlu_connect.ui.models.SocialNetwork;
+import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
 
 public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.ViewHolder> {
-    SocialNetwork socialNetwork[];
+    SocialNetworkDTO socialNetworkDTO[];
     Context context;
 
     /**
      * Constructor
      * @param context context
-     * @param socialNetworks data list
+     * @param socialNetworkDTOS data list
      */
-    public  BottomSheetAdapter(Context context, SocialNetwork socialNetworks[]){
+    public  BottomSheetAdapter(Context context, SocialNetworkDTO socialNetworkDTOS[]){
         this.context = context;
-        this.socialNetwork = socialNetworks;
+        this.socialNetworkDTO = socialNetworkDTOS;
     };
 
     @NonNull
@@ -36,7 +36,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
 
     @Override
     public int getItemCount() {
-        return this.socialNetwork.length;
+        return this.socialNetworkDTO.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -13,13 +13,13 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.HomeSliderItem;
+import teneocto.thiemjason.tlu_connect.ui.models.HomeSliderItemDTO;
 
 public class HomeSliderAdapter extends RecyclerView.Adapter<HomeSliderAdapter.ViewHolder> {
-    public ArrayList<HomeSliderItem> homeSliderItems;
+    public ArrayList<HomeSliderItemDTO> homeSliderItemDTOS;
 
-    public HomeSliderAdapter(ArrayList<HomeSliderItem> homeSliderItems, ViewPager2 viewPager2) {
-        this.homeSliderItems = homeSliderItems;
+    public HomeSliderAdapter(ArrayList<HomeSliderItemDTO> homeSliderItemDTOS, ViewPager2 viewPager2) {
+        this.homeSliderItemDTOS = homeSliderItemDTOS;
     }
 
     @NonNull
@@ -36,12 +36,12 @@ public class HomeSliderAdapter extends RecyclerView.Adapter<HomeSliderAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.image.setImageResource(homeSliderItems.get(position).getImage());
+        holder.image.setImageResource(homeSliderItemDTOS.get(position).getImage());
     }
 
     @Override
     public int getItemCount() {
-        return homeSliderItems.size();
+        return homeSliderItemDTOS.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

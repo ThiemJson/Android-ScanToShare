@@ -13,7 +13,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.SliderItem;
+import teneocto.thiemjason.tlu_connect.ui.models.SliderItemDTO;
 
 public class ImageSliderTest extends AppCompatActivity {
     private ViewPager2 mViewPager2;
@@ -25,14 +25,14 @@ public class ImageSliderTest extends AppCompatActivity {
 
         mViewPager2 = findViewById(R.id.viewPaperSlider);
 
-        ArrayList<SliderItem> sliderItems = new ArrayList<SliderItem>();
-        sliderItems.add(new SliderItem(R.drawable.facebook));
-        sliderItems.add(new SliderItem(R.drawable.instagram));
-        sliderItems.add(new SliderItem(R.drawable.linkedin));
-        sliderItems.add(new SliderItem(R.drawable.sapchat));
-        sliderItems.add(new SliderItem(R.drawable.twiiter));
+        ArrayList<SliderItemDTO> sliderItemDTOS = new ArrayList<SliderItemDTO>();
+        sliderItemDTOS.add(new SliderItemDTO(R.drawable.facebook));
+        sliderItemDTOS.add(new SliderItemDTO(R.drawable.instagram));
+        sliderItemDTOS.add(new SliderItemDTO(R.drawable.linkedin));
+        sliderItemDTOS.add(new SliderItemDTO(R.drawable.sapchat));
+        sliderItemDTOS.add(new SliderItemDTO(R.drawable.twiiter));
 
-        mViewPager2.setAdapter(new SliderAdapter(sliderItems, mViewPager2));
+        mViewPager2.setAdapter(new SliderAdapter(sliderItemDTOS, mViewPager2));
 
         mViewPager2.setClipToPadding(false);
         mViewPager2.setClipChildren(false);

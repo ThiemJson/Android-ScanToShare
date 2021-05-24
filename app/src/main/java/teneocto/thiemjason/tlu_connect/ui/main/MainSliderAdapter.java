@@ -14,14 +14,14 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.MainSliderItem;
+import teneocto.thiemjason.tlu_connect.ui.models.MainSliderItemDTO;
 
 public class MainSliderAdapter extends RecyclerView.Adapter<MainSliderAdapter.ViewHolder> {
-    public ArrayList<MainSliderItem> mainSliderItems;
+    public ArrayList<MainSliderItemDTO> mainSliderItemDTOS;
     public ViewPager2 mViewPager2;
 
-    public MainSliderAdapter(ArrayList<MainSliderItem> mainSliderItems, ViewPager2 viewPager2) {
-        this.mainSliderItems = mainSliderItems;
+    public MainSliderAdapter(ArrayList<MainSliderItemDTO> mainSliderItemDTOS, ViewPager2 viewPager2) {
+        this.mainSliderItemDTOS = mainSliderItemDTOS;
         this.mViewPager2 = viewPager2;
     }
 
@@ -39,18 +39,18 @@ public class MainSliderAdapter extends RecyclerView.Adapter<MainSliderAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.content.setText(mainSliderItems.get(position).getContent());
-        holder.title.setText(mainSliderItems.get(position).getTitle());
-        holder.setImage(mainSliderItems.get(position));
+        holder.content.setText(mainSliderItemDTOS.get(position).getContent());
+        holder.title.setText(mainSliderItemDTOS.get(position).getTitle());
+        holder.setImage(mainSliderItemDTOS.get(position));
 
-        if (position == mainSliderItems.size() - 2 ) {
+        if (position == mainSliderItemDTOS.size() - 2 ) {
             mViewPager2.post(runnable);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mainSliderItems.size();
+        return mainSliderItemDTOS.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,15 +66,15 @@ public class MainSliderAdapter extends RecyclerView.Adapter<MainSliderAdapter.Vi
             content = itemView.findViewById(R.id.text_main_slider_content);
         }
 
-        void setImage(MainSliderItem mainSliderItem) {
-            imageView.setImageResource(mainSliderItem.getImage());
+        void setImage(MainSliderItemDTO mainSliderItemDTO) {
+            imageView.setImageResource(mainSliderItemDTO.getImage());
         }
     }
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            mainSliderItems.addAll(mainSliderItems);
+            mainSliderItemDTOS.addAll(mainSliderItemDTOS);
             notifyDataSetChanged();
         }
     };
