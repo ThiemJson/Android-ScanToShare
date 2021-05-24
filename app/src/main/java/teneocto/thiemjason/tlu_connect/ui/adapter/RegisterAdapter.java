@@ -74,7 +74,6 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
      * Inteface handler when user click on list item
      */
     public interface OnItemClickListener {
-//        void onItemClick(View view , int position);
         void onDelete(View view, int position);
     }
 
