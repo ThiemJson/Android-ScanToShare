@@ -1,5 +1,6 @@
 package teneocto.thiemjason.tlu_connect.ui.home;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,13 +10,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
+import androidmads.library.qrgenearator.QRGEncoder;
+import okhttp3.internal.Util;
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +32,8 @@ import teneocto.thiemjason.tlu_connect.R;
  */
 public class HomeQRScanner extends Fragment {
     private CodeScanner mCodeScanner;
+    private Dialog mDialog;
+    private HomeResultScanner homeResultScanner;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -101,28 +111,19 @@ public class HomeQRScanner extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(getActivity(), scannerView);
+        homeResultScanner = new HomeResultScanner(getActivity());
 
-        if(mCodeScanner == null ){
+        if (mCodeScanner == null) {
             Log.i(TAG, " NULL OBJECT");
         }
 
-        mCodeScanner.setDecodeCallback(new DecodeCallback() {
+        mCodeScanner.setDecodeCallback(result -> getActivity().runOnUiThread(new Runnable() {
             @Override
-            public void onDecoded(@NonNull final Result result) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
+            public void run() {
+                showDataWhenScanned(result);
             }
-        });
-        scannerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCodeScanner.startPreview();
-            }
-        });
+        }));
+        scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
         return root;
     }
 
@@ -139,12 +140,38 @@ public class HomeQRScanner extends Fragment {
 
     @Override
     public void onPause() {
-        if (mCodeScanner == null ){
+        if (mCodeScanner == null) {
             super.onPause();
             return;
         }
         Log.i(TAG, "On Pause");
         mCodeScanner.releaseResources();
         super.onPause();
+    }
+
+    private void showDataWhenScanned(Result result) {
+        mDialog = new Dialog(getActivity());
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setCancelable(true);
+        mDialog.setContentView(R.layout.home_qr_code_result);
+
+        TextView mUsername = mDialog.findViewById(R.id.home_result_user_name);
+        TextView mEmail = mDialog.findViewById(R.id.home_result_email);
+        TextView mAddress = mDialog.findViewById(R.id.home_result_address);
+        TextView mUrl = mDialog.findViewById(R.id.home_url_text);
+
+        ImageView mProfileImage = mDialog.findViewById(R.id.home_profile_image_result);
+        ImageView mQRImage = mDialog.findViewById(R.id.home_result_qr_image);
+
+        Button mCancelBtn = mDialog.findViewById(R.id.home_result_cancel_btn);
+        Button mSaveBtn = mDialog.findViewById(R.id.home_result_save_btn);
+        Button mViewMore = mDialog.findViewById(R.id.home_result_viewmore_btn);
+
+        QRGEncoder qrgEncoder = Utils.generateQRCodeFromContent(getActivity(), result.getText());
+        mQRImage.setImageBitmap(qrgEncoder.getBitmap());
+        mUrl.setText(result.getText());
+
+        mCancelBtn.setOnClickListener(v -> homeResultScanner.onSaveUserClick());
+        mViewMore.setOnClickListener(v -> homeResultScanner.onViewMoreClick());
     }
 }
