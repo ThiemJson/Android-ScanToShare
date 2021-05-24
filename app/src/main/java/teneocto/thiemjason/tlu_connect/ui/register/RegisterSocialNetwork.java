@@ -62,12 +62,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         this.mRecyclerView.setAdapter(this.mRegisterAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mRegisterAdapter.setOnItemClickListener(new RegisterAdapter.OnItemClickListener() {
-            @Override
-            public void onDelete(View view, int position) {
-                removeItem(position);
-            }
-        });
+        mRegisterAdapter.setOnItemClickListener((view, position) -> removeItem(position));
     }
 
     /**

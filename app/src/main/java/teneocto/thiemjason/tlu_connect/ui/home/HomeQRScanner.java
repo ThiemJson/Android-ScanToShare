@@ -21,7 +21,6 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
 import androidmads.library.qrgenearator.QRGEncoder;
-import okhttp3.internal.Util;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
