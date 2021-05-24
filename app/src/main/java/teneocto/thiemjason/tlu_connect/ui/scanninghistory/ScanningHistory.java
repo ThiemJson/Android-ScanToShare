@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.adapter.ScanHisAdapter;
-import teneocto.thiemjason.tlu_connect.ui.models.User;
+import teneocto.thiemjason.tlu_connect.ui.models.UserDTO;
 
 public class ScanningHistory extends AppCompatActivity {
     Button mBackButton;
@@ -29,7 +29,7 @@ public class ScanningHistory extends AppCompatActivity {
     View mEmptyImage;
 
     // DUMMY DATA
-    ArrayList<User> mUserArrayList;
+    ArrayList<UserDTO> mUserDTOArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class ScanningHistory extends AppCompatActivity {
         this.initRecycleView();
         this.initialAds();
 
-        if (mUserArrayList.size() != 0) {
+        if (mUserDTOArrayList.size() != 0) {
             mEmptyImage.setVisibility(View.GONE);
         }
     }
@@ -67,7 +67,7 @@ public class ScanningHistory extends AppCompatActivity {
     private void initRecycleView() {
         this.initDummyData();
         mRecycleView = findViewById(R.id.scanning_his_recycle_view);
-        mAdapter = new ScanHisAdapter(mUserArrayList, this);
+        mAdapter = new ScanHisAdapter(mUserDTOArrayList, this);
         mRecycleView.setAdapter(mAdapter);
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -85,10 +85,10 @@ public class ScanningHistory extends AppCompatActivity {
     }
 
     private void deleteItem(int position) {
-        mUserArrayList.remove(position);
+        mUserDTOArrayList.remove(position);
         mAdapter.notifyItemRemoved(position);
 
-        if (mUserArrayList.size() == 0) {
+        if (mUserDTOArrayList.size() == 0) {
             mEmptyImage.setVisibility(View.VISIBLE);
         }
     }
@@ -98,13 +98,19 @@ public class ScanningHistory extends AppCompatActivity {
     }
 
     private void initDummyData() {
-        mUserArrayList = new ArrayList<>();
-        mUserArrayList.add(new User("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
-        mUserArrayList.add(new User("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
-        mUserArrayList.add(new User("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
-        mUserArrayList.add(new User("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
-        mUserArrayList.add(new User("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
-        mUserArrayList.add(new User("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
-        mUserArrayList.add(new User("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList = new ArrayList<>();
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
+        mUserDTOArrayList.add(new UserDTO("Nguyen Cao Thiem", R.drawable.user_example, "nguyencaothiem292@gmail.com"));
     }
 }

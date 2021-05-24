@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.SocialNetwork;
+import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
 
 public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHolder> {
     OnItemClickListener onItemClickListener;
-    ArrayList<SocialNetwork> socialNetworks;
+    ArrayList<SocialNetworkDTO> socialNetworkDTOS;
     Context context;
 
-    public RegisterAdapter(Context context, ArrayList<SocialNetwork> socialNetworks) {
+    public RegisterAdapter(Context context, ArrayList<SocialNetworkDTO> socialNetworkDTOS) {
         this.context = context;
-        this.socialNetworks = socialNetworks;
+        this.socialNetworkDTOS = socialNetworkDTOS;
     }
 
     @NonNull
@@ -35,13 +35,13 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.editText.setText(socialNetworks.get(position).getLink());
-        holder.logo.setImageResource(socialNetworks.get(position).getLogo());
+        holder.editText.setText(socialNetworkDTOS.get(position).getLink());
+        holder.logo.setImageResource(socialNetworkDTOS.get(position).getLogo());
     }
 
     @Override
     public int getItemCount() {
-        return socialNetworks.size();
+        return socialNetworkDTOS.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

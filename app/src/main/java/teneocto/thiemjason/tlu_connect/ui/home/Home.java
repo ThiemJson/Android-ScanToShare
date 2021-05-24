@@ -17,14 +17,17 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.notification.Notification;
+import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
 
 public class Home extends AppCompatActivity {
     TabLayout mTabLayout;
     ViewPager mViewPager;
     HomeAdapter mAdapter;
     Button mNotification;
+    CircleImageView mMainImage;
 
     // Fragment
     HomeQRImage mHomeQRImage;
@@ -38,6 +41,8 @@ public class Home extends AppCompatActivity {
         this.initTabLayout();
 
         mNotification = findViewById(R.id.home_notification_icon);
+        mMainImage = findViewById(R.id.home_profile_image);
+        mMainImage.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Profile.class)));
         mNotification.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Notification.class)));
     }
 

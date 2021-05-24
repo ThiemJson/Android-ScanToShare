@@ -11,17 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.User;
+import teneocto.thiemjason.tlu_connect.ui.models.UserDTO;
 
 public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHolder> {
     ScanHisAdapter.OnItemClickListener onItemClickListener;
-    private ArrayList<User> mArrayList;
+    private ArrayList<UserDTO> mArrayList;
     private Context context;
 
-    public ScanHisAdapter(ArrayList<User> mArrayList, Context context) {
+    public ScanHisAdapter(ArrayList<UserDTO> mArrayList, Context context) {
         this.mArrayList = mArrayList;
         this.context = context;
     }

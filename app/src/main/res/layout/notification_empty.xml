@@ -12,14 +12,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_contact_mail_24" />
+        app:srcCompat="@drawable/ic_baseline_notifications_none_24" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/phetsarath"
-        android:text="Notification is Empty"
+        android:text="Scanning history is Empty"
         android:textColor="#d3d3d3"
         android:textFontWeight="700"
         android:textSize="28dp"

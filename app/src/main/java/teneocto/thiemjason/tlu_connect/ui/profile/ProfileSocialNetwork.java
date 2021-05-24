@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
-import teneocto.thiemjason.tlu_connect.ui.models.SocialNetwork;
+import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +28,7 @@ import teneocto.thiemjason.tlu_connect.ui.models.SocialNetwork;
 public class ProfileSocialNetwork extends Fragment {
     RecyclerView mSocialRecyclerView;
     RegisterAdapter mSocialAdapter;
-    ArrayList<SocialNetwork> socialNetwork;
+    ArrayList<SocialNetworkDTO> socialNetworkDTO;
 
     FloatingActionButton mFloatingButton;
     BottomSheetFragment mBottomSheetFragment;
@@ -84,9 +84,9 @@ public class ProfileSocialNetwork extends Fragment {
     }
 
     private void initDummyData() {
-        this.socialNetwork = new ArrayList<SocialNetwork>();
-        this.socialNetwork.add(new SocialNetwork(R.drawable.facebook, "fb.com/thiemtinhte"));
-        this.socialNetwork.add(new SocialNetwork(R.drawable.linkedin, "linkedin.com/thiemjason"));
+        this.socialNetworkDTO = new ArrayList<SocialNetworkDTO>();
+        this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.facebook, "fb.com/thiemtinhte"));
+        this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.linkedin, "linkedin.com/thiemjason"));
     }
 
     private void initRecycleView(View view) {
@@ -94,7 +94,7 @@ public class ProfileSocialNetwork extends Fragment {
         this.mFloatingButton = view.findViewById(R.id.tab_view_social_fab);
         this.mSocialRecyclerView = view.findViewById(R.id.tab_view_social_recycle_view);
 
-        this.mSocialAdapter = new RegisterAdapter(getActivity(), this.socialNetwork);
+        this.mSocialAdapter = new RegisterAdapter(getActivity(), this.socialNetworkDTO);
         this.mSocialRecyclerView.setAdapter(this.mSocialAdapter);
         this.mSocialRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -117,29 +117,29 @@ public class ProfileSocialNetwork extends Fragment {
      * Add / remove item func
      */
     public void removeItem(int position) {
-        socialNetwork.remove(position);
+        socialNetworkDTO.remove(position);
         this.mSocialAdapter.notifyItemRemoved(position);
     }
 
     public void addItem(String name) {
         switch (name) {
             case "Facebook":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.facebook, "fb.com/thiemtinhte"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.facebook, "fb.com/thiemtinhte"));
                 break;
             case "Instagram":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.instagram, "instagram.com/thiemjason"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.instagram, "instagram.com/thiemjason"));
                 break;
             case "Twitter":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.twiiter, "twitter.com/thiemtinhte"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.twiiter, "twitter.com/thiemtinhte"));
                 break;
             case "Snapchat":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.sapchat, "snapchat.com/thiem"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.sapchat, "snapchat.com/thiem"));
                 break;
             case "LinkedIn":
-                this.socialNetwork.add(new SocialNetwork(R.drawable.linkedin, "linkedIn.com/thiemtinhte"));
+                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.linkedin, "linkedIn.com/thiemtinhte"));
                 break;
         }
-        this.mSocialAdapter.notifyItemInserted(this.socialNetwork.size());
+        this.mSocialAdapter.notifyItemInserted(this.socialNetworkDTO.size());
     }
 
     /**
@@ -156,7 +156,7 @@ public class ProfileSocialNetwork extends Fragment {
     }
 
     /**
-     * On BottomSheetItem click
+     * On BottomSheetItemDTO click
      */
     private void bottomSheetItemClick(View view, int position) {
         TextView name = view.findViewById(R.id.action_item_name);

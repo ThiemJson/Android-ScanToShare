@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.adapter.BottomSheetAdapter;
-import teneocto.thiemjason.tlu_connect.ui.models.BottomSheetItem;
+import teneocto.thiemjason.tlu_connect.ui.models.BottomSheetItemDTO;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
     Context context;
-    ArrayList<BottomSheetItem> bottomSheetItems;
+    ArrayList<BottomSheetItemDTO> bottomSheetItemDTOS;
     OnItemClick listener;
     RecyclerView recyclerView;
     BottomSheetAdapter adapter;
@@ -44,7 +44,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new BottomSheetAdapter(context, bottomSheetItems);
+        adapter = new BottomSheetAdapter(context, bottomSheetItemDTOS);
         adapter.setOnItemClickListener((view1, position) -> {
             listener.onItemClick(view1,position);
         });
@@ -57,13 +57,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
      * DUMMY Data for bottomSheetItem
      */
     private void initDummyDataBottomSheet() {
-        this.bottomSheetItems = new ArrayList<BottomSheetItem>();
+        this.bottomSheetItemDTOS = new ArrayList<BottomSheetItemDTO>();
 
-        this.bottomSheetItems.add(new BottomSheetItem(R.drawable.facebook, "Facebook"));
-        this.bottomSheetItems.add(new BottomSheetItem(R.drawable.instagram, "Instagram"));
-        this.bottomSheetItems.add(new BottomSheetItem(R.drawable.twiiter, "Twitter"));
-        this.bottomSheetItems.add(new BottomSheetItem(R.drawable.sapchat, "Snapchat"));
-        this.bottomSheetItems.add(new BottomSheetItem(R.drawable.linkedin, "LinkedIn"));
+        this.bottomSheetItemDTOS.add(new BottomSheetItemDTO(R.drawable.facebook, "Facebook"));
+        this.bottomSheetItemDTOS.add(new BottomSheetItemDTO(R.drawable.instagram, "Instagram"));
+        this.bottomSheetItemDTOS.add(new BottomSheetItemDTO(R.drawable.twiiter, "Twitter"));
+        this.bottomSheetItemDTOS.add(new BottomSheetItemDTO(R.drawable.sapchat, "Snapchat"));
+        this.bottomSheetItemDTOS.add(new BottomSheetItemDTO(R.drawable.linkedin, "LinkedIn"));
     }
 
     /**

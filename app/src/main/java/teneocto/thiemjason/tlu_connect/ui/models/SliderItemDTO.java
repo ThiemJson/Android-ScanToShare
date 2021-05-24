@@ -1,9 +1,9 @@
 package teneocto.thiemjason.tlu_connect.ui.models;
 
-public class SliderItem {
+public class SliderItemDTO {
     private int image;
 
-    public SliderItem(int image) {
+    public SliderItemDTO(int image) {
         this.image = image;
     }
 

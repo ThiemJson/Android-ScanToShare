@@ -1,5 +1,6 @@
 package teneocto.thiemjason.tlu_connect.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,9 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +32,7 @@ public class HomeFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager viewPager;
     HomeFragment.HomeAdapter adapter;
+    CircleImageView mMainImage;
 
 //    // Fragment
     HomeQRImage homeQRImage;
@@ -146,6 +150,8 @@ public class HomeFragment extends Fragment {
         Log.i(TAG, "On Init tablayout");
         tabLayout = view.findViewById(R.id.home_tablayout);
         viewPager = view.findViewById(R.id.home_view_paper);
+        mMainImage = view.findViewById(R.id.home_profile_image);
+        mMainImage.setOnClickListener(v -> startActivity(new Intent(viewGroup.getContext(), Profile.class)));
 
         adapter = new HomeFragment.HomeAdapter(getFragmentManager(), 12);
 

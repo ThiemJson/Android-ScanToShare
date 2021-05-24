@@ -1,11 +1,11 @@
 package teneocto.thiemjason.tlu_connect.ui.models;
 
-public class MainSliderItem {
+public class MainSliderItemDTO {
     private int image;
     private String title;
     private String content;
 
-    public MainSliderItem(int image, String title, String content) {
+    public MainSliderItemDTO(int image, String title, String content) {
         this.image = image;
         this.title = title;
         this.content = content;
