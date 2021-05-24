@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/about_dialog_background">
+
+    <LinearLayout
+        android:id="@+id/home_user_information_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="217dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/home_profile_image_result"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_weight="3"
+            android:paddingStart="-35dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/facebook"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="-40dp"
+            android:layout_weight="7"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:textAlignment="gravity">
+
+            <TextView
+                android:id="@+id/home_result_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/phetsarath"
+                android:paddingBottom="2dp"
+                android:singleLine="true"
+                android:text="NguyenCaoThiem"
+                android:textAllCaps="false"
+                android:textColor="@color/blue_primary"
+                android:textFontWeight="700"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/home_result_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/phetsarath"
+                android:paddingBottom="3dp"
+                android:singleLine="true"
+                android:text="Developer"
+                android:textAllCaps="false"
+                android:textColor="@color/blue_primary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/home_result_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/phetsarath"
+                android:singleLine="true"
+                android:text="Teneocto Technologies CO, LTD."
+                android:textAllCaps="false"
+                android:textColor="@color/blue_primary"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_result_url_container"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_user_information_result">
+
+        <ImageView
+            android:id="@+id/home_result_qr_image"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/example" />
+
+        <include
+            layout="@layout/home_url_container"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        app:layout_constraintTop_toBottomOf="@+id/home_result_url_container">
+
+        <Button
+            android:id="@+id/home_result_viewmore_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@null"
+            android:fontFamily="@font/phetsarath"
+            android:gravity="center_vertical"
+            android:paddingStart="45dp"
+            android:text="View more"
+            android:textAllCaps="false"
+            android:textColor="@color/blue_primary"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/home_result_save_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:fontFamily="@font/phetsarath"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/blue_primary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/home_result_cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:fontFamily="@font/phetsarath"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_light"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

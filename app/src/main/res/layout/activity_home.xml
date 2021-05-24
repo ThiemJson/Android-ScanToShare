@@ -56,12 +56,13 @@
                     android:textColor="@color/white"
                     android:textSize="21dp"
                     android:textStyle="bold" />
+
                 <Button
                     android:id="@+id/home_notification_icon"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_weight="1"
                     android:layout_gravity="end"
+                    android:layout_weight="1"
                     android:background="@drawable/ic_baseline_notifications"
                     android:padding="5dp"
                     android:textColor="@color/white" />
@@ -122,23 +123,23 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:textAllCaps="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/phetsarath"
                 android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:text="Developer"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="17dp" />
 
             <TextView
-                android:textAllCaps="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/phetsarath"
                 android:singleLine="true"
                 android:text="Teneocto Technologies CO, LTD."
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="17dp" />
 
