@@ -172,5 +172,7 @@ public class HomeQRScanner extends Fragment {
 
         mCancelBtn.setOnClickListener(v -> homeResultScanner.onSaveUserClick());
         mViewMore.setOnClickListener(v -> homeResultScanner.onViewMoreClick());
+
+        mDialog.show();
     }
 }

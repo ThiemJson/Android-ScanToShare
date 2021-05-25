@@ -104,9 +104,8 @@
         <ImageView
             android:id="@+id/home_result_qr_image"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_weight="1"
-            android:padding="5dp"
             android:src="@drawable/example" />
 
         <include
