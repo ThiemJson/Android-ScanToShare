@@ -20,15 +20,10 @@ public class NetworkReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "On receive");
         if (this.isInternetConnected(context)) {
             Toast.makeText(context, "Internet connected", Toast.LENGTH_LONG).show();
         } else {
-            Dialog mDialog = new Dialog(context);
-            mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            mDialog.setCancelable(true);
-            mDialog.setContentView(R.layout.receiver_network_dialog);
-            mDialog.show();
+            Toast.makeText(context, "Internet disconnected", Toast.LENGTH_LONG).show();
         }
     }
 
