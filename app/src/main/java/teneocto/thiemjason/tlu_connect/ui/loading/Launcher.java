@@ -10,57 +10,65 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import teneocto.thiemjason.tlu_connect.MainActivity;
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.receiver.NetworkReceiver;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
 public class Launcher extends AppCompatActivity {
+    private static String TAG = "Launcher";
     private BroadcastReceiver mNetworkReceiver;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+
+        // App initial
         this.initFirebaseMessaging();
         this.setUpPermission();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-
         this.setUpReceiver();
+//        this.setUpSQLiteDB();
+
+        // App started
+        this.appStart();
     }
 
-    void initFirebaseMessaging(){
-        FirebaseMessaging.getInstance().subscribeToTopic(AppConst.notification_topic)
+    /**
+     * Request Firebase Messaging
+     */
+    void initFirebaseMessaging() {
+        FirebaseMessaging.getInstance().subscribeToTopic(AppConst.NOTIFICATION_TOPIC)
                 .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()){
-                        Log.i("NOTIFICATION", "FAILURE");
+                    if (!task.isSuccessful()) {
+                        Log.e(TAG, "==> Notification failure");
                     }
-
-                    Log.i("NOTIFICATION", "SUCCESSFULL");
+                    Log.i(TAG, "==> Notification successful");
                 });
     }
 
 
-
-    void setUpPermission() {
+    /**
+     * Request Permission
+     */
+    private void setUpPermission() {
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (permission != PackageManager.PERMISSION_GRANTED) {
             makeRequest();
         }
     }
 
-    void makeRequest() {
+    private void makeRequest() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1888);
     }
 
@@ -69,7 +77,10 @@ public class Launcher extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void setUpReceiver(){
+    /**
+     * Request Broadcast Receiver
+     */
+    private void setUpReceiver() {
         mNetworkReceiver = new NetworkReceiver();
         registerNetworkBroadcastForNougat();
     }
@@ -81,5 +92,19 @@ public class Launcher extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         }
+    }
+
+    /**
+     * Request SQLite Database
+     */
+    private void setUpSQLiteDB() {
+        dbHelper = new DBHelper(this);
+    }
+
+
+    private void appStart() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
