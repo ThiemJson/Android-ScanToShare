@@ -17,6 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TLUConnect">
+        <activity android:name=".TestDB">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/google_ad_app_id" />
@@ -33,10 +41,6 @@
         <activity android:name=".ui.register.RegisterProfile" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.loading.Launcher">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service
@@ -48,7 +52,7 @@
         </service>
 
         <receiver
-            android:name="teneocto.thiemjason.tlu_connect.receiver.NetworkReceiver"
+            android:name=".receiver.NetworkReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
