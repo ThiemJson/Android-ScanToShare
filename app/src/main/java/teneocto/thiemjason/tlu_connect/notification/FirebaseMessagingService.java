@@ -3,6 +3,7 @@ package teneocto.thiemjason.tlu_connect.notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -41,9 +42,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(content))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(999, builder.build());
-
     }
 }

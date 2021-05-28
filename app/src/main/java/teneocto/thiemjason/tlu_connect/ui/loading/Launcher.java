@@ -47,13 +47,12 @@ public class Launcher extends AppCompatActivity {
     /**
      * Request Firebase Messaging
      */
-    void initFirebaseMessaging(){
+    void initFirebaseMessaging() {
         FirebaseMessaging.getInstance().subscribeToTopic(AppConst.NOTIFICATION_TOPIC)
                 .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()){
-                        Log.i(TAG, "==> Notification failure");
+                    if (!task.isSuccessful()) {
+                        Log.e(TAG, "==> Notification failure");
                     }
-
                     Log.i(TAG, "==> Notification successful");
                 });
     }
@@ -68,6 +67,7 @@ public class Launcher extends AppCompatActivity {
             makeRequest();
         }
     }
+
     private void makeRequest() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1888);
     }
@@ -80,7 +80,7 @@ public class Launcher extends AppCompatActivity {
     /**
      * Request Broadcast Receiver
      */
-    private void setUpReceiver(){
+    private void setUpReceiver() {
         mNetworkReceiver = new NetworkReceiver();
         registerNetworkBroadcastForNougat();
     }
@@ -97,12 +97,12 @@ public class Launcher extends AppCompatActivity {
     /**
      * Request SQLite Database
      */
-    private void setUpSQLiteDB(){
+    private void setUpSQLiteDB() {
         dbHelper = new DBHelper(this);
     }
 
 
-    private void appStart(){
+    private void appStart() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
