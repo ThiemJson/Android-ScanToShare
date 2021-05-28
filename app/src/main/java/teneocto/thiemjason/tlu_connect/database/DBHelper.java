@@ -59,7 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param dbName database name
      */
     public void dropDatabase(String dbName) {
-        dropDatabase(dbName);
+        context.deleteDatabase(dbName);
     }
 
 
@@ -137,12 +137,12 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 UserDTO userDTO = new UserDTO(
                         cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
                         cursor.getString(3),
                         cursor.getString(4),
+                        cursor.getString(2),
                         cursor.getString(5),
-                        Base64.getEncoder().encodeToString(cursor.getBlob(6)));
+                        cursor.getString(5),
+                        Base64.getEncoder().encodeToString(cursor.getBlob(1)));
                 arrayList.add(userDTO);
             } while (cursor.moveToNext());
             // moving our cursor to next.
@@ -160,15 +160,14 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 UserDTO userDTO = new UserDTO(
                         cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
                         cursor.getString(3),
                         cursor.getString(4),
+                        cursor.getString(2),
                         cursor.getString(5),
-                        Base64.getEncoder().encodeToString(cursor.getBlob(6)));
+                        cursor.getString(6),
+                        Base64.getEncoder().encodeToString(cursor.getBlob(1)));
                 arrayList.add(userDTO);
             } while (cursor.moveToNext());
-            // moving our cursor to next.
         }
         cursor.close();
         return arrayList;

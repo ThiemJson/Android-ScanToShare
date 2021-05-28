@@ -50,6 +50,7 @@
                 android:textAlignment="gravity">
 
                 <TextView
+                    android:id="@+id/home_fragment_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/phetsarath"
@@ -62,6 +63,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/home_fragment_user_pos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/phetsarath"
@@ -72,6 +74,7 @@
                     android:textSize="17dp" />
 
                 <TextView
+                    android:id="@+id/home_fragment_user_company"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/phetsarath"

@@ -1,10 +1,14 @@
 package teneocto.thiemjason.tlu_connect.ui.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -14,13 +18,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Base64;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.database.DBHelper;
+import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
 
 /**
@@ -32,11 +40,18 @@ public class HomeFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager viewPager;
     HomeFragment.HomeAdapter adapter;
-    CircleImageView mMainImage;
 
-//    // Fragment
+    // Fragment
     HomeQRImage homeQRImage;
     HomeQRScanner homeQRScanner;
+
+    // Element
+    CircleImageView mMainImage;
+    TextView mUserName;
+    TextView mPosition;
+    TextView mCompany;
+    DBHelper dbHelper;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,6 +79,7 @@ public class HomeFragment extends Fragment {
         Log.i(TAG, "On Create");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,6 +87,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         Log.i(TAG, "On View Create");
         this.initTabLayout(view, container, savedInstanceState);
+//        this.initData();
         return view;
     }
 
@@ -87,10 +104,9 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
-        if ( this.homeQRScanner != null) {
+        if (this.homeQRScanner != null) {
             this.homeQRScanner.onPause();
-        }
-        else {
+        } else {
             Log.i(TAG, "On Pause => QR SCANNER NULL");
         }
 
@@ -151,6 +167,10 @@ public class HomeFragment extends Fragment {
         tabLayout = view.findViewById(R.id.home_tablayout);
         viewPager = view.findViewById(R.id.home_view_paper);
         mMainImage = view.findViewById(R.id.home_profile_image);
+        mUserName = view.findViewById(R.id.home_fragment_user_name);
+        mCompany = view.findViewById(R.id.home_fragment_user_company);
+        mPosition = view.findViewById(R.id.home_fragment_user_pos);
+
         mMainImage.setOnClickListener(v -> startActivity(new Intent(viewGroup.getContext(), Profile.class)));
 
         adapter = new HomeFragment.HomeAdapter(getFragmentManager(), 12);
@@ -222,5 +242,19 @@ public class HomeFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return stringArrayList.get(position);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initData() {
+        dbHelper = new DBHelper(getActivity());
+        ArrayList<UserDTO> arrayList = dbHelper.USER_Query();
+
+        mPosition.setText(arrayList.get(0).getPosition());
+        mUserName.setText(arrayList.get(0).getLastName());
+        mCompany.setText(arrayList.get(0).getCompany());
+
+        byte[] imageBase64 = Base64.getDecoder().decode(arrayList.get(0).getImageBase64());
+        Bitmap bitmap = BitmapFactory.decodeByteArray(imageBase64, 0, imageBase64.length, null);
+        mMainImage.setImageBitmap(bitmap);
     }
 }

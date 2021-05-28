@@ -1,19 +1,32 @@
 package teneocto.thiemjason.tlu_connect.ui.register;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.util.Base64;
+
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.database.DBHelper;
+import teneocto.thiemjason.tlu_connect.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterProfile extends AppCompatActivity {
+    public static String TAG = "RegisterProfile";
     ImageView mImagePicker;
+    DBHelper dbHelper;
     int SELECT_PHOTO = 1;
     Uri uri;
 
@@ -21,6 +34,14 @@ public class RegisterProfile extends AppCompatActivity {
     Button mBackButton;
     Button mNext;
 
+    // Elements
+    EditText mFirstName;
+    EditText mLastName;
+    EditText mEmail;
+    EditText mPosition;
+    EditText mCompany;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +50,12 @@ public class RegisterProfile extends AppCompatActivity {
 
         mBackButton = findViewById(R.id.register_profile_menu_icon);
         mNext = findViewById(R.id.register_btn_main_ac_skip);
+        mLastName = findViewById(R.id.register_edt_last_name);
+        mFirstName = findViewById(R.id.register_edt_first_name);
+        mEmail = findViewById(R.id.register_edt_email);
+        mPosition = findViewById(R.id.register_edt_position);
+        mCompany = findViewById(R.id.register_edt_company);
+
         mBackButton.setOnClickListener(v -> backButton());
         mNext.setOnClickListener(v -> nextButton());
     }
@@ -57,11 +84,34 @@ public class RegisterProfile extends AppCompatActivity {
         }
     }
 
-    void backButton(){
+    void backButton() {
         finish();
     }
 
-    void nextButton(){
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void nextButton() {
+//        dbHelper = new DBHelper(this);
+//        Bitmap bitmap = ((BitmapDrawable) mImagePicker.getDrawable()).getBitmap();
+//        String imageBase64 = Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(bitmap));
+//
+//        UserDTO userDTO = new UserDTO(
+//                1,
+//                mFirstName.getText().toString(),
+//                mLastName.getText().toString(),
+//                mEmail.getText().toString(),
+//                mPosition.getText().toString(),
+//                mCompany.getText().toString(),
+//                imageBase64
+//        );
+//        boolean result = dbHelper.USER_Insert(userDTO);
+//
+//        if (result == true) {
+//
+//            Log.i(TAG, "==> SUCCESS");
+//        } else {
+//            Log.e(TAG, "==> ERROR");
+//        }
+
         Intent intent = new Intent(this, RegisterSocialNetwork.class);
         startActivity(intent);
     }

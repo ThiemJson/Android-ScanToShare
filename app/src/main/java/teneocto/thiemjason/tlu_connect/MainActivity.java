@@ -23,6 +23,8 @@ import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 
+import teneocto.thiemjason.tlu_connect.database.DBConst;
+import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.ui.main.MainSliderAdapter;
 import teneocto.thiemjason.tlu_connect.ui.models.MainSliderItemDTO;
 import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
@@ -130,7 +132,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void connectFacebook(){
-
+//        DBHelper dbHelper = new DBHelper(this);
+//        dbHelper.dropDatabase(DBConst.DB_NAME);
     }
 
     void skip(){
