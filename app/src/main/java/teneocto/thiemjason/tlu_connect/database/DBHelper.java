@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.util.Log;
 
@@ -13,11 +15,15 @@ import androidx.annotation.RequiresApi;
 
 import java.security.acl.LastOwnerException;
 
+import teneocto.thiemjason.tlu_connect.models.UserDTO;
+
 public class DBHelper extends SQLiteOpenHelper {
+    private Context context;
     private static String TAG = "SQLite Helper";
 
     public DBHelper(Context context) {
         super(context, DBConst.DB_NAME, null, DBConst.DB_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -40,6 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Drop database
+     *
      * @param dbName database name
      */
     public void dropDatabase(String dbName) {
@@ -50,17 +57,18 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * =========================> INSERT
      */
-//    public boolean USER_Insert(String name, int age) {
+    public boolean USER_Insert(UserDTO userDTO) {
 //        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.facebook);
 //        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+//
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put("name", name);
 //        contentValues.put("age", age);
 //        contentValues.put("image", getBitmapAsByteArray(bitmap));
 //        long result = sqLiteDatabase.insert("USER", null, contentValues);
 //        return result != -1;
-//    }
-
+        return true;
+    }
 
 
     /**
