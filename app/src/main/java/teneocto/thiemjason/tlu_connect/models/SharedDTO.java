@@ -2,14 +2,14 @@ package teneocto.thiemjason.tlu_connect.models;
 
 public class SharedDTO {
     private int id;
-    private int userId;
-    private int scanHisId;
+    private int userID;
+    private int socialNetWorkID;
     private String url;
 
-    public SharedDTO(int id, int userId, int scanHisId, String url) {
+    public SharedDTO(int id, int userID, int socialNetWorkID, String url) {
         this.id = id;
-        this.userId = userId;
-        this.scanHisId = scanHisId;
+        this.userID = userID;
+        this.socialNetWorkID = socialNetWorkID;
         this.url = url;
     }
 
@@ -21,20 +21,20 @@ public class SharedDTO {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public int getScanHisId() {
-        return scanHisId;
+    public int getSocialNetWorkID() {
+        return socialNetWorkID;
     }
 
-    public void setScanHisId(int scanHisId) {
-        this.scanHisId = scanHisId;
+    public void setSocialNetWorkID(int socialNetWorkID) {
+        this.socialNetWorkID = socialNetWorkID;
     }
 
     public String getUrl() {
