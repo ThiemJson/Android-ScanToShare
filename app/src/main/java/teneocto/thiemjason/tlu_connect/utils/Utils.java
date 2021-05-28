@@ -1,7 +1,10 @@
 package teneocto.thiemjason.tlu_connect.utils;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
+
+import java.io.ByteArrayOutputStream;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -14,5 +17,11 @@ public class Utils {
         Integer qrCodeContentWidth = (int) Math.round(widthPixels * 1);
 
         return new QRGEncoder(content, null, QRGContents.Type.TEXT, qrCodeContentWidth);
+    }
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
     }
 }

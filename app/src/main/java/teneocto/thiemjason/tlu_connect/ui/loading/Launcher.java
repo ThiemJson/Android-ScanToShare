@@ -38,7 +38,7 @@ public class Launcher extends AppCompatActivity {
         this.initFirebaseMessaging();
         this.setUpPermission();
         this.setUpReceiver();
-        this.setUpSQLiteDB();
+//        this.setUpSQLiteDB();
 
         // App started
         this.appStart();

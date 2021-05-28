@@ -50,6 +50,16 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * =========================> INSERT
      */
+//    public boolean USER_Insert(String name, int age) {
+//        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.facebook);
+//        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put("name", name);
+//        contentValues.put("age", age);
+//        contentValues.put("image", getBitmapAsByteArray(bitmap));
+//        long result = sqLiteDatabase.insert("USER", null, contentValues);
+//        return result != -1;
+//    }
 
 
 
