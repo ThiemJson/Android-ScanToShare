@@ -1,4 +1,4 @@
-package teneocto.thiemjason.tlu_connect;
+package teneocto.thiemjason.tlu_connect.ui.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +23,7 @@ import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 
+import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.ui.main.MainSliderAdapter;

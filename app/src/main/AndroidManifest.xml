@@ -31,7 +31,7 @@
         <activity android:name=".ui.notification.Notification" />
         <activity android:name=".ui.home.Home" />
         <activity android:name=".ui.register.RegisterProfile" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.loading.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

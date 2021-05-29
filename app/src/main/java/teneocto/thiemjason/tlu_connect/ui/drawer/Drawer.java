@@ -2,17 +2,13 @@ package teneocto.thiemjason.tlu_connect.ui.drawer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +16,10 @@ import android.widget.Button;
 
 import com.google.android.material.navigation.NavigationView;
 
-import teneocto.thiemjason.tlu_connect.MainActivity;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.notification.Notification;
 import teneocto.thiemjason.tlu_connect.ui.policies.PoliciesAndTerm;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
-import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
 import teneocto.thiemjason.tlu_connect.ui.scanninghistory.ScanningHistory;
 import teneocto.thiemjason.tlu_connect.ui.support.Support;
 

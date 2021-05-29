@@ -10,7 +10,6 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import teneocto.thiemjason.tlu_connect.MainActivity;
+import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.receiver.NetworkReceiver;
