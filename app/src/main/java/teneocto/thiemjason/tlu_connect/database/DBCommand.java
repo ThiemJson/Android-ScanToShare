@@ -13,18 +13,6 @@ public class DBCommand {
             + DBConst.USER_COMPANY + " TEXT"
             + ");";
 
-    public static String DB_INSERT_USER() {
-        return "CREATE TABLE IF NOT EXISTS " + DBConst.USER_TABLE_NAME + "("
-                + DBConst.USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + DBConst.USER_IMAGE + " BLOB,"
-                + DBConst.USER_EMAIL + " TEXT NOT NULL,"
-                + DBConst.USER_FIRST_NAME + " TEXT,"
-                + DBConst.USER_LAST_NAME + " TEXT,"
-                + DBConst.USER_POS + " TEXT,"
-                + DBConst.USER_COMPANY + " TEXT"
-                + ");";
-    }
-
 
     // TABLE - SCANNING_HISTORY
     public static String DB_CREATE_SCAN_HISTORY = "CREATE TABLE IF NOT EXISTS " + DBConst.SCAN_TABLE_NAME + "("

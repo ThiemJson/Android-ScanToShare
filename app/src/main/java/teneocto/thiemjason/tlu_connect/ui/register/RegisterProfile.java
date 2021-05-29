@@ -16,10 +16,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
+import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
+import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
+import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
+import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -90,28 +97,6 @@ public class RegisterProfile extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     void nextButton() {
-//        dbHelper = new DBHelper(this);
-//        Bitmap bitmap = ((BitmapDrawable) mImagePicker.getDrawable()).getBitmap();
-//        String imageBase64 = Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(bitmap));
-//
-//        UserDTO userDTO = new UserDTO(
-//                1,
-//                mFirstName.getText().toString(),
-//                mLastName.getText().toString(),
-//                mEmail.getText().toString(),
-//                mPosition.getText().toString(),
-//                mCompany.getText().toString(),
-//                imageBase64
-//        );
-//        boolean result = dbHelper.USER_Insert(userDTO);
-//
-//        if (result == true) {
-//
-//            Log.i(TAG, "==> SUCCESS");
-//        } else {
-//            Log.e(TAG, "==> ERROR");
-//        }
-
         Intent intent = new Intent(this, RegisterSocialNetwork.class);
         startActivity(intent);
     }
