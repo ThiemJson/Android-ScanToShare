@@ -22,6 +22,7 @@ import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
+import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBExample;
 import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
 import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;

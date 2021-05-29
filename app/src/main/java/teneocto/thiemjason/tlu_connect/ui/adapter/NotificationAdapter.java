@@ -1,6 +1,8 @@
 package teneocto.thiemjason.tlu_connect.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.NotificationDTO;
+import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     NotificationAdapter.OnItemClickListener onItemClickListener;
-    ArrayList<NotificationDTO> arrayList;
+    ArrayList<teneocto.thiemjason.tlu_connect.models.NotificationDTO> arrayList;
     Context context;
 
     public NotificationAdapter(ArrayList<NotificationDTO> arrayList, Context context) {
@@ -33,9 +37,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return new NotificationAdapter.ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mImage.setImageResource(arrayList.get(position).getImage());
+        Bitmap imageBitmap = Utils.getBitmapFromByteArray(arrayList.get(position).getImageBase64());
+        holder.mImage.setImageBitmap(imageBitmap);
         holder.mContent.setText(arrayList.get(position).getContent());
         holder.mTitle.setText(arrayList.get(position).getTitle());
     }

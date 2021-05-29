@@ -20,6 +20,10 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
 public class FirebaseDBExample {
     Context context;
 
+    public FirebaseDBExample(Context context) {
+        this.context = context;
+    }
+
     public void USER_initFirebaseDB() {
 //        Bitmap bitmap = ((BitmapDrawable) mImagePicker.getDrawable()).getBitmap();
 //        String imageBase64 = Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(bitmap));
@@ -44,6 +48,8 @@ public class FirebaseDBExample {
                 "Cập nhật phiên bản mới",
                 Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(((BitmapDrawable) context.getResources().getDrawable(R.drawable.facebook)).getBitmap()))
         );
+        FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
+        firebaseDBHelper.Notification_Insert(notificationDTO);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

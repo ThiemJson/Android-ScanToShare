@@ -6,6 +6,10 @@ public class SharedDTO {
     private int socialNetWorkID;
     private String url;
 
+    public SharedDTO() {
+
+    }
+
     public SharedDTO(int id, int userID, int socialNetWorkID, String url) {
         this.id = id;
         this.userID = userID;

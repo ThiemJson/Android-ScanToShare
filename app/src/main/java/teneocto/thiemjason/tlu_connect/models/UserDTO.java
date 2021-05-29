@@ -9,6 +9,9 @@ public class UserDTO {
     private String company;
     private String imageBase64;
 
+    public UserDTO() {
+    }
+
     public UserDTO(int id, String firstName, String lastName, String email, String position, String company, String imageBase64) {
         this.id = id;
         this.firstName = firstName;

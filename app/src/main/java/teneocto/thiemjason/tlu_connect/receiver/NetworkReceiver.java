@@ -21,9 +21,9 @@ public class NetworkReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (this.isInternetConnected(context)) {
-            Toast.makeText(context, "Internet connected", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Internet connected", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Internet disconnected", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Internet disconnected", Toast.LENGTH_SHORT).show();
         }
     }
 
