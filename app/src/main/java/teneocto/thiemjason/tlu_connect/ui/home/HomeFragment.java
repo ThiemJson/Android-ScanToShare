@@ -36,6 +36,7 @@ import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -289,8 +290,7 @@ public class HomeFragment extends Fragment {
         mPosition.setText(userDTO.getPosition());
         mUserName.setText(String.format("%s %s", userDTO.getFirstName(), userDTO.getLastName()));
         mCompany.setText(userDTO.getCompany());
-        byte[] imageBase64 = Base64.getDecoder().decode(userDTO.getImageBase64());
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageBase64, 0, imageBase64.length, null);
+        Bitmap bitmap = Utils.getBitmapFromByteArray(userDTO.getImageBase64());
         mMainImage.setImageBitmap(bitmap);
     }
 }

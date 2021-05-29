@@ -5,17 +5,20 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,16 +28,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.database.DBConst;
+import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
+import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
+import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.home.slider.HomeSliderAdapter;
-import teneocto.thiemjason.tlu_connect.ui.models.HomeSliderItemDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -43,20 +56,28 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
  * create an instance of this fragment.
  */
 public class HomeQRImage extends Fragment {
-    public ArrayList<HomeSliderItemDTO> homeSliderItemDTOS;
+    public ArrayList<SharedDTO> sharedDTOArrays;
     public ViewPager2 viewPager2;
     public Gson gson;
+
+    // Firebase
+    FirebaseDBHelper firebaseDBHelper;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     // Element
     TextView itemName;
     TextView itemUrl;
     ImageView qrImage;
     View mRULContainer;
-    Button mSharImageBtn;
+    Button mShareImageBtn;
 
     // URL container
     private ClipboardManager mClipboard;
     private ClipData mClipData;
+
+    // Adapter
+    HomeSliderAdapter homeSliderAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -140,31 +161,33 @@ public class HomeQRImage extends Fragment {
         Log.i(TAG, "On DestroyView");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_slider_contaiter, container, false);
 
+        sharedDTOArrays = new ArrayList<>();
         itemName = view.findViewById(R.id.home_slider_item_name);
         qrImage = view.findViewById(R.id.home_qr_image);
         itemUrl = view.findViewById(R.id.home_url_text);
         mRULContainer = view.findViewById(R.id.home_view_url_container);
-        mSharImageBtn = view.findViewById(R.id.home_slider_share_image);
+        mShareImageBtn = view.findViewById(R.id.home_slider_share_image);
         mRULContainer.setOnClickListener(v -> copyDataToClipboard());
-        mSharImageBtn.setOnClickListener(v -> shareImage(container.getContext()));
+        mShareImageBtn.setOnClickListener(v -> shareImage(container.getContext()));
 
-        Log.i(TAG, "On View Create");
+        this.loadDataFromFirebase();
         this.initSlider(view);
         return view;
     }
 
     private void initSlider(View view) {
+        Log.i(TAG, "==> INIT SLIDER");
         this.gson = new Gson();
         viewPager2 = view.findViewById(R.id.home_view_slider_container);
 
-        this.initalData();
-        HomeSliderAdapter homeSliderAdapter = new HomeSliderAdapter(homeSliderItemDTOS, viewPager2);
+        homeSliderAdapter = new HomeSliderAdapter(sharedDTOArrays, viewPager2);
         viewPager2.setAdapter(homeSliderAdapter);
         viewPager2.setClipToPadding(false);
         viewPager2.setClipChildren(false);
@@ -183,6 +206,7 @@ public class HomeQRImage extends Fragment {
 
         viewPager2.setPageTransformer(compositePageTransformer);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
@@ -218,58 +242,34 @@ public class HomeQRImage extends Fragment {
     }
 
     private void forwardButtonOnLick() {
-        if (viewPager2.getCurrentItem() == homeSliderItemDTOS.size()) {
+        if (viewPager2.getCurrentItem() == sharedDTOArrays.size()) {
             return;
         }
         viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
     }
 
-    private void initalData() {
-        homeSliderItemDTOS = new ArrayList<>();
-        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.facebook, "Facebook",
-                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(), "https://facebook.com/thiemtinhte")),
-                "https://facebook.com/thiemtinhte"));
-        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.linkedin, "LinkedIn",
-                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(),"https://www.linkedin.com/in/cao-thiem-nguyen-628945206/")),
-                "https://www.linkedin.com/in/cao-thiem-nguyen-628945206/"));
-        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.sapchat, "Snapchat",
-                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(),"https://www.snapchat.com/add/magicmenlive")),
-                "https://www.snapchat.com/add/magicmenlive"));
-        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.twiiter, "Twitter",
-                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(),"https://twitter.com/ThiemJaso")),
-                "https://twitter.com/ThiemJason"));
-        homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.instagram, "Instagram",
-                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(),"https://www.instagram.com/thiemjason/")),
-                "https://www.instagram.com/thiemjason/"));
-
-        pageChange();
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void pageChange() {
         int position = viewPager2.getCurrentItem();
-
-        itemUrl.setText(homeSliderItemDTOS.get(position).getUrl());
-        itemName.setText(homeSliderItemDTOS.get(position).getName());
-
-        String qrgEncoderJson = homeSliderItemDTOS.get(position).getQrImage();
-        QRGEncoder qrgEncoder = this.gson.fromJson(qrgEncoderJson, QRGEncoder.class);
+        int socialNWId = sharedDTOArrays.get(position).getSocialNetWorkID();
+        List<SocialNetworkDTO> socialNetworkDTO = Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getId() == socialNWId).collect(Collectors.toList());
+        itemUrl.setText(sharedDTOArrays.get(position).getUrl());
+        itemName.setText(socialNetworkDTO.get(0).getName());
+        QRGEncoder qrgEncoder = Utils.generateQRCodeFromContent(getActivity(), sharedDTOArrays.get(position).getUrl());
         qrImage.setImageBitmap(qrgEncoder.getBitmap());
     }
 
-    private void copyDataToClipboard(){
+    private void copyDataToClipboard() {
         ClipboardManager _clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Nothing", itemUrl.getText());
         _clipboard.setPrimaryClip(clip);
         Toast.makeText(getActivity(), "Copy to clipboard", Toast.LENGTH_SHORT).show();
     }
 
-    private void shareImage(Context context){
+    private void shareImage(Context context) {
         int position = viewPager2.getCurrentItem();
-        String qrgEncoderJson = homeSliderItemDTOS.get(position).getQrImage();
-        QRGEncoder qrgEncoder = this.gson.fromJson(qrgEncoderJson, QRGEncoder.class);
-
+        QRGEncoder qrgEncoder = Utils.generateQRCodeFromContent(getActivity(), sharedDTOArrays.get(position).getUrl());
         Uri uri = Utils.getImageUri(context, qrgEncoder.getBitmap());
-
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -277,5 +277,31 @@ public class HomeQRImage extends Fragment {
         startActivity(Intent.createChooser(shareIntent, "Select"));
     }
 
+    /**
+     * ===========================> DATA
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void loadDataFromFirebase() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
+        databaseReference.child("1").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        sharedDTOArrays.add(data.getValue(SharedDTO.class));
+                    }
+                }
+                homeSliderAdapter.notifyDataSetChanged();
+                pageChange();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                loadDataFromSQLite();
+            }
+        });
+    }
 
+    private void loadDataFromSQLite() {
+    }
 }

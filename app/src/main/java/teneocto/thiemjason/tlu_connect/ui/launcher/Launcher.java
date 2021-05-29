@@ -1,4 +1,4 @@
-package teneocto.thiemjason.tlu_connect.ui.loading;
+package teneocto.thiemjason.tlu_connect.ui.launcher;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,18 +15,31 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
+
+import teneocto.thiemjason.tlu_connect.database.DBConst;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
+import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.receiver.NetworkReceiver;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class Launcher extends AppCompatActivity {
     private static String TAG = "Launcher";
     private BroadcastReceiver mNetworkReceiver;
     private DBHelper dbHelper;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +50,7 @@ public class Launcher extends AppCompatActivity {
         this.initFirebaseMessaging();
         this.setUpPermission();
         this.setUpReceiver();
-//        this.setUpSQLiteDB();
+        this.setUpFirebaseDatabase();
 
         // App started
         this.appStart();
@@ -100,6 +113,27 @@ public class Launcher extends AppCompatActivity {
         dbHelper = new DBHelper(this);
     }
 
+    private void setUpFirebaseDatabase() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
+        Utils.socialNetworkDTOArrayList = new ArrayList<>();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        Utils.socialNetworkDTOArrayList.add(data.getValue(SocialNetworkDTO.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setUpSQLiteDB();
+            }
+        });
+
+    }
 
     private void appStart() {
         Intent intent = new Intent(this, MainActivity.class);
