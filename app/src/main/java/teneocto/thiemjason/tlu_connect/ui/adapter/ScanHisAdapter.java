@@ -1,6 +1,8 @@
 package teneocto.thiemjason.tlu_connect.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHolder> {
     ScanHisAdapter.OnItemClickListener onItemClickListener;
@@ -33,11 +37,14 @@ public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHold
         return new ScanHisAdapter.ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.mEmail.setText(mArrayList.get(position).getEmail());
-        holder.mUsername.setText(mArrayList.get(position).getName());
-        holder.mUserImage.setImageResource(mArrayList.get(position).getImage());
+        holder.mUsername.setText(String.format("%s %s", mArrayList.get(position).getFirstName(), mArrayList.get(position).getLastName()));
+
+        Bitmap imageBitmap = Utils.getBitmapFromByteArray(mArrayList.get(position).getImageBase64());
+        holder.mUserImage.setImageBitmap(imageBitmap);
     }
 
     @Override

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
+import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
@@ -115,6 +116,7 @@ public class Launcher extends AppCompatActivity {
 
     private void setUpFirebaseDatabase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
+
         databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
         Utils.socialNetworkDTOArrayList = new ArrayList<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -133,6 +135,23 @@ public class Launcher extends AppCompatActivity {
             }
         });
 
+        databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
+        Utils.userDTOArrayList = new ArrayList<>();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        Utils.userDTOArrayList.add(data.getValue(UserDTO.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                setUpSQLiteDB();
+            }
+        });
     }
 
     private void appStart() {

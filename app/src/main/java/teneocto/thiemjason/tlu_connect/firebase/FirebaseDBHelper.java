@@ -58,7 +58,7 @@ public class FirebaseDBHelper {
         try {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference(DBConst.SCAN_TABLE_NAME);
-            databaseReference.child(scanningHistoryDTO.getId() + "").setValue(scanningHistoryDTO);
+            databaseReference.child(scanningHistoryDTO.getLocalUserID() + "").child(scanningHistoryDTO.getId() + "").setValue(scanningHistoryDTO);
             return true;
         } catch (Exception e) {
             return false;
@@ -69,7 +69,7 @@ public class FirebaseDBHelper {
         try {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
-            databaseReference.child(sharedDTO.getUserID()+"").child(sharedDTO.getId() + "").setValue(sharedDTO);
+            databaseReference.child(sharedDTO.getUserID() + "").child(sharedDTO.getId() + "").setValue(sharedDTO);
             return true;
         } catch (Exception e) {
             return false;
