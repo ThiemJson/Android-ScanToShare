@@ -5,6 +5,10 @@ public class SocialNetworkDTO {
     private String name;
     private String imageBase64;
 
+    public SocialNetworkDTO() {
+
+    }
+
     public SocialNetworkDTO(int id, String name, String imageBase64) {
         this.id = id;
         this.name = name;

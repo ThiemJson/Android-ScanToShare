@@ -35,6 +35,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.home.slider.HomeSliderAdapter;
 import teneocto.thiemjason.tlu_connect.ui.models.HomeSliderItemDTO;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -226,39 +227,22 @@ public class HomeQRImage extends Fragment {
     private void initalData() {
         homeSliderItemDTOS = new ArrayList<>();
         homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.facebook, "Facebook",
-                serializeQREncoder(generateQRCodeFromContent("https://facebook.com/thiemtinhte")),
+                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(), "https://facebook.com/thiemtinhte")),
                 "https://facebook.com/thiemtinhte"));
         homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.linkedin, "LinkedIn",
-                serializeQREncoder(generateQRCodeFromContent("https://www.linkedin.com/in/cao-thiem-nguyen-628945206/")),
+                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(),"https://www.linkedin.com/in/cao-thiem-nguyen-628945206/")),
                 "https://www.linkedin.com/in/cao-thiem-nguyen-628945206/"));
         homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.sapchat, "Snapchat",
-                serializeQREncoder(generateQRCodeFromContent("https://www.snapchat.com/add/magicmenlive")),
+                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(),"https://www.snapchat.com/add/magicmenlive")),
                 "https://www.snapchat.com/add/magicmenlive"));
         homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.twiiter, "Twitter",
-                serializeQREncoder(generateQRCodeFromContent("https://twitter.com/ThiemJaso")),
+                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(),"https://twitter.com/ThiemJaso")),
                 "https://twitter.com/ThiemJason"));
         homeSliderItemDTOS.add(new HomeSliderItemDTO(R.drawable.instagram, "Instagram",
-                serializeQREncoder(generateQRCodeFromContent("https://www.instagram.com/thiemjason/")),
+                Utils.serializeQREncoder(Utils.generateQRCodeFromContent(getActivity(),"https://www.instagram.com/thiemjason/")),
                 "https://www.instagram.com/thiemjason/"));
 
         pageChange();
-    }
-
-    private QRGEncoder generateQRCodeFromContent(String content) {
-        DisplayMetrics lDisplayMetrics = getResources().getDisplayMetrics();
-        int widthPixels = lDisplayMetrics.widthPixels;
-        int heightPixels = lDisplayMetrics.heightPixels;
-        Integer qrCodeContentWidth = (int) Math.round(widthPixels * 1);
-
-        return new QRGEncoder(content, null, QRGContents.Type.TEXT, qrCodeContentWidth);
-    }
-
-    private String serializeQREncoder(QRGEncoder qrgEncoder) {
-        return this.gson.toJson(qrgEncoder);
-    }
-
-    private QRGEncoder deserialQREncoder(String qrEncoder) {
-        return this.gson.fromJson(qrEncoder, QRGEncoder.class);
     }
 
     private void pageChange() {
@@ -284,7 +268,7 @@ public class HomeQRImage extends Fragment {
         String qrgEncoderJson = homeSliderItemDTOS.get(position).getQrImage();
         QRGEncoder qrgEncoder = this.gson.fromJson(qrgEncoderJson, QRGEncoder.class);
 
-        Uri uri = getImageUri(context, qrgEncoder.getBitmap());
+        Uri uri = Utils.getImageUri(context, qrgEncoder.getBitmap());
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
@@ -293,10 +277,5 @@ public class HomeQRImage extends Fragment {
         startActivity(Intent.createChooser(shareIntent, "Select"));
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Image", null);
-        return Uri.parse(path);
-    }
+
 }

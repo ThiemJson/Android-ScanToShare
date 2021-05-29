@@ -5,6 +5,10 @@ public class ScanningHistoryDTO {
     private int localUserID;
     private int remoteUserID;
 
+    public ScanningHistoryDTO() {
+
+    }
+
     public ScanningHistoryDTO(int id, int localUserID, int remoteUserID) {
         this.id = id;
         this.localUserID = localUserID;

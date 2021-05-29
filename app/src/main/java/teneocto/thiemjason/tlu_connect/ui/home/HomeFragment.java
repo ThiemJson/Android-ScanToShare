@@ -21,12 +21,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Base64;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
@@ -50,7 +56,11 @@ public class HomeFragment extends Fragment {
     TextView mUserName;
     TextView mPosition;
     TextView mCompany;
+
+    // Database and Firebase
     DBHelper dbHelper;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -87,7 +97,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         Log.i(TAG, "On View Create");
         this.initTabLayout(view, container, savedInstanceState);
-//        this.initData();
+        this.loadDataFromFirebase();
         return view;
     }
 
@@ -244,16 +254,42 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * ===========================> DATA
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void initData() {
-        dbHelper = new DBHelper(getActivity());
-        ArrayList<UserDTO> arrayList = dbHelper.USER_Query();
+    private void loadDataFromFirebase() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
+        databaseReference.child("1").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i(TAG,"==> "+ snapshot.getValue());
+                UserDTO userDTO = snapshot.getValue(UserDTO.class);
+                if(userDTO == null){
+                    loadDataFromSQLite();
+                    return;
+                }
+                fillData(userDTO);
+            }
 
-        mPosition.setText(arrayList.get(0).getPosition());
-        mUserName.setText(arrayList.get(0).getLastName());
-        mCompany.setText(arrayList.get(0).getCompany());
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                loadDataFromFirebase();
+            }
+        });
+    }
 
-        byte[] imageBase64 = Base64.getDecoder().decode(arrayList.get(0).getImageBase64());
+    private void loadDataFromSQLite() {
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void fillData(UserDTO userDTO) {
+        mPosition.setText(userDTO.getPosition());
+        mUserName.setText(String.format("%s %s", userDTO.getFirstName(), userDTO.getLastName()));
+        mCompany.setText(userDTO.getCompany());
+        byte[] imageBase64 = Base64.getDecoder().decode(userDTO.getImageBase64());
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBase64, 0, imageBase64.length, null);
         mMainImage.setImageBitmap(bitmap);
     }

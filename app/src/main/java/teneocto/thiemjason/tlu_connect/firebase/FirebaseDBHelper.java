@@ -47,7 +47,7 @@ public class FirebaseDBHelper {
         try {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference(DBConst.NOTIFICATION_TABLE_NAME);
-            databaseReference.child(notificationDTO.getId() + "").setValue(notificationDTO);
+            databaseReference.child(notificationDTO.getUserID() + "").child(notificationDTO.getId() + "").setValue(notificationDTO);
             return true;
         } catch (Exception e) {
             return false;
@@ -69,7 +69,7 @@ public class FirebaseDBHelper {
         try {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
-            databaseReference.child(sharedDTO.getId() + "").setValue(sharedDTO);
+            databaseReference.child(sharedDTO.getUserID()+"").child(sharedDTO.getId() + "").setValue(sharedDTO);
             return true;
         } catch (Exception e) {
             return false;

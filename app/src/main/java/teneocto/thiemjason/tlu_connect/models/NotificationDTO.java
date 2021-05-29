@@ -7,6 +7,9 @@ public class NotificationDTO {
     private String title;
     private String imageBase64;
 
+    public NotificationDTO() {
+    }
+
     public NotificationDTO(int id, int userID, String content, String title, String imageBase64) {
         this.id = id;
         this.userID = userID;
