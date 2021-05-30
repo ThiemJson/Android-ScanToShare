@@ -54,7 +54,11 @@ public class Launcher extends AppCompatActivity {
         this.setUpFirebaseDatabase();
 
         // App started
-        this.appStart();
+        try {
+            this.appStart();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -154,7 +158,8 @@ public class Launcher extends AppCompatActivity {
         });
     }
 
-    private void appStart() {
+    private void appStart() throws InterruptedException {
+        Thread.sleep(3000);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

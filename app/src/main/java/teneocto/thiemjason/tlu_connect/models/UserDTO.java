@@ -10,6 +10,11 @@ public class UserDTO {
     private String imageBase64;
 
     public UserDTO() {
+        this.firstName = "Your name";
+        this.lastName = "Your last name";
+        this.company = "Your company";
+        this.position = "Your position";
+        this.email = " ";
     }
 
     public UserDTO(int id, String firstName, String lastName, String email, String position, String company, String imageBase64) {

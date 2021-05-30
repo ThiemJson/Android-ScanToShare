@@ -21,12 +21,15 @@ import java.util.stream.Collectors;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 
 public class Utils {
     public static List<SocialNetworkDTO> socialNetworkDTOArrayList;
     public static List<UserDTO> userDTOArrayList;
+    public static ArrayList<SharedDTO> sharedDTOArrayList;
+    public static UserDTO registerUserDTO;
 
     public static QRGEncoder generateQRCodeFromContent(Activity activity, String content) {
         DisplayMetrics lDisplayMetrics = activity.getResources().getDisplayMetrics();
