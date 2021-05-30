@@ -1,46 +1,40 @@
 package teneocto.thiemjason.tlu_connect.ui.register;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
-import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterSocialNetworkViewModel extends ViewModel {
-    public MutableLiveData<ArrayList<SharedDTO>> sharedDTOLiveData = new MutableLiveData<ArrayList<SharedDTO>>();
-    public MutableLiveData<Boolean> isVerify = new MutableLiveData<Boolean>();
-    private ArrayList<SharedDTO> arrayList = new ArrayList<>();
+    public ArrayList<SharedDTO> sharedDTOArrays = new ArrayList<SharedDTO>();
+    public String errorField = "";
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void addShared(SharedDTO sharedDTO) {
-        if (sharedDTOLiveData.getValue() == null) {
-            sharedDTOLiveData.setValue(arrayList);
+        if (sharedDTOArrays == null) {
+            sharedDTOArrays = new ArrayList<SharedDTO>();
         }
 
-        arrayList.add(sharedDTO);
-        sharedDTOLiveData.setValue(arrayList);
-        verifyUserInput();
+        sharedDTOArrays.add(sharedDTO);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void verifyUserInput() {
-        for (SharedDTO sharedDTO : arrayList) {
+    public boolean verifyUserInput() {
+        for (SharedDTO sharedDTO : sharedDTOArrays) {
             switch (Utils.getSocialNWDTOFromId(sharedDTO.getSocialNetWorkID()).getName()) {
                 case "Facebook": {
                     Pattern pattern = Pattern.compile(AppConst.REGEX_Facebook_URL, Pattern.CASE_INSENSITIVE);
-                    Boolean result = pattern.matcher(sharedDTO.getUrl()).matches();
+                    Boolean result = pattern.matcher(sharedDTO.getUrl().trim()).matches();
                     if (!result) {
-                        isVerify.setValue(false);
-                        return;
+                        errorField = Utils.getSocialNWDTOFromId(sharedDTO.getSocialNetWorkID()).getName() + " " + sharedDTO.getUrl().trim();
+                        return false;
                     }
                     break;
                 }
@@ -48,8 +42,8 @@ public class RegisterSocialNetworkViewModel extends ViewModel {
                     Pattern pattern = Pattern.compile(AppConst.REGEX_Instagram_URL, Pattern.CASE_INSENSITIVE);
                     Boolean result = pattern.matcher(sharedDTO.getUrl()).matches();
                     if (!result) {
-                        isVerify.setValue(false);
-                        return;
+                        errorField = Utils.getSocialNWDTOFromId(sharedDTO.getSocialNetWorkID()).getName() + " " + sharedDTO.getUrl().trim();
+                        return false;
                     }
                     break;
                 }
@@ -57,8 +51,8 @@ public class RegisterSocialNetworkViewModel extends ViewModel {
                     Pattern pattern = Pattern.compile(AppConst.REGEX_Snapchat_URL, Pattern.CASE_INSENSITIVE);
                     Boolean result = pattern.matcher(sharedDTO.getUrl()).matches();
                     if (!result) {
-                        isVerify.setValue(false);
-                        return;
+                        errorField = Utils.getSocialNWDTOFromId(sharedDTO.getSocialNetWorkID()).getName() + " " + sharedDTO.getUrl().trim();
+                        return false;
                     }
                     break;
                 }
@@ -66,8 +60,8 @@ public class RegisterSocialNetworkViewModel extends ViewModel {
                     Pattern pattern = Pattern.compile(AppConst.REGEX_LinkedIn_URL, Pattern.CASE_INSENSITIVE);
                     Boolean result = pattern.matcher(sharedDTO.getUrl()).matches();
                     if (!result) {
-                        isVerify.setValue(false);
-                        return;
+                        errorField = Utils.getSocialNWDTOFromId(sharedDTO.getSocialNetWorkID()).getName() + " " + sharedDTO.getUrl().trim();
+                        return false;
                     }
                     break;
                 }
@@ -75,18 +69,22 @@ public class RegisterSocialNetworkViewModel extends ViewModel {
                     Pattern pattern = Pattern.compile(AppConst.REGEX_Twitter_URL, Pattern.CASE_INSENSITIVE);
                     Boolean result = pattern.matcher(sharedDTO.getUrl()).matches();
                     if (!result) {
-                        isVerify.setValue(false);
-                        return;
+                        errorField = Utils.getSocialNWDTOFromId(sharedDTO.getSocialNetWorkID()).getName() + " " + sharedDTO.getUrl().trim();
+                        return false;
                     }
                     break;
                 }
             }
         }
-
-        isVerify.setValue(true);
+        return true;
     }
 
     public void registerSocialNetwork() {
 
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
     }
 }

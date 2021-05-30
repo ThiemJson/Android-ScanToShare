@@ -2,6 +2,7 @@ package teneocto.thiemjason.tlu_connect.ui.register;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +24,6 @@ import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
 import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
-import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -36,7 +36,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
     // Main recycle view
     RecyclerView mRecyclerView;
     RegisterAdapter mRegisterAdapter;
-    ArrayList<SharedDTO> sharedDTOArrays;
+    View mEmpty;
 
     // Buttons
     Button mBackButton;
@@ -45,12 +45,13 @@ public class RegisterSocialNetwork extends AppCompatActivity {
     // View model
     RegisterSocialNetworkViewModel viewModel;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_social_network);
-        sharedDTOArrays = new ArrayList<>();
-        viewModel = new RegisterSocialNetworkViewModel();
+        viewModel = ViewModelProviders.of(this).get(RegisterSocialNetworkViewModel.class);
+        viewModel.sharedDTOArrays = new ArrayList<>();
         this.initRecycleView();
 
         this.mFloatingButton = findViewById(R.id.btn_register_social_add);
@@ -58,6 +59,8 @@ public class RegisterSocialNetwork extends AppCompatActivity {
 
         mBackButton = findViewById(R.id.btn_register_social_back);
         mNextButton = findViewById(R.id.btn_register_social_facebook_next);
+        mEmpty = findViewById(R.id.register_social_network_empty);
+        mEmpty.setVisibility(View.GONE);
 
         mBackButton.setOnClickListener(v -> backButton());
         mNextButton.setOnClickListener(v -> nextButton());
@@ -69,52 +72,61 @@ public class RegisterSocialNetwork extends AppCompatActivity {
      */
     private void initRecycleView() {
         this.mRecyclerView = findViewById(R.id.register_social_recycle_view);
-        this.mRegisterAdapter = new RegisterAdapter(this, this.sharedDTOArrays);
+        this.mRegisterAdapter = new RegisterAdapter(this, viewModel.sharedDTOArrays);
         this.mRecyclerView.setAdapter(this.mRegisterAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         mRegisterAdapter.setOnItemClickListener((view, position) -> removeItem(position));
+
+        mRegisterAdapter.setOnEditTextChange(new RegisterAdapter.OnEditTextChange() {
+            @Override
+            public void beforeTextChanged(int position, String text) {
+
+            }
+
+            @Override
+            public void onTextChanged(int position, String text) {
+
+            }
+
+            @Override
+            public void afterTextChanged(int position, String text) {
+                Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, viewModel.sharedDTOArrays.get(position).getUrl() + " ==> text: " + text);
+                viewModel.sharedDTOArrays.get(position).setUrl(text);
+            }
+        });
     }
 
     /**
      * Add / remove item func
      */
     public void removeItem(int position) {
-        sharedDTOArrays.remove(position);
-        this.mRegisterAdapter.notifyItemRemoved(position);
-        viewModel.sharedDTOLiveData.getValue().remove(position);
-        viewModel.sharedDTOLiveData.setValue(viewModel.sharedDTOLiveData.getValue());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void addItem(String name) {
-        SharedDTO sharedDTO;
-        switch (name) {
-            case "Facebook":
-                sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "facebook.com/");
-                this.sharedDTOArrays.add(sharedDTO);
-                break;
-            case "Instagram":
-                sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "instagram.com/");
-                this.sharedDTOArrays.add(sharedDTO);
-                break;
-            case "Twitter":
-                sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "twitter.com/");
-                this.sharedDTOArrays.add(sharedDTO);
-                break;
-            case "Snapchat":
-                sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "snapchat.com/add/");
-                this.sharedDTOArrays.add(sharedDTO);
-                break;
-            case "LinkedIn":
-                sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "linkedin.com/in/");
-                this.sharedDTOArrays.add(sharedDTO);
-                break;
-            default:
-                sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "facebook.com/");
+        SharedDTO sharedDTO = null;
+
+        if ("Instagram".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
         }
-        this.mRegisterAdapter.notifyItemInserted(this.sharedDTOArrays.size());
+
+        if ("Twitter".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
+        }
+
+        if ("Snapchat".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
+        }
+
+        if ("LinkedIn".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
+        }
+
+        if ("Facebook".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
+        }
         viewModel.addShared(sharedDTO);
+        this.mRegisterAdapter.notifyItemInserted(viewModel.sharedDTOArrays.size());
     }
 
     /**
@@ -146,13 +158,14 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     void nextButton() {
-        if (viewModel.isVerify.getValue() == null || viewModel.isVerify.getValue() == false) {
-            Toast.makeText(this, "Make sure all social network url is correct", Toast.LENGTH_SHORT).show();
+        if (!viewModel.verifyUserInput()) {
+            Toast.makeText(this, "Make sure your " + viewModel.errorField + " URL is correct !", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        viewModel.registerSocialNetwork();
-        Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, viewModel.sharedDTOLiveData.getValue().size() + "");
+        Toast.makeText(this, "Register successfully !", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, Drawer.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

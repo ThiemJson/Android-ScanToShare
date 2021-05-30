@@ -82,7 +82,7 @@ public class ProfileSocialNetwork extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_profile_social_network, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_social_network, container, false);
 
         this.initRecycleView(view);
         return view;
@@ -117,6 +117,7 @@ public class ProfileSocialNetwork extends Fragment {
     public void removeItem(int position) {
         sharedDTOArrays.remove(position);
         this.mSocialAdapter.notifyItemRemoved(position);
+        this.mSocialAdapter.notifyItemRangeChanged(position, sharedDTOArrays.size());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -146,17 +147,19 @@ public class ProfileSocialNetwork extends Fragment {
      */
     private void fabOnClick() {
         this.mBottomSheetFragment = new BottomSheetFragment(getActivity(), new BottomSheetFragment.OnItemClick() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(View view, int position) {
                 bottomSheetItemClick(view, position);
             }
         });
-        mBottomSheetFragment.show( getFragmentManager(), mBottomSheetFragment.getTag());
+        mBottomSheetFragment.show(getFragmentManager(), mBottomSheetFragment.getTag());
     }
 
     /**
      * On BottomSheetItemDTO click
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void bottomSheetItemClick(View view, int position) {
         TextView name = view.findViewById(R.id.action_item_name);
         this.mBottomSheetFragment.dismiss();

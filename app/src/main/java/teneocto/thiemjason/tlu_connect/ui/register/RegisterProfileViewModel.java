@@ -51,4 +51,8 @@ public class RegisterProfileViewModel extends ViewModel {
         Utils.registerUserDTO = userDTO.getValue();
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+    }
 }
