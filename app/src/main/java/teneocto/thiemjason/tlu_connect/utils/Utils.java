@@ -66,6 +66,11 @@ public class Utils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
+    public static SocialNetworkDTO getSocialNWDTOFromName(String name) {
+        return Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getName().equals(name)).collect(Collectors.toList()).get(0);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static UserDTO getUserDTOFromId(int id){
         return Utils.userDTOArrayList.stream().filter(x -> x.getId() == id).collect(Collectors.toList()).get(0);
     }

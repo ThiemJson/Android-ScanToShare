@@ -1,6 +1,10 @@
 package teneocto.thiemjason.tlu_connect.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,21 +12,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
+import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHolder> {
     OnItemClickListener onItemClickListener;
-    ArrayList<SocialNetworkDTO> socialNetworkDTOS;
+    ArrayList<SharedDTO> sharedDTOArrays;
     Context context;
 
-    public RegisterAdapter(Context context, ArrayList<SocialNetworkDTO> socialNetworkDTOS) {
+    public RegisterAdapter(Context context, ArrayList<SharedDTO> sharedDTOArrays) {
         this.context = context;
-        this.socialNetworkDTOS = socialNetworkDTOS;
+        this.sharedDTOArrays = sharedDTOArrays;
     }
 
     @NonNull
@@ -33,15 +42,19 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.editText.setText(socialNetworkDTOS.get(position).getLink());
-        holder.logo.setImageResource(socialNetworkDTOS.get(position).getLogo());
+        holder.editText.setText(sharedDTOArrays.get(position).getUrl());
+
+        SocialNetworkDTO socialNetworkDTO = Utils.getSocialNWDTOFromId(sharedDTOArrays.get(position).getSocialNetWorkID());
+        Bitmap imageBitmap = Utils.getBitmapFromByteArray(socialNetworkDTO.getImageBase64());
+        holder.logo.setImageBitmap(imageBitmap);
     }
 
     @Override
     public int getItemCount() {
-        return socialNetworkDTOS.size();
+        return sharedDTOArrays.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

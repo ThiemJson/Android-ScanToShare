@@ -1,7 +1,9 @@
 package teneocto.thiemjason.tlu_connect.ui.profile;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +18,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
 import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +33,7 @@ import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
 public class ProfileSocialNetwork extends Fragment {
     RecyclerView mSocialRecyclerView;
     RegisterAdapter mSocialAdapter;
-    ArrayList<SocialNetworkDTO> socialNetworkDTO;
+    ArrayList<SharedDTO> sharedDTOArrays;
 
     FloatingActionButton mFloatingButton;
     BottomSheetFragment mBottomSheetFragment;
@@ -84,9 +89,7 @@ public class ProfileSocialNetwork extends Fragment {
     }
 
     private void initDummyData() {
-        this.socialNetworkDTO = new ArrayList<SocialNetworkDTO>();
-        this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.facebook, "fb.com/thiemtinhte"));
-        this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.linkedin, "linkedin.com/thiemjason"));
+        this.sharedDTOArrays = new ArrayList<>();
     }
 
     private void initRecycleView(View view) {
@@ -94,16 +97,11 @@ public class ProfileSocialNetwork extends Fragment {
         this.mFloatingButton = view.findViewById(R.id.tab_view_social_fab);
         this.mSocialRecyclerView = view.findViewById(R.id.tab_view_social_recycle_view);
 
-        this.mSocialAdapter = new RegisterAdapter(getActivity(), this.socialNetworkDTO);
+        this.mSocialAdapter = new RegisterAdapter(getActivity(), this.sharedDTOArrays);
         this.mSocialRecyclerView.setAdapter(this.mSocialAdapter);
         this.mSocialRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        this.mSocialAdapter.setOnItemClickListener(new RegisterAdapter.OnItemClickListener() {
-            @Override
-            public void onDelete(View view, int position) {
-                removeItem(position);
-            }
-        });
+        this.mSocialAdapter.setOnItemClickListener((view1, position) -> removeItem(position));
 
         this.mFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,29 +115,30 @@ public class ProfileSocialNetwork extends Fragment {
      * Add / remove item func
      */
     public void removeItem(int position) {
-        socialNetworkDTO.remove(position);
+        sharedDTOArrays.remove(position);
         this.mSocialAdapter.notifyItemRemoved(position);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void addItem(String name) {
         switch (name) {
             case "Facebook":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.facebook, "fb.com/thiemtinhte"));
+                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "facebook.com/"));
                 break;
             case "Instagram":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.instagram, "instagram.com/thiemjason"));
+                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "instagram.com/"));
                 break;
             case "Twitter":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.twiiter, "twitter.com/thiemtinhte"));
+                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "twitter.com/"));
                 break;
             case "Snapchat":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.sapchat, "snapchat.com/thiem"));
+                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "snapchat.com/add/"));
                 break;
             case "LinkedIn":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.linkedin, "linkedIn.com/thiemtinhte"));
+                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "linkedin.com/in/"));
                 break;
         }
-        this.mSocialAdapter.notifyItemInserted(this.socialNetworkDTO.size());
+        this.mSocialAdapter.notifyItemInserted(this.sharedDTOArrays.size());
     }
 
     /**

@@ -1,10 +1,7 @@
 package teneocto.thiemjason.tlu_connect.ui.register;
 
 import android.util.Log;
-import android.util.SparseArray;
-import android.widget.Toast;
 
-import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -29,7 +26,7 @@ public class RegisterProfileViewModel extends ViewModel {
             userDTO.setValue(mUserDTO);
         }
 
-        Pattern pattern = Pattern.compile(AppConst.REGEX_Email_Patter, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(AppConst.REGEX_Email, Pattern.CASE_INSENSITIVE);
         String userEmail = userDTO.getValue().getEmail();
 
         if (userEmail.equals("")) {

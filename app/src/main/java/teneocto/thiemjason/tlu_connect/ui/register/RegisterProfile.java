@@ -29,12 +29,6 @@ import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
-import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBExample;
-import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
-import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
-import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
-import teneocto.thiemjason.tlu_connect.models.SharedDTO;
-import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -95,6 +89,7 @@ public class RegisterProfile extends AppCompatActivity {
         mRegisterProfileViewModel.isVerify.observe(this, aBoolean -> {
             // False
             if (!aBoolean){
+                Toast.makeText(this, "Please make sure your email address is correct", Toast.LENGTH_SHORT).show();
                 return;
             }
             // True
