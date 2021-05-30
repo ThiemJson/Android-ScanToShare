@@ -63,6 +63,7 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
         holder.editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
@@ -106,7 +107,6 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
                 sharedDTOArrays.remove(getAdapterPosition());
                 notifyItemRemoved(getAdapterPosition());
                 notifyItemRangeChanged(getAdapterPosition(), sharedDTOArrays.size());
-                onItemClickListener.onDelete(v, getAdapterPosition());
                 return;
             }
         }

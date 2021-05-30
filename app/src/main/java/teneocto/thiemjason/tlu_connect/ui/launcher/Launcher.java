@@ -53,12 +53,17 @@ public class Launcher extends AppCompatActivity {
         this.setUpReceiver();
         this.setUpFirebaseDatabase();
 
-        // App started
-        try {
-            this.appStart();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread background = new Thread() {
+            public void run() {
+                try {
+                    sleep(2 * 1000);
+                    appStart();
+                } catch (Exception e) {
+                }
+            }
+        };
+        // start thread
+        background.start();
     }
 
     /**
