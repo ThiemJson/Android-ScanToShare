@@ -28,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="20dp" />
+            app:riv_corner_radius="30dp" />
 
         <LinearLayout
             android:id="@+id/placeholer"
@@ -49,9 +49,10 @@
                 android:fontFamily="@font/phetsarath"
                 android:gravity="start"
                 android:text="Add your Social Network link"
+                android:textAllCaps="false"
                 android:textColor="@color/blue_primary"
                 android:textFontWeight="700"
-                android:textSize="20dp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +65,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/phetsarath"
                 android:gravity="start"
+                android:textAllCaps="false"
                 android:text="Add social network you are using and want to share with another"
                 android:textColor="@color/gray_dark"
                 android:textFontWeight="700"

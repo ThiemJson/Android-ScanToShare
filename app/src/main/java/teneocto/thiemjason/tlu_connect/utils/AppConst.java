@@ -14,6 +14,8 @@ public class AppConst {
     public static String TAG_RegisterProfileViewModel = "==> RegisterProfileViewModel";
     public static String TAG_RegisterSocialNetworkViewModel = "==> Register SocialNetwork view model";
     public static String TAG_Profile_Social_NW = "==>  Profile social network";
+    public static String TAG_ScanningHistory = "==>  Scanning History";
+    public static String TAG_Notification = "==>  Notification";
 
     // Regex
     public static String REGEX_Email = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";

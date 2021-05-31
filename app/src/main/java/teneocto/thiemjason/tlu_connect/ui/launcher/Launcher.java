@@ -53,10 +53,11 @@ public class Launcher extends AppCompatActivity {
         this.setUpReceiver();
         this.setUpFirebaseDatabase();
 
-        Thread background = new Thread() {
+        Thread background;
+        background = new Thread() {
             public void run() {
                 try {
-                    sleep(2 * 1000);
+                    sleep(1000);
                     appStart();
                 } catch (Exception e) {
                 }
