@@ -1,11 +1,17 @@
 package teneocto.thiemjason.tlu_connect.ui.profile;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +19,12 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
-import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,10 +34,12 @@ import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
 public class ProfileSocialNetwork extends Fragment {
     RecyclerView mSocialRecyclerView;
     RegisterAdapter mSocialAdapter;
-    ArrayList<SocialNetworkDTO> socialNetworkDTO;
 
     FloatingActionButton mFloatingButton;
     BottomSheetFragment mBottomSheetFragment;
+
+    // View model
+    ProfileSharedViewModel viewModel;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -77,69 +85,76 @@ public class ProfileSocialNetwork extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_profile_social_network, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_profile_social_network, container, false);
+        viewModel = new ViewModelProvider(requireActivity()).get(ProfileSharedViewModel.class);
         this.initRecycleView(view);
+        viewModel.dataFetched.observe(getViewLifecycleOwner(), aBoolean -> mSocialAdapter.notifyDataSetChanged());
         return view;
     }
 
-    private void initDummyData() {
-        this.socialNetworkDTO = new ArrayList<SocialNetworkDTO>();
-        this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.facebook, "fb.com/thiemtinhte"));
-        this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.linkedin, "linkedin.com/thiemjason"));
-    }
-
     private void initRecycleView(View view) {
-        this.initDummyData();
         this.mFloatingButton = view.findViewById(R.id.tab_view_social_fab);
         this.mSocialRecyclerView = view.findViewById(R.id.tab_view_social_recycle_view);
 
-        this.mSocialAdapter = new RegisterAdapter(getActivity(), this.socialNetworkDTO);
+        this.mSocialAdapter = new RegisterAdapter(getActivity(), viewModel.sharedDTOLiveData);
         this.mSocialRecyclerView.setAdapter(this.mSocialAdapter);
         this.mSocialRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        this.mSocialAdapter.setOnItemClickListener(new RegisterAdapter.OnItemClickListener() {
+        this.mFloatingButton.setOnClickListener(v -> fabOnClick());
+
+        mSocialAdapter.setOnEditTextChange(new RegisterAdapter.OnEditTextChange() {
             @Override
-            public void onDelete(View view, int position) {
-                removeItem(position);
+            public void beforeTextChanged(int position, String text) {
+
+            }
+
+            @Override
+            public void onTextChanged(int position, String text) {
+
+            }
+
+            @Override
+            public void afterTextChanged(int position, String text) {
+                Log.i(AppConst.TAG_Profile_Social_NW, viewModel.sharedDTOLiveData.get(position).getUrl() + " ==> text: " + text);
+                viewModel.sharedDTOLiveData.get(position).setUrl(text);
             }
         });
 
-        this.mFloatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fabOnClick();
-            }
+        mSocialAdapter.setOnItemClickListener((view1, position) -> {
+            viewModel.sharedDTOLiveData.remove(position);
+            Log.i(AppConst.TAG_Profile_Social_NW, " tesssttt: position " + position);
+            Log.i(AppConst.TAG_Profile_Social_NW, " tesssttt: viewmodel" + viewModel.sharedDTOLiveData.size());
+            Log.i(AppConst.TAG_Profile_Social_NW, " tesssttt: adapter " + viewModel.sharedDTOLiveData.size());
+
+            mSocialAdapter.notifyItemRemoved(position);
+            mSocialAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOLiveData.size());
         });
     }
 
-    /**
-     * Add / remove item func
-     */
-    public void removeItem(int position) {
-        socialNetworkDTO.remove(position);
-        this.mSocialAdapter.notifyItemRemoved(position);
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void addItem(String name) {
-        switch (name) {
-            case "Facebook":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.facebook, "fb.com/thiemtinhte"));
-                break;
-            case "Instagram":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.instagram, "instagram.com/thiemjason"));
-                break;
-            case "Twitter":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.twiiter, "twitter.com/thiemtinhte"));
-                break;
-            case "Snapchat":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.sapchat, "snapchat.com/thiem"));
-                break;
-            case "LinkedIn":
-                this.socialNetworkDTO.add(new SocialNetworkDTO(R.drawable.linkedin, "linkedIn.com/thiemtinhte"));
-                break;
+        SharedDTO sharedDTO = null;
+        if ("Instagram".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
         }
-        this.mSocialAdapter.notifyItemInserted(this.socialNetworkDTO.size());
+
+        if ("Twitter".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
+        }
+
+        if ("Snapchat".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
+        }
+
+        if ("LinkedIn".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
+        }
+
+        if ("Facebook".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
+        }
+        viewModel.addShared(sharedDTO);
+        this.mSocialAdapter.notifyItemInserted(viewModel.sharedDTOLiveData.size());
     }
 
     /**
@@ -147,17 +162,19 @@ public class ProfileSocialNetwork extends Fragment {
      */
     private void fabOnClick() {
         this.mBottomSheetFragment = new BottomSheetFragment(getActivity(), new BottomSheetFragment.OnItemClick() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(View view, int position) {
                 bottomSheetItemClick(view, position);
             }
         });
-        mBottomSheetFragment.show( getFragmentManager(), mBottomSheetFragment.getTag());
+        mBottomSheetFragment.show(getFragmentManager(), mBottomSheetFragment.getTag());
     }
 
     /**
      * On BottomSheetItemDTO click
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void bottomSheetItemClick(View view, int position) {
         TextView name = view.findViewById(R.id.action_item_name);
         this.mBottomSheetFragment.dismiss();

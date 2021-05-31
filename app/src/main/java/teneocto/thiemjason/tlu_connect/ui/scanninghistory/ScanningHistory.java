@@ -1,36 +1,21 @@
 package teneocto.thiemjason.tlu_connect.ui.scanninghistory;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.database.DBConst;
-import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
-import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
-import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.adapter.ScanHisAdapter;
-import teneocto.thiemjason.tlu_connect.utils.Utils;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
 public class ScanningHistory extends AppCompatActivity {
     Button mBackButton;
@@ -39,19 +24,33 @@ public class ScanningHistory extends AppCompatActivity {
     AdView adView;
     View mEmptyImage;
 
-    ArrayList<UserDTO> mUserArrays;
+    // View model
+    ScanningHistoryViewModel viewModel;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanning_history);
 
-        mUserArrays = new ArrayList<>();
+        // Init ViewModel
+        viewModel = new ViewModelProvider(this).get(ScanningHistoryViewModel.class);
+        viewModel.loadDataFromFirebase();
+
         this.initView();
         this.initRecycleView();
         this.initialAds();
 
-        if (mUserArrays.size() != 0) {
+        viewModel.isFetched.observe(this, aBoolean -> {
+            mAdapter.notifyDataSetChanged();
+            this.hideEmptyImage();
+        });
+    }
+
+    private void hideEmptyImage(){
+        if (viewModel.mUserScanned.size() == 0) {
+            mEmptyImage.setVisibility(View.VISIBLE);
+        } else {
             mEmptyImage.setVisibility(View.GONE);
         }
     }
@@ -63,23 +62,17 @@ public class ScanningHistory extends AppCompatActivity {
     }
 
     private void initialAds() {
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
-
         adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initRecycleView() {
-        this.loadDataFromFirebase();
         mRecycleView = findViewById(R.id.scanning_his_recycle_view);
-        mAdapter = new ScanHisAdapter(mUserArrays, this);
+        mAdapter = new ScanHisAdapter(viewModel.mUserScanned, this);
         mRecycleView.setAdapter(mAdapter);
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -97,51 +90,18 @@ public class ScanningHistory extends AppCompatActivity {
     }
 
     private void deleteItem(int position) {
-        mUserArrays.remove(position);
-        mAdapter.notifyItemRemoved(position);
+        Log.i(AppConst.TAG_ScanningHistory, "Selected position: " + position);
+        Log.i(AppConst.TAG_ScanningHistory, "Arrays size: " + viewModel.mUserScanned.size());
 
-        if (mUserArrays.size() == 0) {
-            mEmptyImage.setVisibility(View.VISIBLE);
-        }
+        viewModel.mUserScanned.remove(position);
+        mAdapter.notifyItemRemoved(position);
+        mAdapter.notifyItemRangeChanged(position, viewModel.mUserScanned.size());
+        this.hideEmptyImage();
     }
 
     private void viewItem(int position) {
+        Log.i(AppConst.TAG_ScanningHistory, "Selected position: " + position);
+        Log.i(AppConst.TAG_ScanningHistory, "Arrays size: " + viewModel.mUserScanned.size());
         // TODO
-    }
-
-    /**
-     * ===========================> DATA
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void loadDataFromFirebase() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SCAN_TABLE_NAME);
-        databaseReference.child("1").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChildren()) {
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        ScanningHistoryDTO scanningHistoryDTO = data.getValue(ScanningHistoryDTO.class);
-                        UserDTO userDTO = Utils.getUserDTOFromId(scanningHistoryDTO.getRemoteUserID());
-                        mUserArrays.add(userDTO);
-                    }
-
-                    mAdapter.notifyDataSetChanged();
-                    if (mUserArrays.size() != 0) {
-                        mEmptyImage.setVisibility(View.GONE);
-                    } else {
-                        mEmptyImage.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                loadDataFromSQLite();
-            }
-        });
-    }
-
-    private void loadDataFromSQLite() {
     }
 }

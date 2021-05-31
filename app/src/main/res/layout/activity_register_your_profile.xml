@@ -277,6 +277,7 @@
                     android:layout_marginEnd="6dp"
                     android:layout_weight="2"
                     android:width="0dp"
+                    android:text="caothiem@gmail.com"
                     android:background="@drawable/table_edittext"
                     android:hint="Enter your email address"
                     android:maxLength="25"

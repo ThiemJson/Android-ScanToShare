@@ -51,14 +51,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return arrayList.size();
     }
 
-    public interface OnItemClickListener {
-        void onView(View view, int position);
-    }
-
-    public void setOnItemClickListener(final NotificationAdapter.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mImage;
         TextView mTitle;
@@ -80,8 +72,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         @Override
         public void onClick(View v) {
             if (v.getId() == mView.getId()) {
-                return;
+                onItemClickListener.onView(v, getAdapterPosition());
             }
         }
+    }
+
+    public interface OnItemClickListener {
+        void onView(View view, int position);
+    }
+
+    public void setOnItemClickListener(final NotificationAdapter.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

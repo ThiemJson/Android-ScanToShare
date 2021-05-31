@@ -53,8 +53,18 @@ public class Launcher extends AppCompatActivity {
         this.setUpReceiver();
         this.setUpFirebaseDatabase();
 
-        // App started
-        this.appStart();
+        Thread background;
+        background = new Thread() {
+            public void run() {
+                try {
+                    sleep(1000);
+                    appStart();
+                } catch (Exception e) {
+                }
+            }
+        };
+        // start thread
+        background.start();
     }
 
     /**
@@ -154,7 +164,8 @@ public class Launcher extends AppCompatActivity {
         });
     }
 
-    private void appStart() {
+    private void appStart() throws InterruptedException {
+        Thread.sleep(3000);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
