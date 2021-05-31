@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,13 +19,10 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
-import teneocto.thiemjason.tlu_connect.ui.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -41,7 +39,7 @@ public class ProfileSocialNetwork extends Fragment {
     BottomSheetFragment mBottomSheetFragment;
 
     // View model
-    ProfileSocialNetworkViewModel viewModel;
+    ProfileSharedViewModel viewModel;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -88,15 +86,9 @@ public class ProfileSocialNetwork extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_social_network, container, false);
-        viewModel = ViewModelProviders.of(this).get(ProfileSocialNetworkViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(ProfileSharedViewModel.class);
         this.initRecycleView(view);
-        viewModel.dataFetched.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                mSocialAdapter.notifyDataSetChanged();
-            }
-        });
-        viewModel.loadDataFromFirebase();
+        viewModel.dataFetched.observe(getViewLifecycleOwner(), aBoolean -> mSocialAdapter.notifyDataSetChanged());
         return view;
     }
 
