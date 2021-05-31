@@ -5,9 +5,12 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +36,12 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
 public class ProfileSocialNetwork extends Fragment {
     RecyclerView mSocialRecyclerView;
     RegisterAdapter mSocialAdapter;
-    ArrayList<SharedDTO> sharedDTOArrays;
 
     FloatingActionButton mFloatingButton;
     BottomSheetFragment mBottomSheetFragment;
+
+    // View model
+    ProfileSocialNetworkViewModel viewModel;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -83,63 +88,81 @@ public class ProfileSocialNetwork extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_social_network, container, false);
-
+        viewModel = ViewModelProviders.of(this).get(ProfileSocialNetworkViewModel.class);
         this.initRecycleView(view);
+        viewModel.dataFetched.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                mSocialAdapter.notifyDataSetChanged();
+            }
+        });
+        viewModel.loadDataFromFirebase();
         return view;
     }
 
-    private void initDummyData() {
-        this.sharedDTOArrays = new ArrayList<>();
-    }
-
     private void initRecycleView(View view) {
-        this.initDummyData();
         this.mFloatingButton = view.findViewById(R.id.tab_view_social_fab);
         this.mSocialRecyclerView = view.findViewById(R.id.tab_view_social_recycle_view);
 
-        this.mSocialAdapter = new RegisterAdapter(getActivity(), this.sharedDTOArrays);
+        this.mSocialAdapter = new RegisterAdapter(getActivity(), viewModel.sharedDTOLiveData);
         this.mSocialRecyclerView.setAdapter(this.mSocialAdapter);
         this.mSocialRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        this.mSocialAdapter.setOnItemClickListener((view1, position) -> removeItem(position));
+        this.mFloatingButton.setOnClickListener(v -> fabOnClick());
 
-        this.mFloatingButton.setOnClickListener(new View.OnClickListener() {
+        mSocialAdapter.setOnEditTextChange(new RegisterAdapter.OnEditTextChange() {
             @Override
-            public void onClick(View v) {
-                fabOnClick();
+            public void beforeTextChanged(int position, String text) {
+
+            }
+
+            @Override
+            public void onTextChanged(int position, String text) {
+
+            }
+
+            @Override
+            public void afterTextChanged(int position, String text) {
+                Log.i(AppConst.TAG_Profile_Social_NW, viewModel.sharedDTOLiveData.get(position).getUrl() + " ==> text: " + text);
+                viewModel.sharedDTOLiveData.get(position).setUrl(text);
             }
         });
-    }
 
-    /**
-     * Add / remove item func
-     */
-    public void removeItem(int position) {
-        sharedDTOArrays.remove(position);
-        this.mSocialAdapter.notifyItemRemoved(position);
-        this.mSocialAdapter.notifyItemRangeChanged(position, sharedDTOArrays.size());
+        mSocialAdapter.setOnItemClickListener((view1, position) -> {
+            viewModel.sharedDTOLiveData.remove(position);
+            Log.i(AppConst.TAG_Profile_Social_NW, " tesssttt: position " + position);
+            Log.i(AppConst.TAG_Profile_Social_NW, " tesssttt: viewmodel" + viewModel.sharedDTOLiveData.size());
+            Log.i(AppConst.TAG_Profile_Social_NW, " tesssttt: adapter " + viewModel.sharedDTOLiveData.size());
+
+            mSocialAdapter.notifyItemRemoved(position);
+            mSocialAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOLiveData.size());
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void addItem(String name) {
-        switch (name) {
-            case "Facebook":
-                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "facebook.com/"));
-                break;
-            case "Instagram":
-                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "instagram.com/"));
-                break;
-            case "Twitter":
-                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "twitter.com/"));
-                break;
-            case "Snapchat":
-                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "snapchat.com/add/"));
-                break;
-            case "LinkedIn":
-                this.sharedDTOArrays.add(new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "linkedin.com/in/"));
-                break;
+        SharedDTO sharedDTO = null;
+        if ("Instagram".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
         }
-        this.mSocialAdapter.notifyItemInserted(this.sharedDTOArrays.size());
+
+        if ("Twitter".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
+        }
+
+        if ("Snapchat".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
+        }
+
+        if ("LinkedIn".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
+        }
+
+        if ("Facebook".equals(name)) {
+            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
+        }
+        viewModel.addShared(sharedDTO);
+        this.mSocialAdapter.notifyItemInserted(viewModel.sharedDTOLiveData.size());
     }
 
     /**

@@ -75,7 +75,6 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         this.mRegisterAdapter = new RegisterAdapter(this, viewModel.sharedDTOArrays);
         this.mRecyclerView.setAdapter(this.mRegisterAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRegisterAdapter.setOnItemClickListener((view, position) -> removeItem(position));
 
         mRegisterAdapter.setOnEditTextChange(new RegisterAdapter.OnEditTextChange() {
             @Override
@@ -94,12 +93,15 @@ public class RegisterSocialNetwork extends AppCompatActivity {
                 viewModel.sharedDTOArrays.get(position).setUrl(text);
             }
         });
-    }
+        mRegisterAdapter.setOnItemClickListener((view, position) -> {
+            viewModel.sharedDTOArrays.remove(position);
+            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: position "+position);
+            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: viewmodel"+viewModel.sharedDTOArrays.size());
+            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: adapter "+mRegisterAdapter.sharedDTOArrays.size());
 
-    /**
-     * Add / remove item func
-     */
-    public void removeItem(int position) {
+            mRegisterAdapter.notifyItemRemoved(position);
+            mRegisterAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOArrays.size());
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

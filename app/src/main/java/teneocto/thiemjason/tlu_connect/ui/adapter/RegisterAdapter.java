@@ -33,7 +33,7 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHolder> {
     OnItemClickListener onItemClickListener;
-    ArrayList<SharedDTO> sharedDTOArrays;
+    public ArrayList<SharedDTO> sharedDTOArrays;
     OnEditTextChange onEditTextChange;
     Context context;
 
@@ -59,24 +59,6 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
         SocialNetworkDTO socialNetworkDTO = Utils.getSocialNWDTOFromId(sharedDTOArrays.get(position).getSocialNetWorkID());
         Bitmap imageBitmap = Utils.getBitmapFromByteArray(socialNetworkDTO.getImageBase64());
         holder.logo.setImageBitmap(imageBitmap);
-
-        holder.editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (onEditTextChange != null) {
-                    onEditTextChange.afterTextChanged(position, s.toString().trim());
-                }
-            }
-        });
     }
 
     @Override
@@ -84,7 +66,7 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
         return sharedDTOArrays.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView logo;
         ImageView delete;
         EditText editText;
@@ -96,19 +78,25 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
             this.delete = itemView.findViewById(R.id.image_list_item_delete);
             this.editText = itemView.findViewById(R.id.edit_list_item_url);
 
-            itemView.setOnClickListener(this);
-            this.delete.setOnClickListener(this);
-        }
+            delete.setOnClickListener(v -> onItemClickListener.onDelete(v, getAdapterPosition()));
 
-        @Override
-        public void onClick(View v) {
-            // When user clicked on delete button
-            if (v.getId() == this.delete.getId()) {
-                sharedDTOArrays.remove(getAdapterPosition());
-                notifyItemRemoved(getAdapterPosition());
-                notifyItemRangeChanged(getAdapterPosition(), sharedDTOArrays.size());
-                return;
-            }
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (onEditTextChange != null) {
+                        onEditTextChange.afterTextChanged(getAdapterPosition(), s.toString().trim());
+                    }
+                }
+            });
         }
     }
 
