@@ -1,10 +1,10 @@
-package teneocto.thiemjason.tlu_connect.ui.models;
+package teneocto.thiemjason.tlu_connect.ui.uimodels;
 
-public class BottomSheetItemDTO {
+public class UIBottomSheetItemDTO {
     Integer logo;
     String name;
 
-    public BottomSheetItemDTO(Integer logo, String name) {
+    public UIBottomSheetItemDTO(Integer logo, String name) {
         this.logo = logo;
         this.name = name;
     }

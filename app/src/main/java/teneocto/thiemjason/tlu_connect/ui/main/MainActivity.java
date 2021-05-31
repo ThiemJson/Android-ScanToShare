@@ -1,17 +1,12 @@
 package teneocto.thiemjason.tlu_connect.ui.main;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -24,10 +19,7 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.database.DBConst;
-import teneocto.thiemjason.tlu_connect.database.DBHelper;
-import teneocto.thiemjason.tlu_connect.ui.main.MainSliderAdapter;
-import teneocto.thiemjason.tlu_connect.ui.models.MainSliderItemDTO;
+import teneocto.thiemjason.tlu_connect.ui.uimodels.UIMainSliderItemDTO;
 import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,15 +54,15 @@ public class MainActivity extends AppCompatActivity {
     public void initSlider() {
         mViewPager = findViewById(R.id.main_slider_container);
 
-        ArrayList<MainSliderItemDTO> mainSliderItemDTOS = new ArrayList<>();
-        mainSliderItemDTOS.add(new MainSliderItemDTO(R.drawable.facebook, "Add your Social Network link", "Add social network you arr using and want to share with another"));
-        mainSliderItemDTOS.add(new MainSliderItemDTO(R.drawable.instagram, "Scan another profile and share your own", "Scan another user's QR code to quickly retrieve the necessary information"));
-        mainSliderItemDTOS.add(new MainSliderItemDTO(R.drawable.twiiter, "Create your Profile", "Set up your basic personal information to share with another"));
-        mainSliderItemDTOS.add(new MainSliderItemDTO(R.drawable.facebook, "Add your Social Network link", "Add social network you arr using and want to share with another"));
-        mainSliderItemDTOS.add(new MainSliderItemDTO(R.drawable.instagram, "Scan another profile and share your own", "Scan another user's QR code to quickly retrieve the necessary information"));
-        mainSliderItemDTOS.add(new MainSliderItemDTO(R.drawable.twiiter, "Create your Profile", "Set up your basic personal information to share with another"));
+        ArrayList<UIMainSliderItemDTO> UIMainSliderItemDTOS = new ArrayList<>();
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.facebook, "Add your Social Network link", "Add social network you arr using and want to share with another"));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.instagram, "Scan another profile and share your own", "Scan another user's QR code to quickly retrieve the necessary information"));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.twiiter, "Create your Profile", "Set up your basic personal information to share with another"));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.facebook, "Add your Social Network link", "Add social network you arr using and want to share with another"));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.instagram, "Scan another profile and share your own", "Scan another user's QR code to quickly retrieve the necessary information"));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.twiiter, "Create your Profile", "Set up your basic personal information to share with another"));
 
-        mViewPager.setAdapter(new MainSliderAdapter(mainSliderItemDTOS, mViewPager));
+        mViewPager.setAdapter(new MainSliderAdapter(UIMainSliderItemDTOS, mViewPager));
 
         mViewPager.setClipToPadding(false);
         mViewPager.setClipChildren(false);

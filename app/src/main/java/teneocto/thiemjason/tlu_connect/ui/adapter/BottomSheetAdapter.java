@@ -13,21 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.BottomSheetItemDTO;
+import teneocto.thiemjason.tlu_connect.ui.uimodels.UIBottomSheetItemDTO;
 
 public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.ViewHolder> {
     Context context;
-    ArrayList<BottomSheetItemDTO> mBottomSheetItemDTOS;
+    ArrayList<UIBottomSheetItemDTO> mUIBottomSheetItemDTOS;
     OnItemClickListener onItemClickListener;
 
     /**
      * Constructor
      * @param context
-     * @param bottomSheetItemDTOS
+     * @param UIBottomSheetItemDTOS
      */
-    public BottomSheetAdapter(Context context, ArrayList<BottomSheetItemDTO> bottomSheetItemDTOS){
+    public BottomSheetAdapter(Context context, ArrayList<UIBottomSheetItemDTO> UIBottomSheetItemDTOS){
         this.context = context;
-        this.mBottomSheetItemDTOS = bottomSheetItemDTOS;
+        this.mUIBottomSheetItemDTOS = UIBottomSheetItemDTOS;
     }
 
     @NonNull
@@ -40,13 +40,13 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText(this.mBottomSheetItemDTOS.get(position).getName());
-        holder.imageView.setImageResource(this.mBottomSheetItemDTOS.get(position).getLogo());
+        holder.textView.setText(this.mUIBottomSheetItemDTOS.get(position).getName());
+        holder.imageView.setImageResource(this.mUIBottomSheetItemDTOS.get(position).getLogo());
     }
 
     @Override
     public int getItemCount() {
-        return this.mBottomSheetItemDTOS.size();
+        return this.mUIBottomSheetItemDTOS.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

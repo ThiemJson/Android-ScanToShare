@@ -1,10 +1,10 @@
-package teneocto.thiemjason.tlu_connect.ui.models;
+package teneocto.thiemjason.tlu_connect.ui.uimodels;
 
-public class SocialNetworkDTO {
+public class UISocialNetworkDTO {
     Integer logo;
     String link;
 
-    public SocialNetworkDTO(int logo, String link) {
+    public UISocialNetworkDTO(int logo, String link) {
         this.logo = logo;
         this.link = link;
     }

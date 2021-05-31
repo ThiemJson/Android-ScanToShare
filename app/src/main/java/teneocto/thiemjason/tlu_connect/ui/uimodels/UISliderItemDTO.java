@@ -1,9 +1,9 @@
-package teneocto.thiemjason.tlu_connect.ui.models;
+package teneocto.thiemjason.tlu_connect.ui.uimodels;
 
-public class SliderItemDTO {
+public class UISliderItemDTO {
     private int image;
 
-    public SliderItemDTO(int image) {
+    public UISliderItemDTO(int image) {
         this.image = image;
     }
 

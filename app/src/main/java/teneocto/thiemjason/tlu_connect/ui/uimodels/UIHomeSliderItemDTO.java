@@ -1,12 +1,12 @@
-package teneocto.thiemjason.tlu_connect.ui.models;
+package teneocto.thiemjason.tlu_connect.ui.uimodels;
 
-public class HomeSliderItemDTO {
+public class UIHomeSliderItemDTO {
     private int image;
     private String name;
     private String qrImage;
     private String url;
 
-    public HomeSliderItemDTO(int image, String name, String qrImage, String url) {
+    public UIHomeSliderItemDTO(int image, String name, String qrImage, String url) {
         this.image = image;
         this.name = name;
         this.qrImage = qrImage;

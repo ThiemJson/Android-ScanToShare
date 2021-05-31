@@ -14,14 +14,14 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.models.MainSliderItemDTO;
+import teneocto.thiemjason.tlu_connect.ui.uimodels.UIMainSliderItemDTO;
 
 public class MainSliderAdapter extends RecyclerView.Adapter<MainSliderAdapter.ViewHolder> {
-    public ArrayList<MainSliderItemDTO> mainSliderItemDTOS;
+    public ArrayList<UIMainSliderItemDTO> UIMainSliderItemDTOS;
     public ViewPager2 mViewPager2;
 
-    public MainSliderAdapter(ArrayList<MainSliderItemDTO> mainSliderItemDTOS, ViewPager2 viewPager2) {
-        this.mainSliderItemDTOS = mainSliderItemDTOS;
+    public MainSliderAdapter(ArrayList<UIMainSliderItemDTO> UIMainSliderItemDTOS, ViewPager2 viewPager2) {
+        this.UIMainSliderItemDTOS = UIMainSliderItemDTOS;
         this.mViewPager2 = viewPager2;
     }
 
@@ -39,18 +39,18 @@ public class MainSliderAdapter extends RecyclerView.Adapter<MainSliderAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.content.setText(mainSliderItemDTOS.get(position).getContent());
-        holder.title.setText(mainSliderItemDTOS.get(position).getTitle());
-        holder.setImage(mainSliderItemDTOS.get(position));
+        holder.content.setText(UIMainSliderItemDTOS.get(position).getContent());
+        holder.title.setText(UIMainSliderItemDTOS.get(position).getTitle());
+        holder.setImage(UIMainSliderItemDTOS.get(position));
 
-        if (position == mainSliderItemDTOS.size() - 2 ) {
+        if (position == UIMainSliderItemDTOS.size() - 2 ) {
             mViewPager2.post(runnable);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mainSliderItemDTOS.size();
+        return UIMainSliderItemDTOS.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,15 +66,15 @@ public class MainSliderAdapter extends RecyclerView.Adapter<MainSliderAdapter.Vi
             content = itemView.findViewById(R.id.text_main_slider_content);
         }
 
-        void setImage(MainSliderItemDTO mainSliderItemDTO) {
-            imageView.setImageResource(mainSliderItemDTO.getImage());
+        void setImage(UIMainSliderItemDTO UIMainSliderItemDTO) {
+            imageView.setImageResource(UIMainSliderItemDTO.getImage());
         }
     }
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            mainSliderItemDTOS.addAll(mainSliderItemDTOS);
+            UIMainSliderItemDTOS.addAll(UIMainSliderItemDTOS);
             notifyDataSetChanged();
         }
     };

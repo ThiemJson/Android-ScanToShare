@@ -1,11 +1,11 @@
-package teneocto.thiemjason.tlu_connect.ui.models;
+package teneocto.thiemjason.tlu_connect.ui.uimodels;
 
-public class NotificationDTO {
+public class UINotificationDTO {
     int image;
     String title;
     String content;
 
-    public NotificationDTO(int image, String title, String content) {
+    public UINotificationDTO(int image, String title, String content) {
         this.image = image;
         this.title = title;
         this.content = content;

@@ -13,13 +13,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
-import teneocto.thiemjason.tlu_connect.ui.models.HomeSliderItemDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class HomeSliderAdapter extends RecyclerView.Adapter<HomeSliderAdapter.ViewHolder> {

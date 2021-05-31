@@ -147,7 +147,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
     }
 
     /**
-     * On BottomSheetItemDTO click
+     * On UIBottomSheetItemDTO click
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void bottomSheetItemClick(View view, int position) {

@@ -172,7 +172,7 @@ public class ProfileSocialNetwork extends Fragment {
     }
 
     /**
-     * On BottomSheetItemDTO click
+     * On UIBottomSheetItemDTO click
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void bottomSheetItemClick(View view, int position) {

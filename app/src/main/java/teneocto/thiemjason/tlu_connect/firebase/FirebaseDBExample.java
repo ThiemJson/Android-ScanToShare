@@ -28,7 +28,7 @@ public class FirebaseDBExample {
 //        Bitmap bitmap = ((BitmapDrawable) mImagePicker.getDrawable()).getBitmap();
 //        String imageBase64 = Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(bitmap));
 //
-//        UserDTO userDTO = new UserDTO(
+//        UIUserDTO userDTO = new UIUserDTO(
 //                1,
 //                mFirstName.getText().toString(),
 //                mLastName.getText().toString(),

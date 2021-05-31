@@ -1,11 +1,11 @@
-package teneocto.thiemjason.tlu_connect.ui.models;
+package teneocto.thiemjason.tlu_connect.ui.uimodels;
 
-public class UserDTO {
+public class UIUserDTO {
     String name;
     int image;
     String email;
 
-    public UserDTO(String name, int image, String email) {
+    public UIUserDTO(String name, int image, String email) {
         this.name = name;
         this.image = image;
         this.email = email;
