@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
 public class NotificationViewModel extends ViewModel {
     public ArrayList<NotificationDTO> notificationDTOArrayList = new ArrayList<>();
@@ -30,7 +31,7 @@ public class NotificationViewModel extends ViewModel {
     public void loadDataFromFirebase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.NOTIFICATION_TABLE_NAME);
-        databaseReference.child("1").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
@@ -48,6 +49,8 @@ public class NotificationViewModel extends ViewModel {
         });
     }
 
+
     private void loadDataFromSQLite() {
+
     }
 }

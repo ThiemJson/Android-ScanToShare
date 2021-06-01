@@ -1,7 +1,7 @@
 package teneocto.thiemjason.tlu_connect.models;
 
 public class SocialNetworkDTO {
-    private int id;
+    private String id;
     private String name;
     private String imageBase64;
 
@@ -9,17 +9,17 @@ public class SocialNetworkDTO {
 
     }
 
-    public SocialNetworkDTO(int id, String name, String imageBase64) {
+    public SocialNetworkDTO(String id, String name, String imageBase64) {
         this.id = id;
         this.name = name;
         this.imageBase64 = imageBase64;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

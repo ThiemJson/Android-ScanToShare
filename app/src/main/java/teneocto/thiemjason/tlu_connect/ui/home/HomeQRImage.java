@@ -48,6 +48,7 @@ import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.home.slider.HomeSliderAdapter;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -251,8 +252,8 @@ public class HomeQRImage extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void pageChange() {
         int position = viewPager2.getCurrentItem();
-        int socialNWId = sharedDTOArrays.get(position).getSocialNetWorkID();
-        List<SocialNetworkDTO> socialNetworkDTO = Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getId() == socialNWId).collect(Collectors.toList());
+        String socialNWId = sharedDTOArrays.get(position).getSocialNetWorkID();
+        List<SocialNetworkDTO> socialNetworkDTO = Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getId().equals(socialNWId)).collect(Collectors.toList());
         itemUrl.setText(sharedDTOArrays.get(position).getUrl());
         itemName.setText(socialNetworkDTO.get(0).getName());
         QRGEncoder qrgEncoder = Utils.generateQRCodeFromContent(getActivity(), sharedDTOArrays.get(position).getUrl());
@@ -284,7 +285,7 @@ public class HomeQRImage extends Fragment {
     private void loadDataFromFirebase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
-        databaseReference.child("1").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {

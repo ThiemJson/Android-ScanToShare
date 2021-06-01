@@ -36,6 +36,7 @@ import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -262,7 +263,7 @@ public class HomeFragment extends Fragment {
     private void loadDataFromFirebase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
-        databaseReference.child("1").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.i(TAG,"==> "+ snapshot.getValue());
