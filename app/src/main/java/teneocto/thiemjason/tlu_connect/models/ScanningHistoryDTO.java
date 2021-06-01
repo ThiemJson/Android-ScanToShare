@@ -1,41 +1,41 @@
 package teneocto.thiemjason.tlu_connect.models;
 
 public class ScanningHistoryDTO {
-    private int id;
-    private int localUserID;
-    private int remoteUserID;
+    private String id;
+    private String localUserID;
+    private String remoteUserID;
 
     public ScanningHistoryDTO() {
 
     }
 
-    public ScanningHistoryDTO(int id, int localUserID, int remoteUserID) {
+    public ScanningHistoryDTO(String id, String localUserID, String remoteUserID) {
         this.id = id;
         this.localUserID = localUserID;
         this.remoteUserID = remoteUserID;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getLocalUserID() {
+    public String getLocalUserID() {
         return localUserID;
     }
 
-    public void setLocalUserID(int localUserID) {
+    public void setLocalUserID(String localUserID) {
         this.localUserID = localUserID;
     }
 
-    public int getRemoteUserID() {
+    public String getRemoteUserID() {
         return remoteUserID;
     }
 
-    public void setRemoteUserID(int remoteUserID) {
+    public void setRemoteUserID(String remoteUserID) {
         this.remoteUserID = remoteUserID;
     }
 }

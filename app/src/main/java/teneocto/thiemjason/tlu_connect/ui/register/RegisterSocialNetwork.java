@@ -109,23 +109,23 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         SharedDTO sharedDTO = null;
 
         if ("Instagram".equals(name)) {
-            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
         }
 
         if ("Twitter".equals(name)) {
-            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
         }
 
         if ("Snapchat".equals(name)) {
-            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
         }
 
         if ("LinkedIn".equals(name)) {
-            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
         }
 
         if ("Facebook".equals(name)) {
-            sharedDTO = new SharedDTO(1, AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
         }
         viewModel.addShared(sharedDTO);
         this.mRegisterAdapter.notifyItemInserted(viewModel.sharedDTOArrays.size());

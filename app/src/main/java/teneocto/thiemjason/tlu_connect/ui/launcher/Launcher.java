@@ -1,6 +1,7 @@
 package teneocto.thiemjason.tlu_connect.ui.launcher;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,6 +26,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.database.DBConst;
+import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBExample;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
@@ -41,7 +43,9 @@ public class Launcher extends AppCompatActivity {
     private DBHelper dbHelper;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private FirebaseDBExample firebaseDBExample;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,9 @@ public class Launcher extends AppCompatActivity {
         this.initFirebaseMessaging();
         this.setUpPermission();
         this.setUpReceiver();
+
+        // firebaseDBExample = new FirebaseDBExample(this);
+        //firebaseDBExample.FirebaseDataSeeder();
         this.setUpFirebaseDatabase();
 
         Thread background;
@@ -130,6 +137,7 @@ public class Launcher extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
         Utils.socialNetworkDTOArrayList = new ArrayList<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {

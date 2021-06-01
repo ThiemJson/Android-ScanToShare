@@ -6,7 +6,7 @@ public class AppConst {
 
     // Shared Preferences keys
     public static String SHARED_PREFER_CONTAINER = "TluConnect sharedPrefer container";
-    public static int SP_CURRENT_USER_ID = 1;
+    public static String SP_CURRENT_USER_ID = "e8f88a6f-dd40-43f8-87a8-dced287e5f55\"";
     public static String SP_UPDATED = "Is app up to date";
 
     // TAG

@@ -1,8 +1,8 @@
 package teneocto.thiemjason.tlu_connect.models;
 
 public class NotificationDTO {
-    private int id;
-    private int userID;
+    private String id;
+    private String userID;
     private String content;
     private String title;
     private String imageBase64;
@@ -10,7 +10,7 @@ public class NotificationDTO {
     public NotificationDTO() {
     }
 
-    public NotificationDTO(int id, int userID, String content, String title, String imageBase64) {
+    public NotificationDTO(String id, String userID, String content, String title, String imageBase64) {
         this.id = id;
         this.userID = userID;
         this.content = content;
@@ -18,19 +18,19 @@ public class NotificationDTO {
         this.imageBase64 = imageBase64;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -61,8 +62,8 @@ public class Utils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static SocialNetworkDTO getSocialNWDTOFromId(int id) {
-        return Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getId() == id).collect(Collectors.toList()).get(0);
+    public static SocialNetworkDTO getSocialNWDTOFromId(String id) {
+        return Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getId().equals(id)).collect(Collectors.toList()).get(0);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -71,8 +72,8 @@ public class Utils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static UserDTO getUserDTOFromId(int id){
-        return Utils.userDTOArrayList.stream().filter(x -> x.getId() == id).collect(Collectors.toList()).get(0);
+    public static UserDTO getUserDTOFromId(String id){
+        return Utils.userDTOArrayList.stream().filter(x -> x.getId().equals(id)).collect(Collectors.toList()).get(0);
     }
 
     public static String serializeQREncoder(QRGEncoder qrgEncoder) {
@@ -90,5 +91,9 @@ public class Utils {
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Image", null);
         return Uri.parse(path);
+    }
+
+    public static String getRandomUUID(){
+        return UUID.randomUUID().toString();
     }
 }

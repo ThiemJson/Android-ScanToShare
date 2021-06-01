@@ -25,6 +25,7 @@ import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
 public class DBHelper extends SQLiteOpenHelper {
     private Context context;
@@ -136,7 +137,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 UserDTO userDTO = new UserDTO(
-                        cursor.getInt(0),
+                        cursor.getString(0),
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getString(2),
@@ -159,7 +160,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 UserDTO userDTO = new UserDTO(
-                        cursor.getInt(0),
+                        cursor.getString(0),
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getString(2),
@@ -173,9 +174,108 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<NotificationDTO> NOTIFICATION_Query() {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ArrayList<NotificationDTO> arrayList = new ArrayList<>();
+
+        String selection = DBConst.NOTIFICATION_USER_ID + " = ?";
+        String[] selectionArgs = {AppConst.SP_CURRENT_USER_ID + ""};
+
+        Cursor cursor = sqLiteDatabase.query(DBConst.NOTIFICATION_TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                byte[] imageBase64 = cursor.getBlob(4);
+                String imageBase64String = Base64.getEncoder().encodeToString(imageBase64);
+
+                NotificationDTO notificationDTO = new NotificationDTO(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(3),
+                        cursor.getString(2),
+                        imageBase64String
+                );
+                arrayList.add(notificationDTO);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return arrayList;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<ScanningHistoryDTO> SCANNING_HISTORY_Query() {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ArrayList<ScanningHistoryDTO> arrayList = new ArrayList<>();
+
+        String selection = DBConst.SCAN_LOCAL_USER_ID + " = ?";
+        String[] selectionArgs = {AppConst.SP_CURRENT_USER_ID + ""};
+
+        Cursor cursor = sqLiteDatabase.query(DBConst.SCAN_TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                ScanningHistoryDTO scanningHistoryDTO = new ScanningHistoryDTO(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2)
+                );
+                arrayList.add(scanningHistoryDTO);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return arrayList;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<SocialNetworkDTO> SOCIAL_NETWORK_Query() {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ArrayList<SocialNetworkDTO> arrayList = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.query(DBConst.SN_TABLE_NAME, null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                byte[] imageBase64 = cursor.getBlob(1);
+                String imageBase64String = Base64.getEncoder().encodeToString(imageBase64);
+
+                SocialNetworkDTO socialNetworkDTO = new SocialNetworkDTO(
+                        cursor.getString(0),
+                        cursor.getString(2),
+                        imageBase64String
+                );
+                arrayList.add(socialNetworkDTO);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return arrayList;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<SharedDTO> SHARED_Query() {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ArrayList<SharedDTO> arrayList = new ArrayList<>();
+
+        String selection = DBConst.SHARED_USER_ID + " = ?";
+        String[] selectionArgs = {AppConst.SP_CURRENT_USER_ID + ""};
+
+        Cursor cursor = sqLiteDatabase.query(DBConst.SHARED_TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                SharedDTO sharedDTO = new SharedDTO(
+                        cursor.getString(0),
+                        cursor.getString(2),
+                        cursor.getString(1),
+                        cursor.getString(3)
+                );
+                arrayList.add(sharedDTO);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return arrayList;
+    }
+
     /**
      * =========================> DELETE
      */
+
 
 
     /**

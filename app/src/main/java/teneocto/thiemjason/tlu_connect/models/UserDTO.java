@@ -1,7 +1,10 @@
 package teneocto.thiemjason.tlu_connect.models;
 
+import teneocto.thiemjason.tlu_connect.utils.Utils;
+
 public class UserDTO {
-    private int id;
+    private String id;
+    private String firebaseId;
     private String firstName;
     private String lastName;
     private String email;
@@ -15,9 +18,10 @@ public class UserDTO {
         this.company = "Your company";
         this.position = "Your position";
         this.email = " ";
+        this.firebaseId = Utils.getRandomUUID();
     }
 
-    public UserDTO(int id, String firstName, String lastName, String email, String position, String company, String imageBase64) {
+    public UserDTO(String id, String firstName, String lastName, String email, String position, String company, String imageBase64) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,12 +31,20 @@ public class UserDTO {
         this.imageBase64 = imageBase64;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
     }
 
     public String getFirstName() {

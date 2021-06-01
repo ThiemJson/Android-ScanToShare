@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class ScanningHistoryViewModel extends ViewModel {
@@ -32,7 +33,7 @@ public class ScanningHistoryViewModel extends ViewModel {
     public void loadDataFromFirebase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SCAN_TABLE_NAME);
-        databaseReference.child("1").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
