@@ -55,11 +55,13 @@ public class Launcher extends AppCompatActivity {
         this.initFirebaseMessaging();
         this.setUpPermission();
         this.setUpReceiver();
-
-        // firebaseDBExample = new FirebaseDBExample(this);
-        //firebaseDBExample.FirebaseDataSeeder();
         this.setUpFirebaseDatabase();
 
+        // SEED DATA
+        //  firebaseDBExample = new FirebaseDBExample(this);
+        //  firebaseDBExample.FirebaseDataSeeder();
+
+        DBHelper dbHelper = new DBHelper(this);
         Thread background;
         background = new Thread() {
             public void run() {

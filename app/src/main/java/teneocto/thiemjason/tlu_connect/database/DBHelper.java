@@ -60,6 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param dbName database name
      */
     public void dropDatabase(String dbName) {
+        Log.i(AppConst.TAG_DBHelper, " ==> Database drop");
         context.deleteDatabase(dbName);
     }
 
@@ -72,6 +73,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         byte[] imageBase64 = Base64.getDecoder().decode(userDTO.getImageBase64());
+
+        contentValues.put(DBConst.USER_ID, userDTO.getId());
         contentValues.put(DBConst.USER_EMAIL, userDTO.getEmail());
         contentValues.put(DBConst.USER_FIRST_NAME, userDTO.getFirstName());
         contentValues.put(DBConst.USER_LAST_NAME, userDTO.getLastName());
@@ -85,6 +88,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean SCANNING_HISTORY_Insert(ScanningHistoryDTO scanningHistoryDTO) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(DBConst.SCAN_ID, scanningHistoryDTO.getId());
         contentValues.put(DBConst.SCAN_LOCAL_USER_ID, scanningHistoryDTO.getLocalUserID());
         contentValues.put(DBConst.SCAN_REMOTE_USER_ID, scanningHistoryDTO.getRemoteUserID());
         long result = sqLiteDatabase.insert(DBConst.SCAN_TABLE_NAME, null, contentValues);
@@ -96,6 +100,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         byte[] imageBase64 = Base64.getDecoder().decode(socialNetworkDTO.getImageBase64());
+        contentValues.put(DBConst.SN_ID, socialNetworkDTO.getId());
         contentValues.put(DBConst.SN_NAME, socialNetworkDTO.getName());
         contentValues.put(DBConst.SN_IMAGE, imageBase64);
         contentValues.put(DBConst.SN_IMAGE, socialNetworkDTO.getName());
@@ -108,6 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         byte[] imageBase64 = Base64.getDecoder().decode(notificationDTO.getImageBase64());
+        contentValues.put(DBConst.NOTIFICATION_ID, notificationDTO.getId());
         contentValues.put(DBConst.NOTIFICATION_IMAGE, imageBase64);
         contentValues.put(DBConst.NOTIFICATION_USER_ID, notificationDTO.getUserID());
         contentValues.put(DBConst.NOTIFICATION_CONTENT, notificationDTO.getContent());
@@ -119,6 +125,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean SHARED_Insert(SharedDTO sharedDTO) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(DBConst.SHARED_ID, sharedDTO.getId());
         contentValues.put(DBConst.SHARED_USER_ID, sharedDTO.getUserID());
         contentValues.put(DBConst.SHARED_URL, sharedDTO.getUrl());
         contentValues.put(DBConst.SHARED_SN_ID, sharedDTO.getSocialNetWorkID());

@@ -11,6 +11,7 @@ public class AppConst {
 
     // TAG
     public static String TAG_Launcher = "==> Launcher";
+    public static String TAG_DBHelper = "==> DBHelper";
     public static String TAG_RegisterProfileViewModel = "==> RegisterProfileViewModel";
     public static String TAG_RegisterSocialNetworkViewModel = "==> Register SocialNetwork view model";
     public static String TAG_Profile_Social_NW = "==>  Profile social network";
@@ -24,4 +25,7 @@ public class AppConst {
     public static String REGEX_LinkedIn_URL = "((http|https)://)?(www[.])?(linkedin)?(linkedin)?.com/in/.[A-z0-9_-]*";
     public static String REGEX_Snapchat_URL = "(?:https?:)?\\/\\/(?:www\\.)?snapchat\\.com\\/add\\/(?<username>[A-z0-9\\.\\_\\-]+)\\/?";
     public static String REGEX_Twitter_URL = "((https?://)?(www\\.)?twitter\\.com/)?(@|#!/)?([A-Za-z0-9_]{1,15})(/([-a-z]{1,20}))?";
+
+    // Service
+    public static String SyncLocalDatabaseService = "SyncLocalDB";
 }
