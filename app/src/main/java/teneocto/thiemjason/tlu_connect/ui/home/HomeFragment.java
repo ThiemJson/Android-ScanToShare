@@ -263,12 +263,12 @@ public class HomeFragment extends Fragment {
     private void loadDataFromFirebase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
-        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i(TAG,"==> "+ snapshot.getValue());
+                Log.i(TAG, "==> " + snapshot.getValue());
                 UserDTO userDTO = snapshot.getValue(UserDTO.class);
-                if(userDTO == null){
+                if (userDTO == null) {
                     loadDataFromSQLite();
                     return;
                 }

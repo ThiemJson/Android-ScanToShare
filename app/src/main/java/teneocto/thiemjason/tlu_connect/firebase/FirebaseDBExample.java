@@ -4,12 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.icu.util.UniversalTimeScale;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.io.UTFDataFormatException;
 import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.R;
@@ -18,7 +16,6 @@ import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
-import teneocto.thiemjason.tlu_connect.ui.uimodels.UIUserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -43,7 +40,7 @@ public class FirebaseDBExample {
         Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.example);
         byte[] imageBase64 = Utils.getBitmapAsByteArray(imageBitmap);
         UserDTO userDTO = new UserDTO(
-                AppConst.SP_CURRENT_USER_ID,
+                Utils.getUserUUID(context),
                 "Thuy Linh",
                 "Vu Thi",
                 "vuthithuylinh@gmail.com",
@@ -58,7 +55,7 @@ public class FirebaseDBExample {
     public void NOTIFICATION_initFirebaseDB() {
         NotificationDTO notificationDTO = new NotificationDTO(
                 Utils.getRandomUUID(),
-                AppConst.SP_CURRENT_USER_ID,
+                Utils.getUserUUID(context),
                 "Cập nhật ứng dụng lên phiên bản 1.0.1, chính sửa các lỗi hiện đang hiện hữu tại đăng nhập bằng Facebook",
                 "Cập nhật phiên bản mới",
                 Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(((BitmapDrawable) context.getResources().getDrawable(R.drawable.example)).getBitmap()))
@@ -122,7 +119,7 @@ public class FirebaseDBExample {
 
     public void SCANNING_HISTORY_initFirebaseDB() {
         ScanningHistoryDTO scanningHistoryDTO = new ScanningHistoryDTO(
-                Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, AppConst.SP_CURRENT_USER_ID
+                Utils.getRandomUUID(), Utils.getUserUUID(context), AppConst.USER_UID_Static
         );
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
         firebaseDBHelper.Scanning_History_Insert(scanningHistoryDTO);
@@ -133,32 +130,32 @@ public class FirebaseDBExample {
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
         SharedDTO user1 = new SharedDTO(
                 Utils.getRandomUUID(),
-                AppConst.SP_CURRENT_USER_ID,
+                Utils.getUserUUID(context),
                 Utils.getSocialNWDTOFromName("Facebook").getId(),
                 "https://facebook.com/thiemtinhte"
         );
 
         SharedDTO user2 = new SharedDTO(
                 Utils.getRandomUUID(),
-                AppConst.SP_CURRENT_USER_ID,
+                Utils.getUserUUID(context),
                 Utils.getSocialNWDTOFromName("Instagram").getId(),
                 "https://www.instagram.com/thiemjason/"
         );
         SharedDTO user3 = new SharedDTO(
                 Utils.getRandomUUID(),
-                AppConst.SP_CURRENT_USER_ID,
+                Utils.getUserUUID(context),
                 Utils.getSocialNWDTOFromName("LinkedIn").getId(),
                 "https://www.linkedin.com/in/cao-thiem-nguyen-628945206/"
         );
         SharedDTO user4 = new SharedDTO(
                 Utils.getRandomUUID(),
-                AppConst.SP_CURRENT_USER_ID,
+                Utils.getUserUUID(context),
                 Utils.getSocialNWDTOFromName("Twitter").getId(),
                 "https://twitter.com/ThiemJason"
         );
         SharedDTO user5 = new SharedDTO(
                 Utils.getRandomUUID(),
-                AppConst.SP_CURRENT_USER_ID,
+                Utils.getUserUUID(context),
                 Utils.getSocialNWDTOFromName("Snapchat").getId(),
                 "https://cv-nguyencaothiem.herokuapp.com/"
         );

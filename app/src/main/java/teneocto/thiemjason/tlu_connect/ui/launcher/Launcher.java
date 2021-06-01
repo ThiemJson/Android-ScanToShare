@@ -55,26 +55,33 @@ public class Launcher extends AppCompatActivity {
         this.initFirebaseMessaging();
         this.setUpPermission();
         this.setUpReceiver();
-        this.setUpFirebaseDatabase();
+        this.setUpSocialNWFromFirebaseDatabase();
+
+        String userUUID = Utils.getPrefer(this, AppConst.USER_UID);
+
+        if ( userUUID == null || userUUID.equals("")) {
+            Thread background;
+            background = new Thread() {
+                public void run() {
+                    try {
+                        sleep(1000);
+                        appStart();
+                    } catch (Exception e) {
+                    }
+                }
+            };
+            // start thread
+            background.start();
+            return;
+        }
+
+        AppConst.USER_UID_Static = Utils.getUserUUID(this);
+        this.setUpUserDTOFromFirebaseDatabase();
         this.startSyncLocalDBService();
 
         // SEED DATA
         //  firebaseDBExample = new FirebaseDBExample(this);
         //  firebaseDBExample.FirebaseDataSeeder();
-
-        DBHelper dbHelper = new DBHelper(this);
-        Thread background;
-        background = new Thread() {
-            public void run() {
-                try {
-                    sleep(1000);
-                    appStart();
-                } catch (Exception e) {
-                }
-            }
-        };
-        // start thread
-        background.start();
     }
 
     // Start Service
@@ -140,7 +147,7 @@ public class Launcher extends AppCompatActivity {
         dbHelper = new DBHelper(this);
     }
 
-    private void setUpFirebaseDatabase() {
+    private void setUpSocialNWFromFirebaseDatabase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
@@ -161,7 +168,9 @@ public class Launcher extends AppCompatActivity {
                 setUpSQLiteDB();
             }
         });
+    }
 
+    private void setUpUserDTOFromFirebaseDatabase(){
         databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
         Utils.userDTOArrayList = new ArrayList<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

@@ -1,12 +1,10 @@
 package teneocto.thiemjason.tlu_connect.ui.profile;
 
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -17,7 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import teneocto.thiemjason.tlu_connect.database.DBConst;
@@ -134,7 +131,7 @@ public class ProfileSharedViewModel extends ViewModel {
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
-        databaseReference.child(AppConst.SP_CURRENT_USER_ID + "").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static + "").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
@@ -153,7 +150,7 @@ public class ProfileSharedViewModel extends ViewModel {
         });
 
         databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
-        databaseReference.child(AppConst.SP_CURRENT_USER_ID + "").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static + "").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot != null) {

@@ -5,9 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,8 +16,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.io.UTFDataFormatException;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
@@ -137,23 +133,23 @@ public class ProfileSocialNetwork extends Fragment {
     public void addItem(String name) {
         SharedDTO sharedDTO = null;
         if ("Instagram".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
         }
 
         if ("Twitter".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
         }
 
         if ("Snapchat".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
         }
 
         if ("LinkedIn".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
         }
 
         if ("Facebook".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
         }
         viewModel.addShared(sharedDTO);
         this.mSocialAdapter.notifyItemInserted(viewModel.sharedDTOLiveData.size());

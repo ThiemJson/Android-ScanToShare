@@ -3,29 +3,23 @@ package teneocto.thiemjason.tlu_connect.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
 import java.util.Base64;
 
-import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
 import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class DBHelper extends SQLiteOpenHelper {
     private Context context;
@@ -194,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<NotificationDTO> arrayList = new ArrayList<>();
 
         String selection = DBConst.NOTIFICATION_USER_ID + " = ?";
-        String[] selectionArgs = {AppConst.SP_CURRENT_USER_ID + ""};
+        String[] selectionArgs = {AppConst.USER_UID_Static + ""};
 
         Cursor cursor = sqLiteDatabase.query(DBConst.NOTIFICATION_TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
@@ -222,7 +216,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<ScanningHistoryDTO> arrayList = new ArrayList<>();
 
         String selection = DBConst.SCAN_LOCAL_USER_ID + " = ?";
-        String[] selectionArgs = {AppConst.SP_CURRENT_USER_ID + ""};
+        String[] selectionArgs = {Utils.getUserUUID(context) + ""};
 
         Cursor cursor = sqLiteDatabase.query(DBConst.SCAN_TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
@@ -268,7 +262,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<SharedDTO> arrayList = new ArrayList<>();
 
         String selection = DBConst.SHARED_USER_ID + " = ?";
-        String[] selectionArgs = {AppConst.SP_CURRENT_USER_ID + ""};
+        String[] selectionArgs = {Utils.getUserUUID(context) + ""};
 
         Cursor cursor = sqLiteDatabase.query(DBConst.SHARED_TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {

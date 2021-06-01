@@ -4,8 +4,13 @@ public class AppConst {
     public static String NOTIFICATION_CHANNEL_ID = "channel";
     public static String NOTIFICATION_TOPIC = "messaging";
 
+    // User
+    public static String USER_PASS = "password";
+
     // Shared Preferences keys
-    public static String SHARED_PREFER_CONTAINER = "TluConnect sharedPrefer container";
+    public static String USER_UID = "UserUID";
+    public static String USER_UID_Static;
+    public static String SHARED_PREFER_CONTAINER = "TluConnectSharedPreferContainer";
     public static String SP_CURRENT_USER_ID = "e8f88a6f-dd40-43f8-87a8-dced287e5f55\"";
     public static String SP_UPDATED = "Is app up to date";
 
@@ -18,6 +23,8 @@ public class AppConst {
     public static String TAG_ScanningHistory = "==>  Scanning History";
     public static String TAG_Notification = "==>  Notification";
     public static String TAG_SyncLocalDBService = "==>  Sync local db service";
+    public static String TAG_FirebaseAuthentication = "==>  Firebase authentication";
+    public static String TAG_RegisterService = "==>  Register Service";
 
     // Regex
     public static String REGEX_Email = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";

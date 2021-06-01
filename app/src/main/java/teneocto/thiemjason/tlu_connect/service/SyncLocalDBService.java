@@ -1,9 +1,6 @@
 package teneocto.thiemjason.tlu_connect.service;
 
-import android.app.Application;
-import android.app.IntentService;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
@@ -12,10 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,13 +27,13 @@ import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class SyncLocalDBService extends Service {
     public MutableLiveData<Integer> isFetched = new MutableLiveData<Integer>();
 
     // Firebase tool
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = firebaseDatabase.getReference(AppConst.SP_CURRENT_USER_ID);
 
     // SQLite tool
     private DBHelper dbHelper;
@@ -71,7 +65,6 @@ public class SyncLocalDBService extends Service {
     @Override
     public void onDestroy() {
         firebaseDatabase = null;
-        databaseReference = null;
         dbHelper = null;
         userDTOList = null;
         sharedDTOList = null;
@@ -102,7 +95,7 @@ public class SyncLocalDBService extends Service {
     private void syncNotification() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.NOTIFICATION_TABLE_NAME);
-        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
@@ -121,7 +114,7 @@ public class SyncLocalDBService extends Service {
                 }
 
                 isFetched.setValue(isFetched.getValue() + 1);
-                if(isFetched.getValue() == 5){
+                if (isFetched.getValue() == 5) {
                     stopSelf();
                 }
             }
@@ -136,7 +129,7 @@ public class SyncLocalDBService extends Service {
     private void syncScanningHistory() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SCAN_TABLE_NAME);
-        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -156,7 +149,7 @@ public class SyncLocalDBService extends Service {
                 }
 
                 isFetched.setValue(isFetched.getValue() + 1);
-                if(isFetched.getValue() == 5){
+                if (isFetched.getValue() == 5) {
                     stopSelf();
                 }
             }
@@ -170,7 +163,7 @@ public class SyncLocalDBService extends Service {
     private void syncShared() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
-        databaseReference.child(AppConst.SP_CURRENT_USER_ID + "").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static + "").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
@@ -185,7 +178,7 @@ public class SyncLocalDBService extends Service {
                         Log.i(AppConst.SyncLocalDatabaseService, "Shared DATA INSERT: " + sharedDTO.getSocialNetWorkID());
                     }
                     isFetched.setValue(isFetched.getValue() + 1);
-                    if(isFetched.getValue() == 5){
+                    if (isFetched.getValue() == 5) {
                         stopSelf();
                     }
                 }
@@ -199,7 +192,7 @@ public class SyncLocalDBService extends Service {
     }
 
     private void syncUser() {
-        databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
+        DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -216,7 +209,7 @@ public class SyncLocalDBService extends Service {
                         Log.i(AppConst.SyncLocalDatabaseService, "User DATA INSERT: " + userDTO.getLastName());
                     }
                     isFetched.setValue(isFetched.getValue() + 1);
-                    if(isFetched.getValue() == 5){
+                    if (isFetched.getValue() == 5) {
                         stopSelf();
                     }
                 }
@@ -230,7 +223,7 @@ public class SyncLocalDBService extends Service {
     }
 
     private void syncSocialNW() {
-        databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
+        DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -247,7 +240,7 @@ public class SyncLocalDBService extends Service {
                         Log.i(AppConst.SyncLocalDatabaseService, "Social NW DATA INSERT: " + socialNetworkDTO.getName());
                     }
                     isFetched.setValue(isFetched.getValue() + 1);
-                    if(isFetched.getValue() == 5){
+                    if (isFetched.getValue() == 5) {
                         stopSelf();
                     }
                 }

@@ -81,7 +81,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         NotificationDTO notificationDTO = new NotificationDTO(
                                 Utils.getRandomUUID(),
-                                AppConst.SP_CURRENT_USER_ID,
+                                AppConst.USER_UID_Static,
                                 remoteMessage.getNotification().getTitle(),
                                 remoteMessage.getNotification().getBody(),
                                 Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(resource))

@@ -285,7 +285,7 @@ public class HomeQRImage extends Fragment {
     private void loadDataFromFirebase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
-        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
