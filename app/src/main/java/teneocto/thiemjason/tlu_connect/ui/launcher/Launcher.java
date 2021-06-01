@@ -1,11 +1,5 @@
 package teneocto.thiemjason.tlu_connect.ui.launcher;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -16,6 +10,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,15 +25,15 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
+import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBConst;
+import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBExample;
-import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
-import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
-import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.receiver.NetworkReceiver;
+import teneocto.thiemjason.tlu_connect.service.SyncLocalDBService;
+import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -56,6 +56,7 @@ public class Launcher extends AppCompatActivity {
         this.setUpPermission();
         this.setUpReceiver();
         this.setUpFirebaseDatabase();
+        this.startSyncLocalDBService();
 
         // SEED DATA
         //  firebaseDBExample = new FirebaseDBExample(this);
@@ -74,6 +75,12 @@ public class Launcher extends AppCompatActivity {
         };
         // start thread
         background.start();
+    }
+
+    // Start Service
+    private void startSyncLocalDBService() {
+        Intent intentService = new Intent(this, SyncLocalDBService.class);
+        startService(intentService);
     }
 
     /**

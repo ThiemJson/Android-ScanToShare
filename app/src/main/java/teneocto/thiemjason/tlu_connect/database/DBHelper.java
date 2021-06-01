@@ -64,6 +64,13 @@ public class DBHelper extends SQLiteOpenHelper {
         context.deleteDatabase(dbName);
     }
 
+    public void deleteRecord(String tableName) {
+        Log.i(AppConst.TAG_DBHelper, " ==> Table " + tableName + " data deleted");
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + tableName + " ;");
+        db.close();
+    }
+
 
     /**
      * =========================> INSERT
@@ -282,7 +289,6 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * =========================> DELETE
      */
-
 
 
     /**
