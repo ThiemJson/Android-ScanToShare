@@ -27,6 +27,7 @@ public class DBConst {
     public static String NOTIFICATION_USER_ID = "NOTIFICATION_USER_ID";
     public static String NOTIFICATION_TITLE = "NOTIFICATION_TITLE";
     public static String NOTIFICATION_CONTENT = "NOTIFICATION_CONTENT";
+    public static String NOTIFICATION_URL = "NOTIFICATION_URL";
 
     // TABLE - SOCIAL_NETWORK
     public static String SN_TABLE_NAME = "SOCIAL_NETWORK";

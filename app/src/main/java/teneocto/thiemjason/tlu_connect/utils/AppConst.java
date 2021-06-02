@@ -27,6 +27,7 @@ public class AppConst {
     public static String TAG_FirebaseAuthentication = "==>  Firebase authentication";
     public static String TAG_RegisterService = "==>  Register Service";
     public static String TAG_MainActivity = "==>  Main Activity";
+    public static String TAG_Notification_web_view = " ==> Notification web view";
 
     // Regex
     public static String REGEX_Email = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";

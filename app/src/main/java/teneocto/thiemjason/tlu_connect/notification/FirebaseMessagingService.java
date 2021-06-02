@@ -81,12 +81,17 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         NotificationDTO notificationDTO = new NotificationDTO(
                                 Utils.getRandomUUID(),
-                                AppConst.USER_UID_Static,
+                                Utils.getUserUUID(getApplicationContext()),
                                 remoteMessage.getNotification().getTitle(),
                                 remoteMessage.getNotification().getBody(),
                                 Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(resource))
                         );
 
+                        String notificationURL = remoteMessage.getData().get("URL");
+                        if (notificationURL == null || notificationDTO.equals("")) {
+                            notificationURL = "https://baomoi.com/";
+                        }
+                        notificationDTO.setUrl(notificationURL);
                         firebaseDBHelper.Notification_Insert(notificationDTO);
                     }
 
