@@ -1,6 +1,7 @@
 package teneocto.thiemjason.tlu_connect.ui.register;
 
 import androidx.annotation.RequiresApi;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,11 +16,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
@@ -95,9 +100,9 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         });
         mRegisterAdapter.setOnItemClickListener((view, position) -> {
             viewModel.sharedDTOArrays.remove(position);
-            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: position "+position);
-            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: viewmodel"+viewModel.sharedDTOArrays.size());
-            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: adapter "+mRegisterAdapter.sharedDTOArrays.size());
+            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: position " + position);
+            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: viewmodel" + viewModel.sharedDTOArrays.size());
+            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: adapter " + mRegisterAdapter.sharedDTOArrays.size());
 
             mRegisterAdapter.notifyItemRemoved(position);
             mRegisterAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOArrays.size());
@@ -109,23 +114,23 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         SharedDTO sharedDTO = null;
 
         if ("Instagram".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
         }
 
         if ("Twitter".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
         }
 
         if ("Snapchat".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
         }
 
         if ("LinkedIn".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
         }
 
         if ("Facebook".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
         }
         viewModel.addShared(sharedDTO);
         this.mRegisterAdapter.notifyItemInserted(viewModel.sharedDTOArrays.size());
@@ -135,14 +140,9 @@ public class RegisterSocialNetwork extends AppCompatActivity {
      * Handler when user clicked on Floating Action button
      */
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void fabOnClick() {
-        this.mBottomSheetFragment = new BottomSheetFragment(this, new BottomSheetFragment.OnItemClick() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemClick(View view, int position) {
-                bottomSheetItemClick(view, position);
-            }
-        });
+        this.mBottomSheetFragment = new BottomSheetFragment(this, (view, position) -> bottomSheetItemClick(view, position));
         mBottomSheetFragment.show(getSupportFragmentManager(), mBottomSheetFragment.getTag());
     }
 
@@ -167,9 +167,69 @@ public class RegisterSocialNetwork extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(this, "Register successfully !", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, Drawer.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        Utils.sharedDTOArrayList = viewModel.sharedDTOArrays;
+        registerUser(Utils.registerUserDTO.getEmail());
+    }
+
+    private void registerUser(String userEmail) {
+        firebaseSignUpWithEmail(userEmail, AppConst.USER_PASS);
+    }
+
+    /**
+     * Sign Up
+     *
+     * @param email    user email
+     * @param password immutable password
+     */
+    public void firebaseSignUpWithEmail(String email, String password) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.i(AppConst.TAG_FirebaseAuthentication, "createUserWithEmail: success");
+                        firebaseSignInWithEmail(email, password);
+                    } else {
+                        Log.w(AppConst.TAG_FirebaseAuthentication, "signInWithEmail:failure", task.getException());
+                    }
+                });
+    }
+
+    /**
+     * Sign In
+     *
+     * @param email    user email
+     * @param password immutable password
+     */
+    public void firebaseSignInWithEmail(String email, String password) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(AppConst.TAG_FirebaseAuthentication, "signInWithEmail:success");
+
+                        Utils.registerUserDTO.setFirebaseId(mAuth.getCurrentUser().getUid());
+                        Utils.setPrefer(getApplicationContext(), AppConst.USER_UID, Utils.registerUserDTO.getId());
+                        AppConst.USER_UID_Static = Utils.registerUserDTO.getId();
+
+                        // Sync data into firebase
+                        FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
+                        firebaseDBHelper.USER_Insert(Utils.registerUserDTO);
+
+                        Log.i(AppConst.TAG_RegisterService, " Current user UID: " + Utils.registerUserDTO.getFirebaseId());
+                        for (SharedDTO sharedDTO : Utils.sharedDTOArrayList) {
+                            sharedDTO.setUserID(Utils.getUserUUID(getApplicationContext()));
+                            firebaseDBHelper.Shared_Insert(sharedDTO);
+                            Log.i(AppConst.TAG_RegisterService, " SharedDTO: " + Utils.registerUserDTO.getFirebaseId());
+                        }
+
+                        // DONE
+                        Toast.makeText(this, "Register successfully !", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, Drawer.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        Log.w(AppConst.TAG_FirebaseAuthentication, "signInWithEmail:failure", task.getException());
+                    }
+                });
     }
 }

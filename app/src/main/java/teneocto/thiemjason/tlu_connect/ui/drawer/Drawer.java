@@ -2,13 +2,17 @@ package teneocto.thiemjason.tlu_connect.ui.drawer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +42,7 @@ public class Drawer extends AppCompatActivity {
 
         this.initDrawerLayout();
         this.drawerListener();
+        this.setUpPermission();
 
         mNotification = findViewById(R.id.home_notification_icon);
         mNotification.setOnClickListener(v -> {
@@ -113,5 +118,24 @@ public class Drawer extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * Request Permission
+     */
+    private void setUpPermission() {
+        int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            makeRequest();
+        }
+    }
+
+    private void makeRequest() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1888);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

@@ -33,6 +33,7 @@ import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.receiver.NetworkReceiver;
 import teneocto.thiemjason.tlu_connect.service.SyncLocalDBService;
+import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
@@ -55,26 +56,38 @@ public class Launcher extends AppCompatActivity {
         this.initFirebaseMessaging();
         this.setUpPermission();
         this.setUpReceiver();
-        this.setUpFirebaseDatabase();
+        this.setUpSocialNWFromFirebaseDatabase();
+
+        String userUUID = Utils.getUserUUID(this);
+
+        if ( userUUID == null || userUUID.equals("")) {
+            Thread background;
+            background = new Thread() {
+                public void run() {
+                    try {
+                        sleep(1000);
+                        appStart();
+                    } catch (Exception e) {
+                    }
+                }
+            };
+            // start thread
+            background.start();
+            return;
+        }
+
+        AppConst.USER_UID_Static = Utils.getUserUUID(this);
+        this.setUpUserDTOFromFirebaseDatabase();
         this.startSyncLocalDBService();
+
+        // Go to Home activity
+        Intent intent = new Intent(this, Drawer.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
 
         // SEED DATA
         //  firebaseDBExample = new FirebaseDBExample(this);
         //  firebaseDBExample.FirebaseDataSeeder();
-
-        DBHelper dbHelper = new DBHelper(this);
-        Thread background;
-        background = new Thread() {
-            public void run() {
-                try {
-                    sleep(1000);
-                    appStart();
-                } catch (Exception e) {
-                }
-            }
-        };
-        // start thread
-        background.start();
     }
 
     // Start Service
@@ -140,7 +153,7 @@ public class Launcher extends AppCompatActivity {
         dbHelper = new DBHelper(this);
     }
 
-    private void setUpFirebaseDatabase() {
+    private void setUpSocialNWFromFirebaseDatabase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
@@ -161,7 +174,9 @@ public class Launcher extends AppCompatActivity {
                 setUpSQLiteDB();
             }
         });
+    }
 
+    private void setUpUserDTOFromFirebaseDatabase(){
         databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
         Utils.userDTOArrayList = new ArrayList<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

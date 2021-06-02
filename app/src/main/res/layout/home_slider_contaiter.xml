@@ -69,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/phetsarath"
-        android:text="Facebook"
+        android:text=""
         android:textAlignment="center"
         android:textFontWeight="700"
         android:textStyle="bold"
@@ -77,20 +77,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_slider_linearlayout" />
 
+    <include
+        android:id="@+id/home_slider_con_empty"
+        layout="@layout/social_network_empty"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="2dp"
+        android:layout_weight="2"
+        android:adjustViewBounds="true"
+        android:background="@drawable/corner_radius_image"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_slider_item_name" />
+
     <ImageView
         android:id="@+id/home_qr_image"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="2dp"
-        android:layout_marginBottom="6dp"
         android:layout_weight="2"
+        android:textAlignment="center"
         android:adjustViewBounds="true"
         android:background="@drawable/corner_radius_image"
         android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_slider_item_name" />
 

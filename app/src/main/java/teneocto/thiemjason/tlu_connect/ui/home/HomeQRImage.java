@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,8 +71,10 @@ public class HomeQRImage extends Fragment {
     TextView itemName;
     TextView itemUrl;
     ImageView qrImage;
+    View emptyImage;
     View mRULContainer;
     Button mShareImageBtn;
+    LinearLayout sliderContainer;
 
     // URL container
     private ClipboardManager mClipboard;
@@ -173,8 +176,10 @@ public class HomeQRImage extends Fragment {
         itemName = view.findViewById(R.id.home_slider_item_name);
         qrImage = view.findViewById(R.id.home_qr_image);
         itemUrl = view.findViewById(R.id.home_url_text);
+        emptyImage = view.findViewById(R.id.home_slider_con_empty);
         mRULContainer = view.findViewById(R.id.home_view_url_container);
         mShareImageBtn = view.findViewById(R.id.home_slider_share_image);
+        sliderContainer = view.findViewById(R.id.home_slider_linearlayout);
         mRULContainer.setOnClickListener(v -> copyDataToClipboard());
         mShareImageBtn.setOnClickListener(v -> shareImage(container.getContext()));
 
@@ -218,18 +223,29 @@ public class HomeQRImage extends Fragment {
         // Back - Forward button
         ImageView backButton = view.findViewById(R.id.home_back_arrow);
         ImageView forwardButton = view.findViewById(R.id.home_forward_arrow);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backButtonOnLick();
-            }
-        });
-        forwardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                forwardButtonOnLick();
-            }
-        });
+        backButton.setOnClickListener(v -> backButtonOnLick());
+        forwardButton.setOnClickListener(v -> forwardButtonOnLick());
+
+        hideShowHomeComponent();
+    }
+
+    private void hideShowHomeComponent(){
+        if(sharedDTOArrays.size() == 0){
+            this.qrImage.setVisibility(View.GONE);
+            this.sliderContainer.setVisibility(View.GONE);
+            this.mRULContainer.setVisibility(View.GONE);
+            this.mShareImageBtn.setVisibility(View.GONE);
+
+            this.emptyImage.setVisibility(View.VISIBLE);
+        }
+        else{
+            this.qrImage.setVisibility(View.VISIBLE);
+            this.emptyImage.setVisibility(View.GONE);
+            this.qrImage.setVisibility(View.VISIBLE);
+            this.sliderContainer.setVisibility(View.VISIBLE);
+            this.mRULContainer.setVisibility(View.VISIBLE);
+            this.mShareImageBtn.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -285,16 +301,16 @@ public class HomeQRImage extends Fragment {
     private void loadDataFromFirebase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
-        databaseReference.child(AppConst.SP_CURRENT_USER_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         sharedDTOArrays.add(data.getValue(SharedDTO.class));
                     }
+                    homeSliderAdapter.notifyDataSetChanged();
+                    pageChange();
                 }
-                homeSliderAdapter.notifyDataSetChanged();
-                pageChange();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -2,6 +2,7 @@ package teneocto.thiemjason.tlu_connect.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -72,7 +73,7 @@ public class Utils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static UserDTO getUserDTOFromId(String id){
+    public static UserDTO getUserDTOFromId(String id) {
         return Utils.userDTOArrayList.stream().filter(x -> x.getId().equals(id)).collect(Collectors.toList()).get(0);
     }
 
@@ -93,7 +94,26 @@ public class Utils {
         return Uri.parse(path);
     }
 
-    public static String getRandomUUID(){
+    public static String getRandomUUID() {
         return UUID.randomUUID().toString();
+    }
+
+    public static void setPrefer(Context context, String key, String data) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, data);
+        editor.apply();
+    }
+
+    public static String getPrefer(Context context, String key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
+        String text = sharedPreferences.getString(key, "");
+        return text;
+    }
+
+    public static String getUserUUID(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
+        String text = sharedPreferences.getString(AppConst.USER_UID, "");
+        return text;
     }
 }

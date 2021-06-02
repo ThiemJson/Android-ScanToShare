@@ -79,10 +79,6 @@ public class RegisterSocialNetworkViewModel extends ViewModel {
         return true;
     }
 
-    public void registerSocialNetwork() {
-
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();

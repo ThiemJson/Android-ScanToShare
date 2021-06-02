@@ -5,9 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,8 +16,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.io.UTFDataFormatException;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
@@ -35,6 +31,7 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
  */
 public class ProfileSocialNetwork extends Fragment {
     RecyclerView mSocialRecyclerView;
+    View mEmptyImage;
     RegisterAdapter mSocialAdapter;
 
     FloatingActionButton mFloatingButton;
@@ -91,12 +88,14 @@ public class ProfileSocialNetwork extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ProfileSharedViewModel.class);
         this.initRecycleView(view);
         viewModel.dataFetched.observe(getViewLifecycleOwner(), aBoolean -> mSocialAdapter.notifyDataSetChanged());
+        hideShowEmptyImage();
         return view;
     }
 
     private void initRecycleView(View view) {
         this.mFloatingButton = view.findViewById(R.id.tab_view_social_fab);
         this.mSocialRecyclerView = view.findViewById(R.id.tab_view_social_recycle_view);
+        this.mEmptyImage = view.findViewById(R.id.profile_social_network_empty);
 
         this.mSocialAdapter = new RegisterAdapter(getActivity(), viewModel.sharedDTOLiveData);
         this.mSocialRecyclerView.setAdapter(this.mSocialAdapter);
@@ -122,6 +121,7 @@ public class ProfileSocialNetwork extends Fragment {
             }
         });
 
+        // Delete item
         mSocialAdapter.setOnItemClickListener((view1, position) -> {
             viewModel.sharedDTOLiveData.remove(position);
             Log.i(AppConst.TAG_Profile_Social_NW, " tesssttt: position " + position);
@@ -130,33 +130,46 @@ public class ProfileSocialNetwork extends Fragment {
 
             mSocialAdapter.notifyItemRemoved(position);
             mSocialAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOLiveData.size());
+            hideShowEmptyImage();
         });
+    }
+
+    private void hideShowEmptyImage(){
+        if(viewModel.sharedDTOLiveData.size() == 0 ){
+            this.mSocialRecyclerView.setVisibility(View.INVISIBLE);
+            this.mEmptyImage.setVisibility(View.VISIBLE);
+        }
+        else{
+            this.mSocialRecyclerView.setVisibility(View.VISIBLE);
+            this.mEmptyImage.setVisibility(View.GONE);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void addItem(String name) {
         SharedDTO sharedDTO = null;
         if ("Instagram".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Instagram").getId(), "https://instagram.com/");
         }
 
         if ("Twitter".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Twitter").getId(), "https://twitter.com/");
         }
 
         if ("Snapchat".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Snapchat").getId(), "https://snapchat.com/add/");
         }
 
         if ("LinkedIn".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("LinkedIn").getId(), "https://linkedin.com/in/");
         }
 
         if ("Facebook".equals(name)) {
-            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.SP_CURRENT_USER_ID, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
+            sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
         }
         viewModel.addShared(sharedDTO);
         this.mSocialAdapter.notifyItemInserted(viewModel.sharedDTOLiveData.size());
+        hideShowEmptyImage();
     }
 
     /**

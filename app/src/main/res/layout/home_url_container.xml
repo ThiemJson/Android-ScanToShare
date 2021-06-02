@@ -37,7 +37,7 @@
             android:fontFamily="@font/phetsarath"
             android:gravity="center"
             android:paddingBottom="3dp"
-            android:text="https:facebook.com/thiemtinhte"
+            android:text=""
             android:textAlignment="center"
             android:textFontWeight="700"
             android:textSize="10dp"
