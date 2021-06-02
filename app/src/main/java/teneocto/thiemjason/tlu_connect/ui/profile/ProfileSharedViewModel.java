@@ -138,9 +138,8 @@ public class ProfileSharedViewModel extends ViewModel {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         sharedDTOLiveData.add(data.getValue(SharedDTO.class));
                     }
+                    dataFetched.setValue(true);
                 }
-
-                dataFetched.setValue(true);
             }
 
             @Override
@@ -155,8 +154,8 @@ public class ProfileSharedViewModel extends ViewModel {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot != null) {
                     userDTO = snapshot.getValue(UserDTO.class);
+                    userDataFetched.setValue(true);
                 }
-                userDataFetched.setValue(true);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

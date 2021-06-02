@@ -1,6 +1,7 @@
 package teneocto.thiemjason.tlu_connect.ui.register;
 
 import androidx.annotation.RequiresApi;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -138,14 +140,9 @@ public class RegisterSocialNetwork extends AppCompatActivity {
      * Handler when user clicked on Floating Action button
      */
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void fabOnClick() {
-        this.mBottomSheetFragment = new BottomSheetFragment(this, new BottomSheetFragment.OnItemClick() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemClick(View view, int position) {
-                bottomSheetItemClick(view, position);
-            }
-        });
+        this.mBottomSheetFragment = new BottomSheetFragment(this, (view, position) -> bottomSheetItemClick(view, position));
         mBottomSheetFragment.show(getSupportFragmentManager(), mBottomSheetFragment.getTag());
     }
 
@@ -174,7 +171,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         registerUser(Utils.registerUserDTO.getEmail());
     }
 
-    private void registerUser(String userEmail){
+    private void registerUser(String userEmail) {
         firebaseSignUpWithEmail(userEmail, AppConst.USER_PASS);
     }
 
@@ -210,8 +207,9 @@ public class RegisterSocialNetwork extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Log.d(AppConst.TAG_FirebaseAuthentication, "signInWithEmail:success");
 
-                        Utils.setPrefer(getApplicationContext(), AppConst.USER_UID, Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
-                        Utils.registerUserDTO.setFirebaseId(mAuth.getUid());
+                        Utils.registerUserDTO.setFirebaseId(mAuth.getCurrentUser().getUid());
+                        Utils.setPrefer(getApplicationContext(), AppConst.USER_UID, Utils.registerUserDTO.getId());
+                        AppConst.USER_UID_Static = Utils.registerUserDTO.getId();
 
                         // Sync data into firebase
                         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
@@ -219,7 +217,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
 
                         Log.i(AppConst.TAG_RegisterService, " Current user UID: " + Utils.registerUserDTO.getFirebaseId());
                         for (SharedDTO sharedDTO : Utils.sharedDTOArrayList) {
-                            sharedDTO.setUserID(Utils.getPrefer(getApplicationContext(), AppConst.USER_UID));
+                            sharedDTO.setUserID(Utils.getUserUUID(getApplicationContext()));
                             firebaseDBHelper.Shared_Insert(sharedDTO);
                             Log.i(AppConst.TAG_RegisterService, " SharedDTO: " + Utils.registerUserDTO.getFirebaseId());
                         }

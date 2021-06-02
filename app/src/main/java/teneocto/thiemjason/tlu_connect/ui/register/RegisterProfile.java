@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Base64;
@@ -37,7 +38,6 @@ public class RegisterProfile extends AppCompatActivity {
     private UserDTO userDTO;
     public static String TAG = "RegisterProfile";
     ImageView mImagePicker;
-    DBHelper dbHelper;
     int SELECT_PHOTO = 1;
     Uri uri;
 
@@ -67,7 +67,7 @@ public class RegisterProfile extends AppCompatActivity {
         mPosition = findViewById(R.id.register_edt_position);
         mCompany = findViewById(R.id.register_edt_company);
 
-        if (Utils.registerUserDTO != null){
+        if (Utils.registerUserDTO != null) {
             mLastName.setText(Utils.registerUserDTO.getLastName());
             mFirstName.setText(Utils.registerUserDTO.getFirstName());
             mEmail.setText(Utils.registerUserDTO.getEmail());
@@ -83,12 +83,12 @@ public class RegisterProfile extends AppCompatActivity {
         mRegisterProfileViewModel = ViewModelProviders.of(this).get(RegisterProfileViewModel.class);
 
         userDTO = Utils.registerUserDTO;
-        if (userDTO == null ){
+        if (userDTO == null) {
             userDTO = new UserDTO();
         }
         mRegisterProfileViewModel.isVerify.observe(this, aBoolean -> {
             // False
-            if (!aBoolean){
+            if (!aBoolean) {
                 Toast.makeText(this, "Please make sure your email address is correct", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -129,11 +129,33 @@ public class RegisterProfile extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     void nextButton() {
-        userDTO.setCompany(mCompany.getText().toString().trim());
-        userDTO.setLastName(mLastName.getText().toString().trim());
-        userDTO.setFirstName(mFirstName.getText().toString().trim());
-        userDTO.setEmail(mEmail.getText().toString().trim());
-        userDTO.setPosition(mPosition.getText().toString().trim());
+        String userCompany = mCompany.getText().toString().trim();
+        if (userCompany.equals("")){
+            userCompany = "Your company";
+        }
+
+        String userLastName = mLastName.getText().toString().trim();
+        if (userLastName.equals("")){
+            userLastName = "Your last name";
+        }
+
+        String userFirstName = mFirstName.getText().toString().trim();
+        if (userFirstName.equals("")){
+            userFirstName = "Your first name";
+        }
+
+        String userPosition = mPosition.getText().toString().trim();
+        if (userPosition.equals("")){
+            userPosition  = "Your position";
+        }
+
+
+        userDTO.setCompany(userCompany);
+        userDTO.setLastName(userLastName);
+        userDTO.setFirstName(userFirstName);
+        userDTO.setEmail(mEmail.getText(). toString().trim());
+        userDTO.setPosition(userPosition);
+        userDTO.setId(Utils.getRandomUUID());
         BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
         byte[] imageBase64 = Utils.getBitmapAsByteArray(bitmap);

@@ -35,7 +35,10 @@ public class NotificationViewModel extends ViewModel {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
-                        notificationDTOArrayList.add(data.getValue(NotificationDTO.class));
+                        NotificationDTO notificationDTO = data.getValue(NotificationDTO.class);
+                        if (checkNotificationDuplicate(notificationDTO)) {
+                            notificationDTOArrayList.add(data.getValue(NotificationDTO.class));
+                        }
                     }
                     isFetched.setValue(true);
                 }
@@ -48,6 +51,14 @@ public class NotificationViewModel extends ViewModel {
         });
     }
 
+    private Boolean checkNotificationDuplicate(NotificationDTO _notificationDTO) {
+        for (NotificationDTO notificationDTO : notificationDTOArrayList) {
+            if (notificationDTO.getId().equals(_notificationDTO.getId())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private void loadDataFromSQLite() {
 

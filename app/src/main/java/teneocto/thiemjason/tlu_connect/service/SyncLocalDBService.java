@@ -106,11 +106,15 @@ public class SyncLocalDBService extends Service {
 
                 }
 
-                // Sync data
-                dbHelper.deleteRecord(DBConst.NOTIFICATION_TABLE_NAME);
-                for (NotificationDTO notificationDTO : notificationDTOList) {
-                    dbHelper.NOTIFICATION_Insert(notificationDTO);
-                    Log.i(AppConst.SyncLocalDatabaseService, "Notification DATA INSERT: " + notificationDTO.getTitle());
+                if (notificationDTOList.size() != 0) {
+                    // Sync data
+                    dbHelper.deleteRecord(DBConst.NOTIFICATION_TABLE_NAME);
+                    for (NotificationDTO notificationDTO : notificationDTOList) {
+                        dbHelper.NOTIFICATION_Insert(notificationDTO);
+                        Log.i(AppConst.SyncLocalDatabaseService, "Notification DATA INSERT: " + notificationDTO.getTitle());
+                    }
+                } else {
+                    dbHelper.deleteRecord(DBConst.NOTIFICATION_TABLE_NAME);
                 }
 
                 isFetched.setValue(isFetched.getValue() + 1);

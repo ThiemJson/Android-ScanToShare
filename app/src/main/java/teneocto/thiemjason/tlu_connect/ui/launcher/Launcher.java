@@ -33,6 +33,7 @@ import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.receiver.NetworkReceiver;
 import teneocto.thiemjason.tlu_connect.service.SyncLocalDBService;
+import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
@@ -57,7 +58,7 @@ public class Launcher extends AppCompatActivity {
         this.setUpReceiver();
         this.setUpSocialNWFromFirebaseDatabase();
 
-        String userUUID = Utils.getPrefer(this, AppConst.USER_UID);
+        String userUUID = Utils.getUserUUID(this);
 
         if ( userUUID == null || userUUID.equals("")) {
             Thread background;
@@ -78,6 +79,11 @@ public class Launcher extends AppCompatActivity {
         AppConst.USER_UID_Static = Utils.getUserUUID(this);
         this.setUpUserDTOFromFirebaseDatabase();
         this.startSyncLocalDBService();
+
+        // Go to Home activity
+        Intent intent = new Intent(this, Drawer.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
 
         // SEED DATA
         //  firebaseDBExample = new FirebaseDBExample(this);

@@ -1,5 +1,7 @@
 package teneocto.thiemjason.tlu_connect.models;
 
+import com.bumptech.glide.util.Util;
+
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class UserDTO {
@@ -19,6 +21,7 @@ public class UserDTO {
         this.position = "Your position";
         this.email = " ";
         this.firebaseId = Utils.getRandomUUID();
+        this.id = Utils.getRandomUUID();
     }
 
     public UserDTO(String id, String firstName, String lastName, String email, String position, String company, String imageBase64) {

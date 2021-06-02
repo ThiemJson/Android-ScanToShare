@@ -31,6 +31,7 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
  */
 public class ProfileSocialNetwork extends Fragment {
     RecyclerView mSocialRecyclerView;
+    View mEmptyImage;
     RegisterAdapter mSocialAdapter;
 
     FloatingActionButton mFloatingButton;
@@ -87,12 +88,14 @@ public class ProfileSocialNetwork extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ProfileSharedViewModel.class);
         this.initRecycleView(view);
         viewModel.dataFetched.observe(getViewLifecycleOwner(), aBoolean -> mSocialAdapter.notifyDataSetChanged());
+        hideShowEmptyImage();
         return view;
     }
 
     private void initRecycleView(View view) {
         this.mFloatingButton = view.findViewById(R.id.tab_view_social_fab);
         this.mSocialRecyclerView = view.findViewById(R.id.tab_view_social_recycle_view);
+        this.mEmptyImage = view.findViewById(R.id.profile_social_network_empty);
 
         this.mSocialAdapter = new RegisterAdapter(getActivity(), viewModel.sharedDTOLiveData);
         this.mSocialRecyclerView.setAdapter(this.mSocialAdapter);
@@ -118,6 +121,7 @@ public class ProfileSocialNetwork extends Fragment {
             }
         });
 
+        // Delete item
         mSocialAdapter.setOnItemClickListener((view1, position) -> {
             viewModel.sharedDTOLiveData.remove(position);
             Log.i(AppConst.TAG_Profile_Social_NW, " tesssttt: position " + position);
@@ -126,7 +130,19 @@ public class ProfileSocialNetwork extends Fragment {
 
             mSocialAdapter.notifyItemRemoved(position);
             mSocialAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOLiveData.size());
+            hideShowEmptyImage();
         });
+    }
+
+    private void hideShowEmptyImage(){
+        if(viewModel.sharedDTOLiveData.size() == 0 ){
+            this.mSocialRecyclerView.setVisibility(View.INVISIBLE);
+            this.mEmptyImage.setVisibility(View.VISIBLE);
+        }
+        else{
+            this.mSocialRecyclerView.setVisibility(View.VISIBLE);
+            this.mEmptyImage.setVisibility(View.GONE);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -153,6 +169,7 @@ public class ProfileSocialNetwork extends Fragment {
         }
         viewModel.addShared(sharedDTO);
         this.mSocialAdapter.notifyItemInserted(viewModel.sharedDTOLiveData.size());
+        hideShowEmptyImage();
     }
 
     /**
