@@ -26,7 +26,7 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
 public class ProfileSharedViewModel extends ViewModel {
     public ArrayList<SharedDTO> sharedDTOLiveData = new ArrayList<>();
     public MutableLiveData<Boolean> dataFetched = new MutableLiveData<Boolean>();
-    public MutableLiveData<Boolean> userDataFetched = new MutableLiveData<Boolean>( );
+    public MutableLiveData<Boolean> userDataFetched = new MutableLiveData<Boolean>();
     public UserDTO userDTO = new UserDTO();
     public String errorField = "";
 
@@ -122,6 +122,7 @@ public class ProfileSharedViewModel extends ViewModel {
      */
     public void loadDataFromFirebase() {
         if (sharedDTOLiveData == null) {
+            dataFetched.setValue(false);
             sharedDTOLiveData = new ArrayList<>();
         }
 
@@ -137,6 +138,7 @@ public class ProfileSharedViewModel extends ViewModel {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         sharedDTOLiveData.add(data.getValue(SharedDTO.class));
+                        Log.i(AppConst.TAG_RegisterProfileViewModel, " ==> List count" + sharedDTOLiveData.size());
                     }
                     dataFetched.setValue(true);
                 }
@@ -157,6 +159,7 @@ public class ProfileSharedViewModel extends ViewModel {
                     userDataFetched.setValue(true);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 loadDataFromSQLite();

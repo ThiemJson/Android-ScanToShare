@@ -229,16 +229,15 @@ public class HomeQRImage extends Fragment {
         hideShowHomeComponent();
     }
 
-    private void hideShowHomeComponent(){
-        if(sharedDTOArrays.size() == 0){
+    private void hideShowHomeComponent() {
+        if (sharedDTOArrays.size() == 0) {
             this.qrImage.setVisibility(View.GONE);
             this.sliderContainer.setVisibility(View.GONE);
             this.mRULContainer.setVisibility(View.GONE);
             this.mShareImageBtn.setVisibility(View.GONE);
 
             this.emptyImage.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             this.qrImage.setVisibility(View.VISIBLE);
             this.emptyImage.setVisibility(View.GONE);
             this.qrImage.setVisibility(View.VISIBLE);
@@ -270,6 +269,8 @@ public class HomeQRImage extends Fragment {
         int position = viewPager2.getCurrentItem();
         String socialNWId = sharedDTOArrays.get(position).getSocialNetWorkID();
         List<SocialNetworkDTO> socialNetworkDTO = Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getId().equals(socialNWId)).collect(Collectors.toList());
+        Log.i("HOMEQRImage", socialNetworkDTO.size() + "");
+
         itemUrl.setText(sharedDTOArrays.get(position).getUrl());
         itemName.setText(socialNetworkDTO.get(0).getName());
         QRGEncoder qrgEncoder = Utils.generateQRCodeFromContent(getActivity(), sharedDTOArrays.get(position).getUrl());
@@ -310,8 +311,10 @@ public class HomeQRImage extends Fragment {
                     }
                     homeSliderAdapter.notifyDataSetChanged();
                     pageChange();
+                    hideShowHomeComponent();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 loadDataFromSQLite();

@@ -87,7 +87,14 @@ public class ProfileSocialNetwork extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_social_network, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ProfileSharedViewModel.class);
         this.initRecycleView(view);
-        viewModel.dataFetched.observe(getViewLifecycleOwner(), aBoolean -> mSocialAdapter.notifyDataSetChanged());
+        viewModel.dataFetched.observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean) {
+                mSocialAdapter.notifyDataSetChanged();
+                hideShowEmptyImage();
+            }
+        });
+
+        viewModel.loadDataFromFirebase();
         hideShowEmptyImage();
         return view;
     }
@@ -134,12 +141,11 @@ public class ProfileSocialNetwork extends Fragment {
         });
     }
 
-    private void hideShowEmptyImage(){
-        if(viewModel.sharedDTOLiveData.size() == 0 ){
+    private void hideShowEmptyImage() {
+        if (viewModel.sharedDTOLiveData.size() == 0) {
             this.mSocialRecyclerView.setVisibility(View.INVISIBLE);
             this.mEmptyImage.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             this.mSocialRecyclerView.setVisibility(View.VISIBLE);
             this.mEmptyImage.setVisibility(View.GONE);
         }

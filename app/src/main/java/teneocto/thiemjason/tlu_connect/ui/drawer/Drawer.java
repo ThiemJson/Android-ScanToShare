@@ -124,10 +124,20 @@ public class Drawer extends AppCompatActivity {
      * Request Permission
      */
     private void setUpPermission() {
-        int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            makeRequest();
-        }
+        Thread background;
+        background = new Thread() {
+            public void run() {
+                try {
+                    int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+                    if (permission != PackageManager.PERMISSION_GRANTED) {
+                        makeRequest();
+                    }
+                } catch (Exception e) {
+                }
+            }
+        };
+        // start thread
+        background.start();
     }
 
     private void makeRequest() {

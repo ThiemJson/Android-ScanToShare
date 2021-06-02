@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,15 +53,14 @@ public class Launcher extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
-        // App initial
-        this.initFirebaseMessaging();
-        this.setUpPermission();
-        this.setUpReceiver();
-        this.setUpSocialNWFromFirebaseDatabase();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
+        // App initial
+        this.appInitial();
+        this.setUpSocialNWFromFirebaseDatabase();
         String userUUID = Utils.getUserUUID(this);
 
-        if ( userUUID == null || userUUID.equals("")) {
+        if (userUUID == null || userUUID.equals("")) {
             Thread background;
             background = new Thread() {
                 public void run() {
@@ -76,18 +76,37 @@ public class Launcher extends AppCompatActivity {
             return;
         }
 
+        // Check user loggedIN
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Log.i(AppConst.TAG_Launcher, " ==>> LOGGED IN");
+        } else {
+            Log.i(AppConst.TAG_Launcher, " ==>> LOGGED OUT");
+        }
+
         AppConst.USER_UID_Static = Utils.getUserUUID(this);
         this.setUpUserDTOFromFirebaseDatabase();
         this.startSyncLocalDBService();
 
-        // Go to Home activity
-        Intent intent = new Intent(this, Drawer.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
 
         // SEED DATA
         //  firebaseDBExample = new FirebaseDBExample(this);
         //  firebaseDBExample.FirebaseDataSeeder();
+    }
+
+    private void appInitial() {
+        Thread background;
+        background = new Thread() {
+            public void run() {
+                try {
+                    initFirebaseMessaging();
+                    setUpPermission();
+                    setUpReceiver();
+                } catch (Exception e) {
+                }
+            }
+        };
+        // start thread
+        background.start();
     }
 
     // Start Service
@@ -154,8 +173,8 @@ public class Launcher extends AppCompatActivity {
     }
 
     private void setUpSocialNWFromFirebaseDatabase() {
+        Log.i(AppConst.TAG_Launcher, " setUpSocialNWFromFirebaseDatabase ");
         firebaseDatabase = FirebaseDatabase.getInstance();
-
         databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
         Utils.socialNetworkDTOArrayList = new ArrayList<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -166,17 +185,19 @@ public class Launcher extends AppCompatActivity {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         Utils.socialNetworkDTOArrayList.add(data.getValue(SocialNetworkDTO.class));
                     }
+                    Log.i(AppConst.TAG_Launcher, Utils.socialNetworkDTOArrayList.size() + "");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 setUpSQLiteDB();
+                Log.i(AppConst.TAG_Launcher, " Error ");
             }
         });
     }
 
-    private void setUpUserDTOFromFirebaseDatabase(){
+    private void setUpUserDTOFromFirebaseDatabase() {
         databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
         Utils.userDTOArrayList = new ArrayList<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -186,6 +207,11 @@ public class Launcher extends AppCompatActivity {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         Utils.userDTOArrayList.add(data.getValue(UserDTO.class));
                     }
+
+                    // Go to Home activity
+                    Intent intent = new Intent(getApplicationContext(), Drawer.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
             }
 

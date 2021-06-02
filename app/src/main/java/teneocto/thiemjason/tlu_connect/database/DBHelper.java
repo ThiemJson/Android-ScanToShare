@@ -188,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<NotificationDTO> arrayList = new ArrayList<>();
 
         String selection = DBConst.NOTIFICATION_USER_ID + " = ?";
-        String[] selectionArgs = {AppConst.USER_UID_Static + ""};
+        String[] selectionArgs = {AppConst.USER_UID_Static};
 
         Cursor cursor = sqLiteDatabase.query(DBConst.NOTIFICATION_TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {

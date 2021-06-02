@@ -106,6 +106,7 @@ public class SyncLocalDBService extends Service {
 
                 }
 
+                dbHelper.deleteRecord(DBConst.NOTIFICATION_TABLE_NAME);
                 if (notificationDTOList.size() != 0) {
                     // Sync data
                     dbHelper.deleteRecord(DBConst.NOTIFICATION_TABLE_NAME);
@@ -114,10 +115,11 @@ public class SyncLocalDBService extends Service {
                         Log.i(AppConst.SyncLocalDatabaseService, "Notification DATA INSERT: " + notificationDTO.getTitle());
                     }
                 } else {
-                    dbHelper.deleteRecord(DBConst.NOTIFICATION_TABLE_NAME);
+
                 }
 
                 isFetched.setValue(isFetched.getValue() + 1);
+                Log.i(AppConst.TAG_SyncLocalDBService, " service notification count: " + isFetched.getValue());
                 if (isFetched.getValue() == 5) {
                     stopSelf();
                 }
@@ -147,12 +149,17 @@ public class SyncLocalDBService extends Service {
 
                 // Sync data
                 dbHelper.deleteRecord(DBConst.SCAN_TABLE_NAME);
-                for (ScanningHistoryDTO scanningHistoryDTO : scanningHistoryDTOList) {
-                    dbHelper.SCANNING_HISTORY_Insert(scanningHistoryDTO);
-                    Log.i(AppConst.SyncLocalDatabaseService, "ScanningHis DATA INSERT: " + scanningHistoryDTO.getLocalUserID());
+                if (scanningHistoryDTOList.size() == 0) {
+
+                } else {
+                    for (ScanningHistoryDTO scanningHistoryDTO : scanningHistoryDTOList) {
+                        dbHelper.SCANNING_HISTORY_Insert(scanningHistoryDTO);
+                        Log.i(AppConst.SyncLocalDatabaseService, "ScanningHis DATA INSERT: " + scanningHistoryDTO.getLocalUserID());
+                    }
                 }
 
                 isFetched.setValue(isFetched.getValue() + 1);
+                Log.i(AppConst.TAG_SyncLocalDBService, " service scanning count: " + isFetched.getValue());
                 if (isFetched.getValue() == 5) {
                     stopSelf();
                 }
@@ -167,7 +174,7 @@ public class SyncLocalDBService extends Service {
     private void syncShared() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
-        databaseReference.child(AppConst.USER_UID_Static + "").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
@@ -175,13 +182,18 @@ public class SyncLocalDBService extends Service {
                         sharedDTOList.add(data.getValue(SharedDTO.class));
                         Log.i(AppConst.SyncLocalDatabaseService, "Shared FETCH: " + data.getValue(SharedDTO.class).getSocialNetWorkID());
                     }
+
                     // Sync data
                     dbHelper.deleteRecord(DBConst.SHARED_TABLE_NAME);
-                    for (SharedDTO sharedDTO : sharedDTOList) {
-                        dbHelper.SHARED_Insert(sharedDTO);
-                        Log.i(AppConst.SyncLocalDatabaseService, "Shared DATA INSERT: " + sharedDTO.getSocialNetWorkID());
+                    if (sharedDTOList.size() != 0) {
+                        for (SharedDTO sharedDTO : sharedDTOList) {
+                            dbHelper.SHARED_Insert(sharedDTO);
+                            Log.i(AppConst.SyncLocalDatabaseService, "Shared DATA INSERT: " + sharedDTO.getSocialNetWorkID());
+                        }
                     }
+
                     isFetched.setValue(isFetched.getValue() + 1);
+                    Log.i(AppConst.TAG_SyncLocalDBService, " service shared count: " + isFetched.getValue());
                     if (isFetched.getValue() == 5) {
                         stopSelf();
                     }
@@ -208,11 +220,16 @@ public class SyncLocalDBService extends Service {
                     }
                     // Sync data
                     dbHelper.deleteRecord(DBConst.USER_TABLE_NAME);
-                    for (UserDTO userDTO : userDTOList) {
-                        dbHelper.USER_Insert(userDTO);
-                        Log.i(AppConst.SyncLocalDatabaseService, "User DATA INSERT: " + userDTO.getLastName());
+
+                    if (userDTOList.size() != 0) {
+                        for (UserDTO userDTO : userDTOList) {
+                            dbHelper.USER_Insert(userDTO);
+                            Log.i(AppConst.SyncLocalDatabaseService, "User DATA INSERT: " + userDTO.getLastName());
+                        }
                     }
+
                     isFetched.setValue(isFetched.getValue() + 1);
+                    Log.i(AppConst.TAG_SyncLocalDBService, " service user count: " + isFetched.getValue());
                     if (isFetched.getValue() == 5) {
                         stopSelf();
                     }
@@ -239,11 +256,15 @@ public class SyncLocalDBService extends Service {
                     }
                     // Sync data
                     dbHelper.deleteRecord(DBConst.SN_TABLE_NAME);
-                    for (SocialNetworkDTO socialNetworkDTO : socialNetworkDTOList) {
-                        dbHelper.SOCIAL_NETWORK_Insert(socialNetworkDTO);
-                        Log.i(AppConst.SyncLocalDatabaseService, "Social NW DATA INSERT: " + socialNetworkDTO.getName());
+                    if (socialNetworkDTOList.size() != 0) {
+                        for (SocialNetworkDTO socialNetworkDTO : socialNetworkDTOList) {
+                            dbHelper.SOCIAL_NETWORK_Insert(socialNetworkDTO);
+                            Log.i(AppConst.SyncLocalDatabaseService, "Social NW DATA INSERT: " + socialNetworkDTO.getName());
+                        }
                     }
+
                     isFetched.setValue(isFetched.getValue() + 1);
+                    Log.i(AppConst.TAG_SyncLocalDBService, " service social count: " + isFetched.getValue());
                     if (isFetched.getValue() == 5) {
                         stopSelf();
                     }
