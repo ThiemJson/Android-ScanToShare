@@ -52,41 +52,24 @@ public class Launcher extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         // App initial
         this.appInitial();
-        this.setUpSocialNWFromFirebaseDatabase();
         String userUUID = Utils.getUserUUID(this);
 
-        if (userUUID == null || userUUID.equals("")) {
-            Thread background;
-            background = new Thread() {
-                public void run() {
-                    try {
-                        sleep(1000);
-                        appStart();
-                    } catch (Exception e) {
-                    }
-                }
-            };
-            // start thread
-            background.start();
-            return;
-        }
-
         // Check user loggedIN
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        if (userUUID == null || userUUID.equals("")) {
             Log.i(AppConst.TAG_Launcher, " ==>> LOGGED IN");
+            this.setUpSocialNWFromFirebaseDatabase(false);
+            return;
         } else {
             Log.i(AppConst.TAG_Launcher, " ==>> LOGGED OUT");
         }
 
+        this.setUpSocialNWFromFirebaseDatabase(true);
         AppConst.USER_UID_Static = Utils.getUserUUID(this);
         this.setUpUserDTOFromFirebaseDatabase();
-        this.startSyncLocalDBService();
-
 
         // SEED DATA
         //  firebaseDBExample = new FirebaseDBExample(this);
@@ -94,19 +77,11 @@ public class Launcher extends AppCompatActivity {
     }
 
     private void appInitial() {
-        Thread background;
-        background = new Thread() {
-            public void run() {
-                try {
-                    initFirebaseMessaging();
-                    setUpPermission();
-                    setUpReceiver();
-                } catch (Exception e) {
-                }
-            }
-        };
-        // start thread
-        background.start();
+        new Thread(() -> {
+            initFirebaseMessaging();
+            setUpPermission();
+            setUpReceiver();
+        }).start();
     }
 
     // Start Service
@@ -172,7 +147,7 @@ public class Launcher extends AppCompatActivity {
         dbHelper = new DBHelper(this);
     }
 
-    private void setUpSocialNWFromFirebaseDatabase() {
+    private void setUpSocialNWFromFirebaseDatabase(Boolean isLoggedIn) {
         Log.i(AppConst.TAG_Launcher, " setUpSocialNWFromFirebaseDatabase ");
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
@@ -184,6 +159,10 @@ public class Launcher extends AppCompatActivity {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         Utils.socialNetworkDTOArrayList.add(data.getValue(SocialNetworkDTO.class));
+                    }
+
+                    if (!isLoggedIn) {
+                        appStart();
                     }
                     Log.i(AppConst.TAG_Launcher, Utils.socialNetworkDTOArrayList.size() + "");
                 }
@@ -222,8 +201,7 @@ public class Launcher extends AppCompatActivity {
         });
     }
 
-    private void appStart() throws InterruptedException {
-        Thread.sleep(3000);
+    private void appStart() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

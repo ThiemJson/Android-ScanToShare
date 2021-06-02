@@ -1,5 +1,7 @@
 package teneocto.thiemjason.tlu_connect.ui.main;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
@@ -7,20 +9,53 @@ import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
+import teneocto.thiemjason.tlu_connect.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.uimodels.UIMainSliderItemDTO;
 import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager2 mViewPager;
@@ -28,8 +63,13 @@ public class MainActivity extends AppCompatActivity {
     AdView adView;
 
     // Button
-    Button mConnectFacebook;
     Button mSkip;
+
+    // Facebook Authentication
+    LoginButton loginButton;
+    CallbackManager mCallbackManager;
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +78,11 @@ public class MainActivity extends AppCompatActivity {
         loadAd();
         initSlider();
 
-        mConnectFacebook = findViewById(R.id.btn_main_ac_register_facebook);
+        loginButton = findViewById(R.id.btn_main_ac_register_facebook);
         mSkip = findViewById(R.id.btn_main_ac_skip);
+        mAuth = FirebaseAuth.getInstance();
 
-        mConnectFacebook.setOnClickListener(v -> connectFacebook());
+        loginButton.setOnClickListener(v -> connectFacebook());
         mSkip.setOnClickListener(v -> skip());
     }
 
@@ -106,13 +147,109 @@ public class MainActivity extends AppCompatActivity {
         adView.loadAd(adRequest);
     }
 
-    void connectFacebook(){
-//        DBHelper dbHelper = new DBHelper(this);
-//        dbHelper.dropDatabase(DBConst.DB_NAME);
-    }
-
-    void skip(){
+    void skip() {
         Intent intent = new Intent(this, RegisterProfile.class);
         startActivity(intent);
+    }
+
+    /**
+     * FACEBOOK Authentication
+     */
+    void connectFacebook() {
+        mCallbackManager = CallbackManager.Factory.create();
+        loginButton.setPermissions("user_friends");
+        loginButton.setPermissions("public_profile");
+        loginButton.setPermissions("email");
+        loginButton.setPermissions("user_birthday");
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(AppConst.TAG_MainActivity, "facebook:onCancel");
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(AppConst.TAG_MainActivity, "facebook:onError", error);
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Pass the activity result back to the Facebook SDK
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(AppConst.TAG_MainActivity, "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(AppConst.TAG_MainActivity, "signInWithCredential:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        Log.i(AppConst.TAG_MainActivity, "handleFacebookAccessToken:" + token);
+                        Log.i(AppConst.TAG_MainActivity, "current user uid:" + mAuth.getCurrentUser().getUid());
+                        Log.i(AppConst.TAG_MainActivity, "current user email:" + mAuth.getCurrentUser().getEmail());
+                        Log.i(AppConst.TAG_MainActivity, "current user display name:" + mAuth.getCurrentUser().getDisplayName());
+                        Log.i(AppConst.TAG_MainActivity, "current user image url:" + mAuth.getCurrentUser().getPhotoUrl());
+                        registerWithFacebook(token);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(AppConst.TAG_MainActivity, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(MainActivity.this, "Authentication with Facebook failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void registerWithFacebook(AccessToken token){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(mAuth.getCurrentUser().getEmail());
+        userDTO.setLastName("");
+        userDTO.setFirstName(mAuth.getCurrentUser().getDisplayName());
+        userDTO.setFirebaseId(mAuth.getCurrentUser().getUid());
+        userDTO.setId(Utils.getRandomUUID());
+
+        // Store
+        Utils.setPrefer(this, AppConst.FB_accessToken, token.getToken());
+
+        Bundle params = new Bundle();
+        params.putString("fields", "id,email,gender,cover,picture.type(large)");
+        new Thread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void run() {
+                try {
+                    URL newURL = new URL(mAuth.getCurrentUser().getPhotoUrl().toString() + "?width=500&height=500");
+                    Bitmap profilePic = BitmapFactory.decodeStream(newURL.openConnection().getInputStream());
+                    userDTO.setImageBase64(Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(profilePic)));
+
+                    Utils.registerUserDTO = userDTO;
+                    AppConst.USER_UID_Static = userDTO.getId();
+                    Utils.setPrefer(getApplicationContext(), AppConst.USER_UID, userDTO.getId());
+
+                    // Sync data into firebase
+                    FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
+                    firebaseDBHelper.USER_Insert(Utils.registerUserDTO);
+
+                    Intent intent = new Intent(getApplicationContext(), Drawer.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

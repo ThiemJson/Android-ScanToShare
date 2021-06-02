@@ -81,12 +81,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+
+    <com.facebook.login.widget.LoginButton
         android:id="@+id/btn_main_ac_register_facebook"
         android:layout_width="343dp"
         android:layout_height="43dp"
         android:layout_marginBottom="17dp"
         android:width="250dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
         android:background="@drawable/custom_button_facbook"
         android:fontFamily="@font/phetsarath"
         android:maxWidth="250dp"
@@ -102,6 +105,27 @@
         app:layout_constraintStart_toStartOf="@id/btn_main_ac_skip"
         tools:layout_editor_absoluteX="74dp"
         tools:layout_editor_absoluteY="605dp" />
+    <!--    <Button-->
+    <!--        android:id="@+id/btn_main_ac_register_facebook"-->
+    <!--        android:layout_width="343dp"-->
+    <!--        android:layout_height="43dp"-->
+    <!--        android:layout_marginBottom="17dp"-->
+    <!--        android:width="250dp"-->
+    <!--        android:background="@drawable/custom_button_facbook"-->
+    <!--        android:fontFamily="@font/phetsarath"-->
+    <!--        android:maxWidth="250dp"-->
+    <!--        android:minWidth="200dp"-->
+    <!--        android:text="Connect with Facebook"-->
+    <!--        android:textAllCaps="false"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textFontWeight="700"-->
+    <!--        android:textSize="17dp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/btn_main_ac_skip"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/btn_main_ac_skip"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/btn_main_ac_skip"-->
+    <!--        tools:layout_editor_absoluteX="74dp"-->
+    <!--        tools:layout_editor_absoluteY="605dp" />-->
 
     <Button
         android:id="@+id/btn_main_ac_skip"

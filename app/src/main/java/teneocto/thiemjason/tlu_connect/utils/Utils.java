@@ -15,6 +15,8 @@ import androidx.annotation.RequiresApi;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -115,5 +117,12 @@ public class Utils {
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
         String text = sharedPreferences.getString(AppConst.USER_UID, "");
         return text;
+    }
+
+    public static Bitmap getFacebookProfilePicture(String grapUrl) throws IOException {
+        URL imageURL = new URL(grapUrl + "?type=large");
+        Bitmap bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
+
+        return bitmap;
     }
 }
