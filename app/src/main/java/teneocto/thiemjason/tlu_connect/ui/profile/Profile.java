@@ -26,6 +26,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class Profile extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class Profile extends AppCompatActivity {
 
     // View Model
     ProfileSharedViewModel sharedViewModel;
+    CustomProgressDialog progressDialog;
 
     /**
      * Constructor
@@ -50,6 +52,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        progressDialog = new CustomProgressDialog(this, "");
         this.initialTabLayout();
         Button backButton = findViewById(R.id.profile_menu_icon);
         backButton.setOnClickListener(v -> finish());
@@ -58,6 +61,7 @@ public class Profile extends AppCompatActivity {
     /**
      * Init Tab layout
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initialTabLayout() {
         mTabLayout = findViewById(R.id.profile_tablayout);
         mViewPager = findViewById(R.id.profile_view_paper);
@@ -69,14 +73,14 @@ public class Profile extends AppCompatActivity {
         sharedViewModel.loadDataFromFirebase();
 
         // Update Profile icon
-        sharedViewModel.userDataFetched.observe(this, new Observer<Boolean>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                String imageBase64  = sharedViewModel.userDTO.getImageBase64();
-                Bitmap imageBitmap = Utils.getBitmapFromByteArray(imageBase64);
+        sharedViewModel.userDataFetched.observe(this, aBoolean -> {
+            String imageBase64 = sharedViewModel.userDTO.getImageBase64();
+            Bitmap imageBitmap = Utils.getBitmapFromByteArray(imageBase64);
 
-                mImagePicker.setImageBitmap(imageBitmap);
+            mImagePicker.setImageBitmap(imageBitmap);
+
+            if (progressDialog != null) {
+                progressDialog.deleteProgressDialog();
             }
         });
 

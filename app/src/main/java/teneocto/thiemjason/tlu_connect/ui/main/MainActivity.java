@@ -56,6 +56,7 @@ import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.uimodels.UIMainSliderItemDTO;
 import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     CallbackManager mCallbackManager;
     FirebaseAuth mAuth;
 
-    private ProgressDialog mProgressDialog;
+    private CustomProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,12 +169,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // Show loading spinner
-                mProgressDialog = new ProgressDialog(MainActivity.this);
-                mProgressDialog.show();
-                mProgressDialog.setContentView(R.layout.loading_spinner);
-                mProgressDialog.getWindow().setBackgroundDrawableResource(
-                        R.color.transparent
-                );
+                mProgressDialog = new CustomProgressDialog(MainActivity.this);
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -266,6 +262,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mProgressDialog.dismiss();
+        if (mProgressDialog != null){
+            mProgressDialog.deleteProgressDialog();
+        }
     }
 }

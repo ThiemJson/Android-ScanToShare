@@ -42,6 +42,7 @@ public class NotificationViewModel extends ViewModel {
                     }
                     isFetched.setValue(true);
                 }
+                isFetched.setValue(false);
             }
 
             @Override

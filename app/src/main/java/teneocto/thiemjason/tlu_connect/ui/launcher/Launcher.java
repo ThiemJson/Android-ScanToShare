@@ -38,6 +38,7 @@ import teneocto.thiemjason.tlu_connect.service.SyncLocalDBService;
 import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class Launcher extends AppCompatActivity {
@@ -47,6 +48,7 @@ public class Launcher extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FirebaseDBExample firebaseDBExample;
+    private CustomProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

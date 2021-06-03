@@ -32,6 +32,7 @@ import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.adapter.NotificationAdapter;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 
 public class Notification extends AppCompatActivity {
     Button mBackButton;
@@ -44,12 +45,14 @@ public class Notification extends AppCompatActivity {
 
     // View model
     NotificationViewModel viewModel;
+    CustomProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        progressDialog = new CustomProgressDialog(this, "");
 
         mBackButton = findViewById(R.id.notification_menu_icon);
         mRecycleView = findViewById(R.id.notification_recycle_view);
@@ -60,6 +63,10 @@ public class Notification extends AppCompatActivity {
         viewModel.isFetched.observe(this, aBoolean -> {
             mAdapter.notifyDataSetChanged();
             hideEmptyImage();
+
+            if(progressDialog != null){
+                progressDialog.deleteProgressDialog();
+            }
         });
         viewModel.loadDataFromFirebase();
 

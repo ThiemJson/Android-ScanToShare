@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,6 +32,7 @@ import java.util.Base64;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterProfile extends AppCompatActivity {
@@ -51,6 +53,9 @@ public class RegisterProfile extends AppCompatActivity {
     EditText mEmail;
     EditText mPosition;
     EditText mCompany;
+
+    // Progressbar
+    ProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -89,6 +94,9 @@ public class RegisterProfile extends AppCompatActivity {
         mRegisterProfileViewModel.isVerify.observe(this, aBoolean -> {
             // False
             if (!aBoolean) {
+                if(progressDialog != null){
+                    progressDialog.dismiss();
+                }
                 Toast.makeText(this, "Please make sure your email address is correct", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -96,6 +104,7 @@ public class RegisterProfile extends AppCompatActivity {
             mRegisterProfileViewModel.registerProfile();
             Intent intent = new Intent(this, RegisterSocialNetwork.class);
             startActivity(intent);
+            progressDialog.dismiss();
         });
     }
 
@@ -129,6 +138,13 @@ public class RegisterProfile extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     void nextButton() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.loading_spinner);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                R.color.transparent
+        );
+
         String userCompany = mCompany.getText().toString().trim();
         if (userCompany.equals("")){
             userCompany = "Your company";

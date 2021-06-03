@@ -37,6 +37,7 @@ import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -63,6 +64,7 @@ public class HomeFragment extends Fragment {
     DBHelper dbHelper;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    CustomProgressDialog progressDialog;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -87,7 +89,6 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         Log.i(TAG, "On Create");
     }
 
@@ -97,6 +98,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        progressDialog = new CustomProgressDialog(getContext(), "");
         Log.i(TAG, "On View Create");
         this.initTabLayout(view, container, savedInstanceState);
         this.loadDataFromFirebase();
@@ -134,6 +136,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(tabLayout != null){
+            if(tabLayout.getSelectedTabPosition() == 1){
+                if(this.homeQRScanner != null){
+                    homeQRScanner.startPreview();
+                }
+            }
+        }
         Log.i(TAG, "On Resume");
     }
 
@@ -293,5 +302,9 @@ public class HomeFragment extends Fragment {
         mCompany.setText(userDTO.getCompany());
         Bitmap bitmap = Utils.getBitmapFromByteArray(userDTO.getImageBase64());
         mMainImage.setImageBitmap(bitmap);
+
+        if (progressDialog != null) {
+            progressDialog.deleteProgressDialog();
+        }
     }
 }
