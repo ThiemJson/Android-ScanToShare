@@ -191,7 +191,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Pass the activity result back to the Facebook SDK
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        try {
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+        catch (Exception e){
+            Toast.makeText(this, "Facebook login error", Toast.LENGTH_SHORT).show();
+            Log.d(AppConst.TAG_MainActivity, "Facebook login error", e);
+        }
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -257,6 +263,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    /**
+     * Check if use have facebook account
+     * @param userID
+     */
+    private void isHaveFacebookAccount(String userID){
+
     }
 
     @Override
