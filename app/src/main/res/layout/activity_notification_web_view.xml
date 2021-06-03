@@ -61,6 +61,8 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <WebView
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
         android:id="@+id/noti_web_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

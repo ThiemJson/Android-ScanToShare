@@ -35,6 +35,7 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        Log.i("Firebase Messaging", "Received message");
         super.onMessageReceived(remoteMessage);
         createNotificationChannel();
         getMessage(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
@@ -82,8 +83,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                         NotificationDTO notificationDTO = new NotificationDTO(
                                 Utils.getRandomUUID(),
                                 Utils.getUserUUID(getApplicationContext()),
-                                remoteMessage.getNotification().getTitle(),
                                 remoteMessage.getNotification().getBody(),
+                                remoteMessage.getNotification().getTitle(),
                                 Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(resource))
                         );
 

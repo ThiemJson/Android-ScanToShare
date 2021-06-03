@@ -1,6 +1,7 @@
 package teneocto.thiemjason.tlu_connect.ui.launcher;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -186,7 +187,6 @@ public class Launcher extends AppCompatActivity {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         Utils.userDTOArrayList.add(data.getValue(UserDTO.class));
                     }
-
                     // Go to Home activity
                     Intent intent = new Intent(getApplicationContext(), Drawer.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

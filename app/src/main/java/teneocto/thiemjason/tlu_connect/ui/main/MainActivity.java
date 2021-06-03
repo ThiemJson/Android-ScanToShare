@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     LoginButton loginButton;
     CallbackManager mCallbackManager;
     FirebaseAuth mAuth;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +167,13 @@ public class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                // Show loading spinner
+                mProgressDialog = new ProgressDialog(MainActivity.this);
+                mProgressDialog.show();
+                mProgressDialog.setContentView(R.layout.loading_spinner);
+                mProgressDialog.getWindow().setBackgroundDrawableResource(
+                        R.color.transparent
+                );
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -213,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void registerWithFacebook(AccessToken token){
+    private void registerWithFacebook(AccessToken token) {
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(mAuth.getCurrentUser().getEmail());
         userDTO.setLastName("");
@@ -251,5 +261,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mProgressDialog.dismiss();
     }
 }
