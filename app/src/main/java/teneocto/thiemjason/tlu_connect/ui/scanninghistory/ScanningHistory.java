@@ -1,9 +1,11 @@
 package teneocto.thiemjason.tlu_connect.ui.scanninghistory;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +15,11 @@ import android.widget.Button;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.adapter.ScanHisAdapter;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 
 public class ScanningHistory extends AppCompatActivity {
     Button mBackButton;
@@ -26,12 +30,14 @@ public class ScanningHistory extends AppCompatActivity {
 
     // View model
     ScanningHistoryViewModel viewModel;
+    CustomProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanning_history);
+        progressDialog = new CustomProgressDialog(this, "");
 
         // Init ViewModel
         viewModel = new ViewModelProvider(this).get(ScanningHistoryViewModel.class);
@@ -44,10 +50,14 @@ public class ScanningHistory extends AppCompatActivity {
         viewModel.isFetched.observe(this, aBoolean -> {
             mAdapter.notifyDataSetChanged();
             this.hideEmptyImage();
+
+            if (progressDialog != null) {
+                progressDialog.deleteProgressDialog();
+            }
         });
     }
 
-    private void hideEmptyImage(){
+    private void hideEmptyImage() {
         if (viewModel.mUserScanned.size() == 0) {
             mEmptyImage.setVisibility(View.VISIBLE);
         } else {

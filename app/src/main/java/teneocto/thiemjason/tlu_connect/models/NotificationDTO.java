@@ -6,6 +6,7 @@ public class NotificationDTO {
     private String content;
     private String title;
     private String imageBase64;
+    private String url;
 
     public NotificationDTO() {
     }
@@ -56,5 +57,13 @@ public class NotificationDTO {
 
     public void setImageBase64(String imageBase64) {
         this.imageBase64 = imageBase64;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -119,6 +119,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(DBConst.NOTIFICATION_USER_ID, notificationDTO.getUserID());
         contentValues.put(DBConst.NOTIFICATION_CONTENT, notificationDTO.getContent());
         contentValues.put(DBConst.NOTIFICATION_TITLE, notificationDTO.getTitle());
+        contentValues.put(DBConst.NOTIFICATION_URL, notificationDTO.getUrl());
         long result = sqLiteDatabase.insert(DBConst.NOTIFICATION_TABLE_NAME, null, contentValues);
         return result != -1;
     }

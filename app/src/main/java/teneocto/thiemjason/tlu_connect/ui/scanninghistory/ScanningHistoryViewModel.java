@@ -43,6 +43,7 @@ public class ScanningHistoryViewModel extends ViewModel {
                     }
                     isFetched.setValue(true);
                 }
+                isFetched.setValue(false);
             }
 
             @Override

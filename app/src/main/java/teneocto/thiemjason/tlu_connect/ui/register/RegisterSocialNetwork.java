@@ -30,6 +30,7 @@ import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
 import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterSocialNetwork extends AppCompatActivity {
@@ -49,6 +50,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
 
     // View model
     RegisterSocialNetworkViewModel viewModel;
+    CustomProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -162,7 +164,11 @@ public class RegisterSocialNetwork extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     void nextButton() {
+        progressDialog = new CustomProgressDialog(this);
         if (!viewModel.verifyUserInput()) {
+            if (progressDialog != null) {
+                progressDialog.deleteProgressDialog();
+            }
             Toast.makeText(this, "Make sure your " + viewModel.errorField + " URL is correct !", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -226,6 +232,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
                         Toast.makeText(this, "Register successfully !", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, Drawer.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        progressDialog.deleteProgressDialog();
                         startActivity(intent);
                     } else {
                         Log.w(AppConst.TAG_FirebaseAuthentication, "signInWithEmail:failure", task.getException());

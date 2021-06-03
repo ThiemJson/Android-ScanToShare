@@ -22,6 +22,7 @@ import com.google.zxing.Result;
 
 import androidmads.library.qrgenearator.QRGEncoder;
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -33,6 +34,7 @@ public class HomeQRScanner extends Fragment {
     private CodeScanner mCodeScanner;
     private Dialog mDialog;
     private HomeResultScanner homeResultScanner;
+    private CustomProgressDialog progressDialog;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -119,6 +121,7 @@ public class HomeQRScanner extends Fragment {
         mCodeScanner.setDecodeCallback(result -> getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                progressDialog = new CustomProgressDialog(container.getContext(), "");
                 showDataWhenScanned(result);
             }
         }));
@@ -173,6 +176,9 @@ public class HomeQRScanner extends Fragment {
         mCancelBtn.setOnClickListener(v -> homeResultScanner.onSaveUserClick());
         mViewMore.setOnClickListener(v -> homeResultScanner.onViewMoreClick());
 
+        if (progressDialog != null) {
+            progressDialog.deleteProgressDialog();
+        }
         mDialog.show();
     }
 }

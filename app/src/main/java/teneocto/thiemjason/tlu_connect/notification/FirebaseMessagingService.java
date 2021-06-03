@@ -35,6 +35,7 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        Log.i("Firebase Messaging", "Received message");
         super.onMessageReceived(remoteMessage);
         createNotificationChannel();
         getMessage(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
@@ -81,12 +82,17 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         NotificationDTO notificationDTO = new NotificationDTO(
                                 Utils.getRandomUUID(),
-                                AppConst.USER_UID_Static,
-                                remoteMessage.getNotification().getTitle(),
+                                Utils.getUserUUID(getApplicationContext()),
                                 remoteMessage.getNotification().getBody(),
+                                remoteMessage.getNotification().getTitle(),
                                 Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(resource))
                         );
 
+                        String notificationURL = remoteMessage.getData().get("URL");
+                        if (notificationURL == null || notificationDTO.equals("")) {
+                            notificationURL = "https://baomoi.com/";
+                        }
+                        notificationDTO.setUrl(notificationURL);
                         firebaseDBHelper.Notification_Insert(notificationDTO);
                     }
 

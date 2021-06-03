@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.adapter.NotificationAdapter;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
+import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 
 public class Notification extends AppCompatActivity {
     Button mBackButton;
@@ -43,12 +45,14 @@ public class Notification extends AppCompatActivity {
 
     // View model
     NotificationViewModel viewModel;
+    CustomProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        progressDialog = new CustomProgressDialog(this, "");
 
         mBackButton = findViewById(R.id.notification_menu_icon);
         mRecycleView = findViewById(R.id.notification_recycle_view);
@@ -59,6 +63,10 @@ public class Notification extends AppCompatActivity {
         viewModel.isFetched.observe(this, aBoolean -> {
             mAdapter.notifyDataSetChanged();
             hideEmptyImage();
+
+            if(progressDialog != null){
+                progressDialog.deleteProgressDialog();
+            }
         });
         viewModel.loadDataFromFirebase();
 
@@ -76,11 +84,10 @@ public class Notification extends AppCompatActivity {
 
     }
 
-    private void hideEmptyImage(){
+    private void hideEmptyImage() {
         if (viewModel.notificationDTOArrayList.size() != 0) {
             mEmptyImage.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mEmptyImage.setVisibility(View.VISIBLE);
         }
     }
@@ -89,6 +96,10 @@ public class Notification extends AppCompatActivity {
         Log.i(AppConst.TAG_Notification, "Selected position: " + position);
         Log.i(AppConst.TAG_Notification, "Arrays size: " + viewModel.notificationDTOArrayList.size());
         // TODO
+
+        Intent viewNotificationIntent = new Intent(this, NotificationWebView.class);
+        viewNotificationIntent.putExtra("URL", viewModel.notificationDTOArrayList.get(position).getUrl());
+        startActivity(viewNotificationIntent);
     }
 
     /**

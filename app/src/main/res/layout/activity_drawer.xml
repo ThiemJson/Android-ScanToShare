@@ -37,7 +37,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
-        app:itemBackground="@drawable/drawer_item_background"
         app:itemIconPadding="10dp"
         app:itemIconSize="32dp"
         app:itemIconTint="#2f7eba"

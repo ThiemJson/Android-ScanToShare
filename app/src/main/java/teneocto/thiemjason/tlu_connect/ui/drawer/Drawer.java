@@ -84,7 +84,8 @@ public class Drawer extends AppCompatActivity {
                     case R.id.aboutFragment:
                         mDrawerController.onAboutClick();
                         break;
-                }
+                };
+                item.setChecked(false);
                 mDrawerLayout.close();
                 return true;
             }

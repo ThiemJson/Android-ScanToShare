@@ -21,7 +21,7 @@ import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
 public class NotificationViewModel extends ViewModel {
     public ArrayList<NotificationDTO> notificationDTOArrayList = new ArrayList<>();
-    public MutableLiveData<Boolean> isFetched = new MutableLiveData<>();
+    public MutableLiveData<Boolean>  isFetched = new MutableLiveData<>();
 
     /**
      * ===========================> DATA
@@ -42,6 +42,7 @@ public class NotificationViewModel extends ViewModel {
                     }
                     isFetched.setValue(true);
                 }
+                isFetched.setValue(false);
             }
 
             @Override

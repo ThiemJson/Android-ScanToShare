@@ -13,6 +13,9 @@
         android:layout_height="wrap_content"
         android:text="Add Social Network"
         android:textAlignment="center"
+        android:fontFamily="@font/phetsarath"
+        android:textFontWeight="700"
+        android:textAllCaps="false"
         android:textColor="@color/blue_primary"
         android:textSize="18dp"
         android:textStyle="bold" />
