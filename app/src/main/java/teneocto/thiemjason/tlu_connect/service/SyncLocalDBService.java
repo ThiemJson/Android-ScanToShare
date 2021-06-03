@@ -84,6 +84,8 @@ public class SyncLocalDBService extends Service {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadDataFromFirebase() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dbHelper = new DBHelper(getApplicationContext());
         syncNotification();
         syncScanningHistory();
         syncShared();
@@ -93,7 +95,6 @@ public class SyncLocalDBService extends Service {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void syncNotification() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.NOTIFICATION_TABLE_NAME);
         databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -127,13 +128,12 @@ public class SyncLocalDBService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.i(AppConst.TAG_SyncLocalDBService, " service notification: Failure");
             }
         });
     }
 
     private void syncScanningHistory() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SCAN_TABLE_NAME);
         databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -167,12 +167,12 @@ public class SyncLocalDBService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.i(AppConst.TAG_SyncLocalDBService, " service scanning: Failure");
             }
         });
     }
 
     private void syncShared() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
         databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -202,7 +202,7 @@ public class SyncLocalDBService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.i(AppConst.TAG_SyncLocalDBService, " service shared Failure: ");
             }
         });
     }
@@ -238,7 +238,7 @@ public class SyncLocalDBService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.i(AppConst.TAG_SyncLocalDBService, " service user Failure: ");
             }
         });
     }
@@ -273,7 +273,7 @@ public class SyncLocalDBService extends Service {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.i(AppConst.TAG_SyncLocalDBService, " service social nw Failure: ");
             }
         });
     }

@@ -30,6 +30,7 @@ public class DBCommand {
             + DBConst.NOTIFICATION_TITLE + " TEXT,"
             + DBConst.NOTIFICATION_CONTENT + " TEXT,"
             + DBConst.NOTIFICATION_IMAGE + " BLOB,"
+            + DBConst.NOTIFICATION_URL + " TEXT,"
             + " FOREIGN KEY (" + DBConst.NOTIFICATION_USER_ID + ") REFERENCES " + DBConst.USER_TABLE_NAME + " (" + DBConst.USER_ID + ") "
             + ");";
 

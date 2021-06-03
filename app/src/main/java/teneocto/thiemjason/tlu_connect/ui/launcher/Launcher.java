@@ -73,6 +73,7 @@ public class Launcher extends AppCompatActivity {
         this.setUpSocialNWFromFirebaseDatabase(true);
         AppConst.USER_UID_Static = Utils.getUserUUID(this);
         this.setUpUserDTOFromFirebaseDatabase();
+        this.startSyncLocalDBService();
 
         // SEED DATA
         //  firebaseDBExample = new FirebaseDBExample(this);
@@ -89,8 +90,11 @@ public class Launcher extends AppCompatActivity {
 
     // Start Service
     private void startSyncLocalDBService() {
-        Intent intentService = new Intent(this, SyncLocalDBService.class);
-        startService(intentService);
+        new Thread(() -> {
+            Intent intentService = new Intent(this, SyncLocalDBService.class);
+            startService(intentService);
+        }).start();
+
     }
 
     /**

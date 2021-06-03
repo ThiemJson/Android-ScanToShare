@@ -104,7 +104,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(DBConst.SN_ID, socialNetworkDTO.getId());
         contentValues.put(DBConst.SN_NAME, socialNetworkDTO.getName());
         contentValues.put(DBConst.SN_IMAGE, imageBase64);
-        contentValues.put(DBConst.SN_IMAGE, socialNetworkDTO.getName());
         long result = sqLiteDatabase.insert(DBConst.SN_TABLE_NAME, null, contentValues);
         return result != -1;
     }
@@ -204,6 +203,8 @@ public class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(2),
                         imageBase64String
                 );
+                notificationDTO.setUrl(cursor.getString(5));
+
                 arrayList.add(notificationDTO);
             } while (cursor.moveToNext());
         }
