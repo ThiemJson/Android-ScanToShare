@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
@@ -33,13 +36,14 @@ public class ProfileSocialNetwork extends Fragment {
     RecyclerView mSocialRecyclerView;
     View mEmptyImage;
     RegisterAdapter mSocialAdapter;
-
     FloatingActionButton mFloatingButton;
     BottomSheetFragment mBottomSheetFragment;
 
     // View model
     ProfileSharedViewModel viewModel;
+    String tempText = "";
 
+    // Handle for edit text auto fill
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,16 +90,32 @@ public class ProfileSocialNetwork extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_social_network, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ProfileSharedViewModel.class);
-        this.initRecycleView(view);
+        this.mFloatingButton = view.findViewById(R.id.tab_view_social_fab);
+        this.mSocialRecyclerView = view.findViewById(R.id.tab_view_social_recycle_view);
+        this.mEmptyImage = view.findViewById(R.id.profile_social_network_empty);
+
+        this.initRecycleView();
         viewModel.dataFetched.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
                 mSocialAdapter.notifyDataSetChanged();
                 hideShowEmptyImage();
-            }else{
+            } else {
                 mSocialAdapter.notifyDataSetChanged();
                 mSocialAdapter.notifyItemRangeChanged(0, viewModel.sharedDTOLiveData.size());
                 hideShowEmptyImage();
             }
+        });
+
+        // Revert Data
+        viewModel.isDataSubmitted.observe(getViewLifecycleOwner(), aBoolean -> {
+            Log.i(AppConst.TAG_ProfileSharedViewModel, "revert social network");
+            viewModel.sharedDTOLiveData.clear();
+            mSocialAdapter.notifyItemRangeRemoved(0, viewModel.sharedDTOLiveData.size());
+            viewModel.sharedDTOLiveData = Utils.cloneSharedDTO(viewModel.oldSharedDTOs);
+
+            this.initRecycleView();
+            hideShowEmptyImage();
+            viewModel.hideShowBtnTool.setValue(false);
         });
 
 //        viewModel.loadDataFromFirebase();
@@ -103,11 +123,7 @@ public class ProfileSocialNetwork extends Fragment {
         return view;
     }
 
-    private void initRecycleView(View view) {
-        this.mFloatingButton = view.findViewById(R.id.tab_view_social_fab);
-        this.mSocialRecyclerView = view.findViewById(R.id.tab_view_social_recycle_view);
-        this.mEmptyImage = view.findViewById(R.id.profile_social_network_empty);
-
+    private void initRecycleView() {
         this.mSocialAdapter = new RegisterAdapter(getActivity(), viewModel.sharedDTOLiveData);
         this.mSocialRecyclerView.setAdapter(this.mSocialAdapter);
         this.mSocialRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -117,7 +133,7 @@ public class ProfileSocialNetwork extends Fragment {
         mSocialAdapter.setOnEditTextChange(new RegisterAdapter.OnEditTextChange() {
             @Override
             public void beforeTextChanged(int position, String text) {
-
+                tempText = text;
             }
 
             @Override
@@ -129,6 +145,7 @@ public class ProfileSocialNetwork extends Fragment {
             public void afterTextChanged(int position, String text) {
                 Log.i(AppConst.TAG_Profile_Social_NW, viewModel.sharedDTOLiveData.get(position).getUrl() + " ==> text: " + text);
                 viewModel.sharedDTOLiveData.get(position).setUrl(text);
+                viewModel.hideShowBtnTool.setValue(true);
             }
         });
 
@@ -189,6 +206,10 @@ public class ProfileSocialNetwork extends Fragment {
      * Handler when user clicked on Floating Action button
      */
     private void fabOnClick() {
+        if (mBottomSheetFragment != null) {
+            mBottomSheetFragment.dismiss();
+        }
+
         this.mBottomSheetFragment = new BottomSheetFragment(getActivity(), new BottomSheetFragment.OnItemClick() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override

@@ -157,7 +157,12 @@ public class ProfileSharedViewModel extends ViewModel {
                     dataFetched.setValue(true);
                 }
 
-                oldSharedDTOs = sharedDTOLiveData;
+                // Store data
+                if (oldSharedDTOs != null) {
+                    oldSharedDTOs = new ArrayList<>();
+                }
+                Log.i(AppConst.TAG_RegisterProfileViewModel, " ==> Add new data" + sharedDTOLiveData.size());
+                oldSharedDTOs = Utils.cloneSharedDTO(sharedDTOLiveData);
             }
 
             @Override
@@ -173,7 +178,7 @@ public class ProfileSharedViewModel extends ViewModel {
                 if (snapshot != null) {
                     userDTO = snapshot.getValue(UserDTO.class);
                     userDataFetched.setValue(true);
-                    oldUserDTO = userDTO;
+                    oldUserDTO = Utils.cloneUserDTO(userDTO);
                 }
             }
 
@@ -183,7 +188,6 @@ public class ProfileSharedViewModel extends ViewModel {
                 loadDataFromSQLite();
             }
         });
-
     }
 
     public void loadDataFromSQLite() {
@@ -198,12 +202,15 @@ public class ProfileSharedViewModel extends ViewModel {
     /**
      * Revert Data
      */
-    public void revertData(){
+    public void revertData() {
         Log.i(AppConst.TAG_ProfileSharedViewModel, "old shared: " + oldSharedDTOs.size());
         Log.i(AppConst.TAG_ProfileSharedViewModel, "new shared: " + sharedDTOLiveData.size());
 
+//        // Revert to old data
+//        userDTO = oldUserDTO;
+//        sharedDTOLiveData = new ArrayList<SharedDTO>(oldSharedDTOs);
+
         // Notify changed;
-        userDTO = oldUserDTO;
         userDataFetched.setValue(true);
 
         hideShowBtnTool.setValue(false);

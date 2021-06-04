@@ -141,6 +141,9 @@ public class RegisterSocialNetwork extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void fabOnClick() {
+        if (mBottomSheetFragment != null) {
+            mBottomSheetFragment.dismiss();
+        }
         this.mBottomSheetFragment = new BottomSheetFragment(this, (view, position) -> bottomSheetItemClick(view, position));
         mBottomSheetFragment.show(getSupportFragmentManager(), mBottomSheetFragment.getTag());
     }

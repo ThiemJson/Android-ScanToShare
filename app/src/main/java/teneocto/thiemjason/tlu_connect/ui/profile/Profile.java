@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -50,6 +52,7 @@ public class Profile extends AppCompatActivity {
     Button dialogSaveBtn;
     Button dialogNotSaveBtn;
     Dialog confirmDialog;
+    Dialog saveBtnDialog;
 
     /**
      * Constructor
@@ -202,7 +205,7 @@ public class Profile extends AppCompatActivity {
         confirmDialog = new Dialog(this);
         confirmDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         confirmDialog.setContentView(R.layout.profile_setting_confirm_dialog);
-        confirmDialog.setCancelable(false);
+        confirmDialog.setCancelable(true);
         confirmDialog.show();
 
         dialogSaveBtn = confirmDialog.findViewById(R.id.profile_confirm_dialog_save_btn);
@@ -215,21 +218,55 @@ public class Profile extends AppCompatActivity {
     private void confirmDialogSaveBtn() {
         confirmDialog.dismiss();
         progressDialog = new CustomProgressDialog(this, "");
+        progressDialog.deleteProgressDialog();
+        finish();
         // Submit data
     }
 
     private void confirmDialogCancelBtn() {
         confirmDialog.dismiss();
         progressDialog = new CustomProgressDialog(this, "");
-        // Reset Data
         sharedViewModel.revertData();
+        progressDialog.deleteProgressDialog();
+        finish();
     }
 
-    private void toolBarSaveBtn(){
+    private void toolBarSaveBtn() {
+        if (saveBtnDialog != null) {
+            saveBtnDialog.dismiss();
+        }
 
+        saveBtnDialog = new Dialog(this);
+        saveBtnDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        saveBtnDialog.setContentView(R.layout.profile_tool_savebtn_dialog);
+        saveBtnDialog.setCancelable(false);
+        saveBtnDialog.show();
+
+        Button submit = saveBtnDialog.findViewById(R.id.profile_saveBtn_dialog_save_btn);
+        Button cancel = saveBtnDialog.findViewById(R.id.profile_saveBtn_dialog_doesnt_btn);
+
+        cancel.setOnClickListener(v -> {
+            progressDialog = new CustomProgressDialog(this, "");
+            saveBtnDialog.dismiss();
+            progressDialog.deleteProgressDialog();
+        });
+
+        submit.setOnClickListener(v -> {
+            progressDialog = new CustomProgressDialog(this, "");
+            saveBtnDialog.dismiss();
+            sharedViewModel.hideShowBtnTool.setValue(false);
+            progressDialog.deleteProgressDialog();
+
+
+            // For debugs
+            for (SharedDTO sharedDTO : sharedViewModel.sharedDTOLiveData) {
+                Log.i("===> Update user: ", sharedDTO.getUrl());
+            }
+            Log.i("===> Update user: ", sharedViewModel.userDTO.getEmail());
+        });
     }
 
-    private void toolBarCancelBtn(){
+    private void toolBarCancelBtn() {
         sharedViewModel.revertData();
     }
 }

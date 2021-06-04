@@ -139,4 +139,19 @@ public class Utils {
         }
         return result;
     }
+
+    public static UserDTO cloneUserDTO(UserDTO userDTO) {
+        UserDTO result = new UserDTO(
+                userDTO.getId(),
+                userDTO.getFirstName(),
+                userDTO.getLastName(),
+                userDTO.getEmail(),
+                userDTO.getPosition(),
+                userDTO.getCompany(),
+                userDTO.getImageBase64()
+        );
+
+        result.setFirebaseId(userDTO.getFirebaseId());
+        return result;
+    }
 }

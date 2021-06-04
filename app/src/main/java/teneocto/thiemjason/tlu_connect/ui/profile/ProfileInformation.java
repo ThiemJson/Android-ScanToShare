@@ -1,5 +1,6 @@
 package teneocto.thiemjason.tlu_connect.ui.profile;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -88,11 +89,11 @@ public class ProfileInformation extends Fragment {
         mPosition = view.findViewById(R.id.profile_position);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ProfileSharedViewModel.class);
-        viewModel.userDataFetched.observe( getViewLifecycleOwner() , aBoolean -> fillData(viewModel.userDTO));
+        viewModel.userDataFetched.observe(getViewLifecycleOwner(), aBoolean -> fillData(viewModel.userDTO));
         return view;
     }
 
-    private void fillData(UserDTO userDTO){
+    private void fillData(UserDTO userDTO) {
         mFirstName.setText(userDTO.getFirstName());
         mLastName.setText(userDTO.getLastName());
         mEmail.setText(userDTO.getEmail());
@@ -100,7 +101,7 @@ public class ProfileInformation extends Fragment {
         mPosition.setText(userDTO.getPosition());
 
         // Init text change listener
-        if(multipleTextWatcher != null){
+        if (multipleTextWatcher != null) {
             multipleTextWatcher = null;
         }
 
@@ -122,9 +123,28 @@ public class ProfileInformation extends Fragment {
 
                     }
 
+                    @SuppressLint("NonConstantResourceId")
                     @Override
                     public void afterTextChanged(EditText editText, Editable editable) {
                         viewModel.hideShowBtnTool.setValue(true);
+
+                        switch (editText.getId()) {
+                            case R.id.profile_first_name:
+                                viewModel.userDTO.setFirstName(editText.getText().toString());
+                                break;
+                            case R.id.profile_last_name:
+                                viewModel.userDTO.setLastName(editText.getText().toString());
+                                break;
+                            case R.id.profile_email:
+                                viewModel.userDTO.setEmail(editText.getText().toString());
+                                break;
+                            case R.id.profile_company:
+                                viewModel.userDTO.setCompany(editText.getText().toString());
+                                break;
+                            case R.id.profile_position:
+                                viewModel.userDTO.setPosition(editText.getText().toString());
+                                break;  
+                        }
                     }
                 });
     }

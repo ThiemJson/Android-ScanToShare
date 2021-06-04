@@ -41,6 +41,7 @@
             android:background="@drawable/table_edittext"
             android:fontFamily="@font/phetsarath"
             android:hint="Facebook URL"
+            android:inputType="textNoSuggestions"
             android:maxLength="40"
             android:paddingLeft="1dp"
             android:singleLine="true"
