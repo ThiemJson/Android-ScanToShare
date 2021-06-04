@@ -3,36 +3,24 @@ package teneocto.thiemjason.tlu_connect.ui.register;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
-import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterProfile extends AppCompatActivity {
@@ -152,7 +140,7 @@ public class RegisterProfile extends AppCompatActivity {
 
         String userLastName = mLastName.getText().toString().trim();
         if (userLastName.equals("")){
-            userLastName = "Your last name";
+            userLastName = "";
         }
 
         String userFirstName = mFirstName.getText().toString().trim();

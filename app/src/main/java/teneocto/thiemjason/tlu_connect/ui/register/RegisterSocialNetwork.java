@@ -1,7 +1,6 @@
 package teneocto.thiemjason.tlu_connect.ui.register;
 
 import androidx.annotation.RequiresApi;
-import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,12 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
@@ -30,7 +27,7 @@ import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
 import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
-import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterSocialNetwork extends AppCompatActivity {

@@ -3,7 +3,6 @@ package teneocto.thiemjason.tlu_connect.ui.home;
 import android.app.Dialog;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -17,12 +16,11 @@ import android.widget.TextView;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
-import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
 import androidmads.library.qrgenearator.QRGEncoder;
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**

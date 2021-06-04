@@ -2,7 +2,6 @@ package teneocto.thiemjason.tlu_connect.ui.home;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -28,7 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Base64;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import teneocto.thiemjason.tlu_connect.R;
@@ -37,7 +35,7 @@ import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
-import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**

@@ -7,9 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -17,7 +15,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -26,7 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class Profile extends AppCompatActivity {
@@ -47,6 +44,7 @@ public class Profile extends AppCompatActivity {
      *
      * @param savedInstanceState
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

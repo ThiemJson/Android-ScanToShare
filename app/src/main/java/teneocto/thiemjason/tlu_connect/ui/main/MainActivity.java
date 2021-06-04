@@ -8,11 +8,9 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,30 +22,20 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
@@ -56,7 +44,7 @@ import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.uimodels.UIMainSliderItemDTO;
 import teneocto.thiemjason.tlu_connect.ui.register.RegisterProfile;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
-import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {

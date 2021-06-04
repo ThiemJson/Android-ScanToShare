@@ -19,7 +19,7 @@ import com.google.android.gms.ads.MobileAds;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.adapter.ScanHisAdapter;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
-import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 
 public class ScanningHistory extends AppCompatActivity {
     Button mBackButton;

@@ -1,7 +1,6 @@
 package teneocto.thiemjason.tlu_connect.ui.launcher;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +36,7 @@ import teneocto.thiemjason.tlu_connect.service.SyncLocalDBService;
 import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.main.MainActivity;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
-import teneocto.thiemjason.tlu_connect.utils.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class Launcher extends AppCompatActivity {

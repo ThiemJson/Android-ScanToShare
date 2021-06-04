@@ -1,4 +1,4 @@
-package teneocto.thiemjason.tlu_connect.utils;
+package teneocto.thiemjason.tlu_connect.ui.progressdialog;
 
 import android.app.ProgressDialog;
 import android.content.Context;
