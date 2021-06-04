@@ -22,6 +22,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.ads.AdRequest;
@@ -242,6 +243,8 @@ public class MainActivity extends AppCompatActivity {
                     // Sync data into firebase
                     FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
                     firebaseDBHelper.USER_Insert(Utils.registerUserDTO);
+                    FirebaseAuth.getInstance().signOut();
+                    LoginManager.getInstance().logOut();
 
                     Intent intent = new Intent(getApplicationContext(), Drawer.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

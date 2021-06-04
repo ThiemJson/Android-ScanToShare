@@ -202,6 +202,10 @@ public class ProfileSharedViewModel extends ViewModel {
         Log.i(AppConst.TAG_ProfileSharedViewModel, "old shared: " + oldSharedDTOs.size());
         Log.i(AppConst.TAG_ProfileSharedViewModel, "new shared: " + sharedDTOLiveData.size());
 
+        // Notify changed;
+        userDTO = oldUserDTO;
+        userDataFetched.setValue(true);
+
         hideShowBtnTool.setValue(false);
         isDataSubmitted.setValue(true);
     }
