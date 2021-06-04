@@ -24,10 +24,21 @@ import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class ProfileSharedViewModel extends ViewModel {
+
+    // Data
     public ArrayList<SharedDTO> sharedDTOLiveData = new ArrayList<>();
+    public UserDTO userDTO = new UserDTO();
+
+    // Flags for check
     public MutableLiveData<Boolean> dataFetched = new MutableLiveData<Boolean>();
     public MutableLiveData<Boolean> userDataFetched = new MutableLiveData<Boolean>();
-    public UserDTO userDTO = new UserDTO();
+    public MutableLiveData<Boolean> isDataChanged = new MutableLiveData<Boolean>();
+
+    // Old data
+    public ArrayList<SharedDTO> oldSharedDTOs = new ArrayList<>();
+    public UserDTO oldUserDTO = new UserDTO();
+
+    // Debugs variables
     public String errorField = "";
 
     public void addShared(SharedDTO sharedDTO) {
@@ -142,6 +153,8 @@ public class ProfileSharedViewModel extends ViewModel {
                     }
                     dataFetched.setValue(true);
                 }
+
+                oldSharedDTOs = sharedDTOLiveData;
             }
 
             @Override
@@ -157,8 +170,10 @@ public class ProfileSharedViewModel extends ViewModel {
                 if (snapshot != null) {
                     userDTO = snapshot.getValue(UserDTO.class);
                     userDataFetched.setValue(true);
+                    oldUserDTO = userDTO;
                 }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

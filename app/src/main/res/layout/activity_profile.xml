@@ -65,6 +65,7 @@
                     android:weightSum="2">
 
                     <Button
+                        android:id="@+id/profile_cancel_button"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_weight="1"
@@ -78,6 +79,7 @@
                         android:textStyle="normal" />
 
                     <Button
+                        android:id="@+id/profile_save_button"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_weight="1"

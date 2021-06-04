@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -15,6 +16,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -38,6 +40,10 @@ public class Profile extends AppCompatActivity {
     // View Model
     ProfileSharedViewModel sharedViewModel;
     CustomProgressDialog progressDialog;
+
+    // Tab bar buttons
+    Button mCancelBtn;
+    Button mSaveBtn;
 
     /**
      * Constructor
@@ -63,8 +69,14 @@ public class Profile extends AppCompatActivity {
     private void initialTabLayout() {
         mTabLayout = findViewById(R.id.profile_tablayout);
         mViewPager = findViewById(R.id.profile_view_paper);
+        mSaveBtn = findViewById(R.id.profile_save_button);
+        mCancelBtn = findViewById(R.id.profile_cancel_button);
         mImagePicker = findViewById(R.id.profile_image);
         mImagePicker.setOnClickListener(v -> imagePicker());
+
+        // Hide tool button
+        mSaveBtn.setVisibility(View.INVISIBLE);
+        mCancelBtn.setVisibility(View.INVISIBLE);
 
         mAdapter = new MainAdapter(getSupportFragmentManager(), 12);
         sharedViewModel = new ViewModelProvider(this).get(ProfileSharedViewModel.class);
@@ -79,6 +91,14 @@ public class Profile extends AppCompatActivity {
 
             if (progressDialog != null) {
                 progressDialog.deleteProgressDialog();
+            }
+        });
+
+        // Handle when user change profle
+        sharedViewModel.isDataChanged.observe(this, aBoolean -> {
+            if(aBoolean){
+                mSaveBtn.setVisibility(View.VISIBLE);
+                mCancelBtn.setVisibility(View.VISIBLE);
             }
         });
 
