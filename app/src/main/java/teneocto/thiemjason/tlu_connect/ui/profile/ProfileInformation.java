@@ -3,11 +3,9 @@ package teneocto.thiemjason.tlu_connect.ui.profile;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,7 @@ import android.widget.EditText;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.utils.MultipleTextWatcher;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +30,9 @@ public class ProfileInformation extends Fragment {
     EditText mEmail;
     EditText mCompany;
     EditText mPosition;
+
+    // Text Watcher
+    MultipleTextWatcher multipleTextWatcher;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -96,5 +98,34 @@ public class ProfileInformation extends Fragment {
         mEmail.setText(userDTO.getEmail());
         mCompany.setText(userDTO.getCompany());
         mPosition.setText(userDTO.getPosition());
+
+        // Init text change listener
+        if(multipleTextWatcher != null){
+            multipleTextWatcher = null;
+        }
+
+        // Setup multiple text changed
+        multipleTextWatcher = new MultipleTextWatcher()
+                .registerEditText(mFirstName)
+                .registerEditText(mLastName)
+                .registerEditText(mEmail)
+                .registerEditText(mCompany)
+                .registerEditText(mPosition)
+                .setCallback(new MultipleTextWatcher.TextWatcherWithInstance() {
+                    @Override
+                    public void beforeTextChanged(EditText editText, CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(EditText editText, CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(EditText editText, Editable editable) {
+                        viewModel.hideShowBtnTool.setValue(true);
+                    }
+                });
     }
 }

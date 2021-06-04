@@ -7,16 +7,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -45,6 +46,11 @@ public class Profile extends AppCompatActivity {
     Button mCancelBtn;
     Button mSaveBtn;
 
+    // Confirm dialog
+    Button dialogSaveBtn;
+    Button dialogNotSaveBtn;
+    Dialog confirmDialog;
+
     /**
      * Constructor
      *
@@ -59,7 +65,7 @@ public class Profile extends AppCompatActivity {
         progressDialog = new CustomProgressDialog(this, "");
         this.initialTabLayout();
         Button backButton = findViewById(R.id.profile_menu_icon);
-        backButton.setOnClickListener(v -> finish());
+        backButton.setOnClickListener(v -> onBackButtonClick());
     }
 
     /**
@@ -73,6 +79,9 @@ public class Profile extends AppCompatActivity {
         mCancelBtn = findViewById(R.id.profile_cancel_button);
         mImagePicker = findViewById(R.id.profile_image);
         mImagePicker.setOnClickListener(v -> imagePicker());
+
+        mSaveBtn.setOnClickListener(v -> toolBarSaveBtn());
+        mCancelBtn.setOnClickListener(v -> toolBarCancelBtn());
 
         // Hide tool button
         mSaveBtn.setVisibility(View.INVISIBLE);
@@ -94,11 +103,22 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        // Handle when user change profle
-        sharedViewModel.isDataChanged.observe(this, aBoolean -> {
-            if(aBoolean){
+        // Handle when user change profile
+        sharedViewModel.hideShowBtnTool.setValue(false);
+        sharedViewModel.hideShowBtnTool.observe(this, aBoolean -> {
+            if (aBoolean) {
                 mSaveBtn.setVisibility(View.VISIBLE);
                 mCancelBtn.setVisibility(View.VISIBLE);
+            } else {
+                mSaveBtn.setVisibility(View.INVISIBLE);
+                mCancelBtn.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        // Handle when user change data
+        sharedViewModel.isDataSubmitted.observe(this, aBoolean -> {
+            if (progressDialog != null) {
+                progressDialog.deleteProgressDialog();
             }
         });
 
@@ -157,6 +177,59 @@ public class Profile extends AppCompatActivity {
         if (requestCode == SELECT_PHOTO && data != null && data.getData() != null) {
             uri = data.getData();
             mImagePicker.setImageURI(uri);
+            sharedViewModel.hideShowBtnTool.setValue(true);
         }
+    }
+
+    /**
+     * Handle when user click on back button
+     */
+    public void onBackButtonClick() {
+        if (!sharedViewModel.hideShowBtnTool.getValue()) {
+            finish();
+            return;
+        }
+
+        this.showConfirmDialog();
+    }
+
+    /**
+     * Confirm dialog
+     * OK -> Commit data changed
+     * Cancel => Cancel data changed
+     */
+    private void showConfirmDialog() {
+        confirmDialog = new Dialog(this);
+        confirmDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        confirmDialog.setContentView(R.layout.profile_setting_confirm_dialog);
+        confirmDialog.setCancelable(false);
+        confirmDialog.show();
+
+        dialogSaveBtn = confirmDialog.findViewById(R.id.profile_confirm_dialog_save_btn);
+        dialogNotSaveBtn = confirmDialog.findViewById(R.id.profile_confirm_dialog_doesnt_save_btn);
+
+        dialogSaveBtn.setOnClickListener(v -> confirmDialogSaveBtn());
+        dialogNotSaveBtn.setOnClickListener(v -> confirmDialogCancelBtn());
+    }
+
+    private void confirmDialogSaveBtn() {
+        confirmDialog.dismiss();
+        progressDialog = new CustomProgressDialog(this, "");
+        // Submit data
+    }
+
+    private void confirmDialogCancelBtn() {
+        confirmDialog.dismiss();
+        progressDialog = new CustomProgressDialog(this, "");
+        // Reset Data
+        sharedViewModel.revertData();
+    }
+
+    private void toolBarSaveBtn(){
+
+    }
+
+    private void toolBarCancelBtn(){
+        sharedViewModel.revertData();
     }
 }

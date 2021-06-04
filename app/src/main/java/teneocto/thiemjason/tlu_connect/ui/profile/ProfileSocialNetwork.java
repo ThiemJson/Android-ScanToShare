@@ -91,6 +91,10 @@ public class ProfileSocialNetwork extends Fragment {
             if (aBoolean) {
                 mSocialAdapter.notifyDataSetChanged();
                 hideShowEmptyImage();
+            }else{
+                mSocialAdapter.notifyDataSetChanged();
+                mSocialAdapter.notifyItemRangeChanged(0, viewModel.sharedDTOLiveData.size());
+                hideShowEmptyImage();
             }
         });
 
@@ -138,6 +142,8 @@ public class ProfileSocialNetwork extends Fragment {
             mSocialAdapter.notifyItemRemoved(position);
             mSocialAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOLiveData.size());
             hideShowEmptyImage();
+
+            viewModel.hideShowBtnTool.setValue(true);
         });
     }
 
@@ -176,6 +182,7 @@ public class ProfileSocialNetwork extends Fragment {
         viewModel.addShared(sharedDTO);
         this.mSocialAdapter.notifyItemInserted(viewModel.sharedDTOLiveData.size());
         hideShowEmptyImage();
+        viewModel.hideShowBtnTool.setValue(true);
     }
 
     /**

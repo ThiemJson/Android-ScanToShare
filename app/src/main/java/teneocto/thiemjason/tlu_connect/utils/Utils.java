@@ -125,4 +125,18 @@ public class Utils {
 
         return bitmap;
     }
+
+    //    String userID, String socialNetWorkID, String url
+    public static ArrayList<SharedDTO> cloneSharedDTO(ArrayList<SharedDTO> arrayList) {
+        ArrayList<SharedDTO> result = new ArrayList<>();
+        for (SharedDTO sharedDTO : arrayList) {
+            result.add(new SharedDTO(
+                    sharedDTO.getId(),
+                    sharedDTO.getUserID(),
+                    sharedDTO.getSocialNetWorkID(),
+                    sharedDTO.getUrl()
+            ));
+        }
+        return result;
+    }
 }

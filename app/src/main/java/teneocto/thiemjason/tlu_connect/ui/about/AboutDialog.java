@@ -23,7 +23,6 @@ public class AboutDialog implements View.OnClickListener {
         context = activity;
         mDialog = new Dialog(activity);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialog.setCancelable(true);
         mDialog.setContentView(R.layout.about_dialog);
 
         mCloseButton = mDialog.findViewById(R.id.about_view_close);

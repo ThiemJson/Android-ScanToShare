@@ -32,7 +32,10 @@ public class ProfileSharedViewModel extends ViewModel {
     // Flags for check
     public MutableLiveData<Boolean> dataFetched = new MutableLiveData<Boolean>();
     public MutableLiveData<Boolean> userDataFetched = new MutableLiveData<Boolean>();
-    public MutableLiveData<Boolean> isDataChanged = new MutableLiveData<Boolean>();
+    public MutableLiveData<Boolean> hideShowBtnTool = new MutableLiveData<Boolean>();
+
+    public MutableLiveData<Boolean> isDataSubmitted = new MutableLiveData<Boolean>();
+
 
     // Old data
     public ArrayList<SharedDTO> oldSharedDTOs = new ArrayList<>();
@@ -190,5 +193,16 @@ public class ProfileSharedViewModel extends ViewModel {
     @Override
     protected void onCleared() {
 
+    }
+
+    /**
+     * Revert Data
+     */
+    public void revertData(){
+        Log.i(AppConst.TAG_ProfileSharedViewModel, "old shared: " + oldSharedDTOs.size());
+        Log.i(AppConst.TAG_ProfileSharedViewModel, "new shared: " + sharedDTOLiveData.size());
+
+        hideShowBtnTool.setValue(false);
+        isDataSubmitted.setValue(true);
     }
 }
