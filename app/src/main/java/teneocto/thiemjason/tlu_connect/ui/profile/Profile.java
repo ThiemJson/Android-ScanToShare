@@ -7,12 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
@@ -131,8 +134,25 @@ public class Profile extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.deleteProgressDialog();
             }
+
+            Toast.makeText(Profile.this, "Updated successfully", Toast.LENGTH_SHORT).show();
             if (aBoolean) {
                 finish();
+            }
+        });
+
+        // Handle when user updated data failure
+        sharedViewModel.isDataUpdatedFailure.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (progressDialog != null) {
+                    progressDialog.deleteProgressDialog();
+                }
+
+                Toast.makeText(Profile.this, "Cannot update your new information. Please check your internet connection and try it again", Toast.LENGTH_SHORT).show();
+                if (aBoolean) {
+                    finish();
+                }
             }
         });
 
@@ -197,7 +217,8 @@ public class Profile extends AppCompatActivity {
     /**
      * Handle when user click on back button
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onBackButtonClick() {
         if (!sharedViewModel.hideShowBtnTool.getValue()) {
             finish();
@@ -212,7 +233,8 @@ public class Profile extends AppCompatActivity {
      * OK -> Commit data changed
      * Cancel => Cancel data changed
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showConfirmDialog() {
         confirmDialog = new Dialog(this);
         confirmDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -227,7 +249,8 @@ public class Profile extends AppCompatActivity {
         dialogNotSaveBtn.setOnClickListener(v -> confirmDialogCancelBtn());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void confirmDialogSaveBtn() {
         confirmDialog.dismiss();
         progressDialog = new CustomProgressDialog(this, "");
@@ -237,6 +260,12 @@ public class Profile extends AppCompatActivity {
             return;
         }
 
+        // Update user profile
+        BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        byte[] imageBase64 = Utils.getBitmapAsByteArray(bitmap);
+
+        sharedViewModel.userDTO.setImageBase64(Base64.getEncoder().encodeToString(imageBase64));
         sharedViewModel.updateUserInformation(true);
         // Submit data
     }
@@ -249,6 +278,7 @@ public class Profile extends AppCompatActivity {
         finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void toolBarSaveBtn() {
         if (saveBtnDialog != null) {
             saveBtnDialog.dismiss();
@@ -274,6 +304,13 @@ public class Profile extends AppCompatActivity {
             saveBtnDialog.dismiss();
             sharedViewModel.hideShowBtnTool.setValue(false);
             sharedViewModel.updateUserInformation(false);
+
+            // Update user profile
+            BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
+            Bitmap bitmap = drawable.getBitmap();
+            byte[] imageBase64 = Utils.getBitmapAsByteArray(bitmap);
+            sharedViewModel.userDTO.setImageBase64(Base64.getEncoder().encodeToString(imageBase64));
+
             // For debugs
             for (SharedDTO sharedDTO : sharedViewModel.sharedDTOLiveData) {
                 Log.i("===> Update user: ", sharedDTO.getUrl());

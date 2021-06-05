@@ -141,6 +141,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         }
+
         Log.i(TAG, "On Resume");
     }
 

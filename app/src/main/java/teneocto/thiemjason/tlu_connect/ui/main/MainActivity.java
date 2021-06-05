@@ -22,6 +22,8 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -33,6 +35,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,6 +44,7 @@ import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
+import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.ui.uimodels.UIMainSliderItemDTO;
@@ -67,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        loadAd();
         initSlider();
 
         loginButton = findViewById(R.id.btn_main_ac_register_facebook);
@@ -131,15 +134,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    void loadAd() {
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-
-        adView = findViewById(R.id.main_adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-    }
-
     void skip() {
         Intent intent = new Intent(this, RegisterProfile.class);
         startActivity(intent);
@@ -165,13 +159,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
                 Log.d(AppConst.TAG_MainActivity, "facebook:onCancel");
-
+                if (mProgressDialog != null) {
+                    mProgressDialog.deleteProgressDialog();
+                }
             }
 
             @Override
             public void onError(FacebookException error) {
                 Log.d(AppConst.TAG_MainActivity, "facebook:onError", error);
-
+                if (mProgressDialog != null) {
+                    mProgressDialog.deleteProgressDialog();
+                }
             }
         });
     }
@@ -182,10 +180,12 @@ public class MainActivity extends AppCompatActivity {
         // Pass the activity result back to the Facebook SDK
         try {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, "Facebook login error", Toast.LENGTH_SHORT).show();
             Log.d(AppConst.TAG_MainActivity, "Facebook login error", e);
+            if (mProgressDialog != null) {
+                mProgressDialog.deleteProgressDialog();
+            }
         }
     }
 
@@ -210,6 +210,9 @@ public class MainActivity extends AppCompatActivity {
                         // If sign in fails, display a message to the user.
                         Log.w(AppConst.TAG_MainActivity, "signInWithCredential:failure", task.getException());
                         Toast.makeText(MainActivity.this, "Authentication with Facebook failure", Toast.LENGTH_SHORT).show();
+                        if (mProgressDialog != null) {
+                            mProgressDialog.deleteProgressDialog();
+                        }
                     }
                 });
     }
@@ -224,9 +227,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Store
         Utils.setPrefer(this, AppConst.FB_accessToken, token.getToken());
-
-        Bundle params = new Bundle();
-        params.putString("fields", "id,email,gender,cover,picture.type(large)");
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -243,14 +243,19 @@ public class MainActivity extends AppCompatActivity {
                     // Sync data into firebase
                     FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
                     firebaseDBHelper.USER_Insert(Utils.registerUserDTO);
+
                     FirebaseAuth.getInstance().signOut();
                     LoginManager.getInstance().logOut();
 
                     Intent intent = new Intent(getApplicationContext(), Drawer.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+
                 } catch (IOException e) {
                     e.printStackTrace();
+                    if (mProgressDialog != null) {
+                        mProgressDialog.deleteProgressDialog();
+                    }
                 }
             }
         }).start();
@@ -258,16 +263,17 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Check if use have facebook account
+     *
      * @param userID
      */
-    private void isHaveFacebookAccount(String userID){
+    private void isHaveFacebookAccount(String userID) {
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mProgressDialog != null){
+        if (mProgressDialog != null) {
             mProgressDialog.deleteProgressDialog();
         }
     }

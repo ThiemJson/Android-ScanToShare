@@ -64,12 +64,27 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         mBackButton = findViewById(R.id.btn_register_social_back);
         mNextButton = findViewById(R.id.btn_register_social_facebook_next);
         mEmpty = findViewById(R.id.register_social_network_empty);
-        mEmpty.setVisibility(View.GONE);
+        hideShowEmptyImage();
 
         mBackButton.setOnClickListener(v -> backButton());
         mNextButton.setOnClickListener(v -> nextButton());
+
+        // Add place holder
+        addItem("Facebook");
+        addItem("Instagram");
     }
 
+    /**
+     * Hid show empty image
+     */
+    private void hideShowEmptyImage(){
+        if(viewModel.sharedDTOArrays.size() == 0){
+            this.mEmpty.setVisibility(View.VISIBLE);
+        }
+        else{
+         this.mEmpty.setVisibility(View.GONE);
+        }
+    }
 
     /**
      * Init recycle view
@@ -105,6 +120,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
 
             mRegisterAdapter.notifyItemRemoved(position);
             mRegisterAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOArrays.size());
+            hideShowEmptyImage();
         });
     }
 
@@ -133,6 +149,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
         }
         viewModel.addShared(sharedDTO);
         this.mRegisterAdapter.notifyItemInserted(viewModel.sharedDTOArrays.size());
+        hideShowEmptyImage();
     }
 
     /**

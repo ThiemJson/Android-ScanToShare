@@ -1,13 +1,20 @@
 package teneocto.thiemjason.tlu_connect.ui.profile;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +25,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import teneocto.thiemjason.tlu_connect.database.DBConst;
+import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
@@ -48,6 +56,13 @@ public class ProfileSharedViewModel extends ViewModel {
      * Check when user changed data and delete progress bar dialog
      */
     public MutableLiveData<Boolean> isDataReverted = new MutableLiveData<Boolean>();
+
+    /**
+     * Check when user updated data failure
+     * TRUE: When user want to close after that
+     * FALSE: When user doesn't want to close after that
+     */
+    public MutableLiveData<Boolean> isDataUpdatedFailure = new MutableLiveData<>();
 
     /**
      * Check user updated new information ()
@@ -217,7 +232,33 @@ public class ProfileSharedViewModel extends ViewModel {
      * Update new information
      */
     public void updateUserInformation(Boolean closeAfterUpdated) {
-        isDataUpdated.setValue(closeAfterUpdated);
-        Log.i(AppConst.TAG_ProfileSharedViewModel, "Updated information ");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+        // Update profile
+        DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
+        databaseReference.child(userDTO.getId()).setValue(userDTO)
+                .addOnSuccessListener(aVoid -> {
+                    // Update social network
+                    DatabaseReference _databaseReference1 = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
+                    _databaseReference1.child(userDTO.getId()).removeValue((error, ref) -> {
+                        FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
+                        for (SharedDTO sharedDTO : sharedDTOLiveData){
+                            firebaseDBHelper.Shared_Insert(sharedDTO);
+                        }
+
+                        // DONE
+                        isDataUpdated.setValue(closeAfterUpdated);
+                        Log.i(AppConst.TAG_ProfileSharedViewModel, "Updated information");
+
+                        // Set flag check
+                        Utils.isUserUpdatedData = true;
+                    });
+                })
+                .addOnCanceledListener(() ->
+                {
+                    isDataUpdatedFailure.setValue(closeAfterUpdated);
+                    Log.i(AppConst.TAG_ProfileSharedViewModel, "Cancel Updated information ");
+                });
+
     }
 }

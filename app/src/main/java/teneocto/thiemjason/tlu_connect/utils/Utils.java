@@ -35,6 +35,11 @@ public class Utils {
     public static ArrayList<SharedDTO> sharedDTOArrayList;
     public static UserDTO registerUserDTO;
 
+    /**
+     * Flag for check user updated new information
+     */
+    public static Boolean isUserUpdatedData = false;
+
     public static QRGEncoder generateQRCodeFromContent(Activity activity, String content) {
         DisplayMetrics lDisplayMetrics = activity.getResources().getDisplayMetrics();
         int widthPixels = lDisplayMetrics.widthPixels;

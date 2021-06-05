@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +50,7 @@ import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.home.slider.HomeSliderAdapter;
+import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -75,6 +77,11 @@ public class HomeQRImage extends Fragment {
     View mRULContainer;
     Button mShareImageBtn;
     LinearLayout sliderContainer;
+    FloatingActionButton mAddSN;
+
+    // Back - Forward button
+    ImageView backButton;
+    ImageView forwardButton;
 
     // URL container
     private ClipboardManager mClipboard;
@@ -147,10 +154,18 @@ public class HomeQRImage extends Fragment {
         Log.i(TAG, "On Stop");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onResume() {
         super.onResume();
         Log.i(TAG, "On Resume");
+
+        if(Utils.isUserUpdatedData){
+            loadDataFromFirebase();
+            initSlider();
+            Log.i(TAG, "On Resume and reload firebase database");
+            Utils.isUserUpdatedData = false;
+        }
     }
 
     @Override
@@ -180,18 +195,28 @@ public class HomeQRImage extends Fragment {
         mRULContainer = view.findViewById(R.id.home_view_url_container);
         mShareImageBtn = view.findViewById(R.id.home_slider_share_image);
         sliderContainer = view.findViewById(R.id.home_slider_linearlayout);
+        viewPager2 = view.findViewById(R.id.home_view_slider_container);
+        mAddSN = view.findViewById(R.id.home_btn_register_social_add);
+
+        // Back - Forward button
+        backButton = view.findViewById(R.id.home_back_arrow);
+        forwardButton = view.findViewById(R.id.home_forward_arrow);
+
         mRULContainer.setOnClickListener(v -> copyDataToClipboard());
         mShareImageBtn.setOnClickListener(v -> shareImage(container.getContext()));
+        mAddSN.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), Profile.class);
+            startActivity(intent);
+        });
 
         this.loadDataFromFirebase();
-        this.initSlider(view);
+        this.initSlider();
         return view;
     }
 
-    private void initSlider(View view) {
+    private void initSlider() {
         Log.i(TAG, "==> INIT SLIDER");
         this.gson = new Gson();
-        viewPager2 = view.findViewById(R.id.home_view_slider_container);
 
         homeSliderAdapter = new HomeSliderAdapter(sharedDTOArrays, viewPager2);
         viewPager2.setAdapter(homeSliderAdapter);
@@ -220,9 +245,7 @@ public class HomeQRImage extends Fragment {
             }
         });
 
-        // Back - Forward button
-        ImageView backButton = view.findViewById(R.id.home_back_arrow);
-        ImageView forwardButton = view.findViewById(R.id.home_forward_arrow);
+
         backButton.setOnClickListener(v -> backButtonOnLick());
         forwardButton.setOnClickListener(v -> forwardButtonOnLick());
 
@@ -237,9 +260,11 @@ public class HomeQRImage extends Fragment {
             this.mShareImageBtn.setVisibility(View.GONE);
 
             this.emptyImage.setVisibility(View.VISIBLE);
+            this.mAddSN.setVisibility(View.VISIBLE);
         } else {
             this.qrImage.setVisibility(View.VISIBLE);
             this.emptyImage.setVisibility(View.GONE);
+            this.mAddSN.setVisibility(View.GONE);
             this.qrImage.setVisibility(View.VISIBLE);
             this.sliderContainer.setVisibility(View.VISIBLE);
             this.mRULContainer.setVisibility(View.VISIBLE);
@@ -300,6 +325,7 @@ public class HomeQRImage extends Fragment {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadDataFromFirebase() {
+        sharedDTOArrays = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
         databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
