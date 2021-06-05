@@ -258,6 +258,7 @@ public class HomeQRImage extends Fragment {
             this.sliderContainer.setVisibility(View.GONE);
             this.mRULContainer.setVisibility(View.GONE);
             this.mShareImageBtn.setVisibility(View.GONE);
+            this.itemName.setVisibility(View.GONE);
 
             this.emptyImage.setVisibility(View.VISIBLE);
             this.mAddSN.setVisibility(View.VISIBLE);
@@ -269,6 +270,7 @@ public class HomeQRImage extends Fragment {
             this.sliderContainer.setVisibility(View.VISIBLE);
             this.mRULContainer.setVisibility(View.VISIBLE);
             this.mShareImageBtn.setVisibility(View.VISIBLE);
+            this.itemName.setVisibility(View.VISIBLE);
         }
     }
 
