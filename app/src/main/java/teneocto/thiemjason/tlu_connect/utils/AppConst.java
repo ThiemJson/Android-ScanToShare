@@ -31,6 +31,7 @@ public class AppConst {
     public static String TAG_ProfileSharedViewModel = " ==> Profile shared viewmodel";
 
     // Regex
+    public static String REGEX_Normal = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
     public static String REGEX_Email = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
     public static String REGEX_Facebook_URL = "(?:https?:)?\\/\\/(?:www\\.)?(?:facebook|fb)\\.com\\/(?<profile>(?![A-z]+\\.php)(?!marketplace|gaming|watch|me|messages|help|search|groups)[A-z0-9_\\-\\.]+)\\/?";
     public static String REGEX_Instagram_URL = "https?:\\/\\/(www\\.)?instagram\\.com\\/([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\\.(?!\\.))){0,28}(?:[A-Za-z0-9_]))?)";

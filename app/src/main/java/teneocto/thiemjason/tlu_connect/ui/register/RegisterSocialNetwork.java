@@ -196,6 +196,8 @@ public class RegisterSocialNetwork extends AppCompatActivity {
                         firebaseSignInWithEmail(email, password);
                     } else {
                         Log.w(AppConst.TAG_FirebaseAuthentication, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(this, "The email address is already in use by another account", Toast.LENGTH_SHORT).show();
+                        progressDialog.deleteProgressDialog();
                     }
                 });
     }
@@ -236,6 +238,8 @@ public class RegisterSocialNetwork extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         Log.w(AppConst.TAG_FirebaseAuthentication, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(this, "The email address is already in use by another account", Toast.LENGTH_SHORT).show();
+                        progressDialog.deleteProgressDialog();
                     }
                 });
     }
