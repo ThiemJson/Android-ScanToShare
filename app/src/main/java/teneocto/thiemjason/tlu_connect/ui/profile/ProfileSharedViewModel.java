@@ -29,12 +29,32 @@ public class ProfileSharedViewModel extends ViewModel {
     public ArrayList<SharedDTO> sharedDTOLiveData = new ArrayList<>();
     public UserDTO userDTO = new UserDTO();
 
-    // Flags for check
+    /**
+     * Check user social nw fetched from internet
+     */
     public MutableLiveData<Boolean> dataFetched = new MutableLiveData<Boolean>();
+
+    /**
+     * Check user information fetched from internet
+     */
     public MutableLiveData<Boolean> userDataFetched = new MutableLiveData<Boolean>();
+
+    /**
+     * Check user cancel of save information and how / show tool button
+     */
     public MutableLiveData<Boolean> hideShowBtnTool = new MutableLiveData<Boolean>();
 
-    public MutableLiveData<Boolean> isDataSubmitted = new MutableLiveData<Boolean>();
+    /**
+     * Check when user changed data and delete progress bar dialog
+     */
+    public MutableLiveData<Boolean> isDataReverted = new MutableLiveData<Boolean>();
+
+    /**
+     * Check user updated new information ()
+     * TRUE: when user want to close after information updated
+     * FALSE: when user doesn't want to close after information updated
+     */
+    public MutableLiveData<Boolean> isDataUpdated = new MutableLiveData<Boolean>();
 
 
     // Old data
@@ -52,31 +72,11 @@ public class ProfileSharedViewModel extends ViewModel {
         sharedDTOLiveData.add(sharedDTO);
     }
 
-    public void modifyUser(UserDTO mUserDTO) {
-        userDTO = mUserDTO;
-    }
-
-    public boolean verifyUserEmail() {
-        if (userDTO == null) {
-            UserDTO mUserDTO = new UserDTO();
-            userDTO = mUserDTO;
-        }
-        Pattern pattern = Pattern.compile(AppConst.REGEX_Email, Pattern.CASE_INSENSITIVE);
-        String userEmail = userDTO.getEmail();
-
-        if (userEmail.equals("")) {
-            Log.e(AppConst.TAG_RegisterProfileViewModel, " ==> Fail to email null");
-            return false;
-        }
-        // Email verify
-        if (!pattern.matcher(userEmail).matches()
-        ) {
-            Log.e(AppConst.TAG_RegisterProfileViewModel, " ==> Fail to email not match REGEX");
-            return false;
-        }
-        return true;
-    }
-
+    /**
+     * Check user social network input
+     *
+     * @return boolean
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean verifySocialNetworkInput() {
         for (SharedDTO sharedDTO : sharedDTOLiveData) {
@@ -206,14 +206,18 @@ public class ProfileSharedViewModel extends ViewModel {
         Log.i(AppConst.TAG_ProfileSharedViewModel, "old shared: " + oldSharedDTOs.size());
         Log.i(AppConst.TAG_ProfileSharedViewModel, "new shared: " + sharedDTOLiveData.size());
 
-//        // Revert to old data
-//        userDTO = oldUserDTO;
-//        sharedDTOLiveData = new ArrayList<SharedDTO>(oldSharedDTOs);
-
         // Notify changed;
         userDataFetched.setValue(true);
 
         hideShowBtnTool.setValue(false);
-        isDataSubmitted.setValue(true);
+        isDataReverted.setValue(true);
+    }
+
+    /**
+     * Update new information
+     */
+    public void updateUserInformation(Boolean closeAfterUpdated) {
+        isDataUpdated.setValue(closeAfterUpdated);
+        Log.i(AppConst.TAG_ProfileSharedViewModel, "Updated information ");
     }
 }

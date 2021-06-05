@@ -143,7 +143,7 @@ public class ProfileInformation extends Fragment {
                                 break;
                             case R.id.profile_position:
                                 viewModel.userDTO.setPosition(editText.getText().toString());
-                                break;  
+                                break;
                         }
                     }
                 });

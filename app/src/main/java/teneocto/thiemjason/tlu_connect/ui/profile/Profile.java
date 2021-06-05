@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -118,13 +119,22 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        // Handle when user change data
-        sharedViewModel.isDataSubmitted.observe(this, aBoolean -> {
+        // Handle when user revert data changed
+        sharedViewModel.isDataReverted.observe(this, aBoolean -> {
             if (progressDialog != null) {
                 progressDialog.deleteProgressDialog();
             }
         });
 
+        // Handle when user updated new data
+        sharedViewModel.isDataUpdated.observe(this, aBoolean -> {
+            if (progressDialog != null) {
+                progressDialog.deleteProgressDialog();
+            }
+            if (aBoolean) {
+                finish();
+            }
+        });
 
         // Add fragment
         mAdapter.AddFragment(new ProfileSocialNetwork(), "Social Network");
@@ -187,6 +197,7 @@ public class Profile extends AppCompatActivity {
     /**
      * Handle when user click on back button
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void onBackButtonClick() {
         if (!sharedViewModel.hideShowBtnTool.getValue()) {
             finish();
@@ -201,6 +212,7 @@ public class Profile extends AppCompatActivity {
      * OK -> Commit data changed
      * Cancel => Cancel data changed
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void showConfirmDialog() {
         confirmDialog = new Dialog(this);
         confirmDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -215,11 +227,17 @@ public class Profile extends AppCompatActivity {
         dialogNotSaveBtn.setOnClickListener(v -> confirmDialogCancelBtn());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void confirmDialogSaveBtn() {
         confirmDialog.dismiss();
         progressDialog = new CustomProgressDialog(this, "");
-        progressDialog.deleteProgressDialog();
-        finish();
+        if (!sharedViewModel.verifySocialNetworkInput()) {
+            Toast.makeText(this, "Make sure your " + sharedViewModel.errorField + " URL is correct !", Toast.LENGTH_SHORT).show();
+            progressDialog.deleteProgressDialog();
+            return;
+        }
+
+        sharedViewModel.updateUserInformation(true);
         // Submit data
     }
 
@@ -255,9 +273,7 @@ public class Profile extends AppCompatActivity {
             progressDialog = new CustomProgressDialog(this, "");
             saveBtnDialog.dismiss();
             sharedViewModel.hideShowBtnTool.setValue(false);
-            progressDialog.deleteProgressDialog();
-
-
+            sharedViewModel.updateUserInformation(false);
             // For debugs
             for (SharedDTO sharedDTO : sharedViewModel.sharedDTOLiveData) {
                 Log.i("===> Update user: ", sharedDTO.getUrl());

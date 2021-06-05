@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +16,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
@@ -107,7 +104,7 @@ public class ProfileSocialNetwork extends Fragment {
         });
 
         // Revert Data
-        viewModel.isDataSubmitted.observe(getViewLifecycleOwner(), aBoolean -> {
+        viewModel.isDataReverted.observe(getViewLifecycleOwner(), aBoolean -> {
             Log.i(AppConst.TAG_ProfileSharedViewModel, "revert social network");
             viewModel.sharedDTOLiveData.clear();
             mSocialAdapter.notifyItemRangeRemoved(0, viewModel.sharedDTOLiveData.size());
@@ -118,7 +115,6 @@ public class ProfileSocialNetwork extends Fragment {
             viewModel.hideShowBtnTool.setValue(false);
         });
 
-//        viewModel.loadDataFromFirebase();
         hideShowEmptyImage();
         return view;
     }
