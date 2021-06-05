@@ -114,4 +114,12 @@ public class ScanningHistory extends AppCompatActivity {
         Log.i(AppConst.TAG_ScanningHistory, "Arrays size: " + viewModel.mUserScanned.size());
         // TODO
     }
+
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
 }
