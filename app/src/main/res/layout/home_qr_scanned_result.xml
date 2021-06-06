@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scanned_result_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="80dp"
@@ -17,6 +18,7 @@
             android:layout_weight="1">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/scanned_result_user_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="7dp"
@@ -29,7 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/action_item_logo"
+                android:id="@+id/scanned_result_socialnw_icon"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="bottom|end"
@@ -52,6 +54,7 @@
             android:paddingTop="7dp">
 
             <TextView
+                android:id="@+id/scanned_result_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/phetsarath"
@@ -63,6 +66,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/scanned_result_user_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/phetsarath"
@@ -73,6 +77,7 @@
                 android:textSize="13sp" />
 
             <Button
+                android:id="@+id/scanned_result_copy_btn"
                 android:layout_gravity="center"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
@@ -95,6 +100,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/scanned_result_close_btn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="top|right"

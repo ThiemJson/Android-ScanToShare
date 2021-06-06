@@ -37,6 +37,31 @@ public class HomeQRScanner extends Fragment {
     private HomeResultScanner homeResultScanner;
 
     private CustomProgressDialog progressDialog;
+    
+    /**
+     * Result
+     */
+    View mResultContainer;
+    ImageView mResultCloseBtn;
+    ImageView mResultUserImage;
+    ImageView mResultUserIcon;
+    TextView mResultUserName;
+    TextView mResultUserUrl;
+    Button mResultCopyBtn;
+
+
+    /**
+     * Empty
+     */
+    View mEmptyContainer;
+    Button mEmptyCopyBtn;
+    TextView mEmptyUserUrl;
+    ImageView mEmptyCloseBtn;
+
+    /**
+     * Loading
+     */
+    View mLoadingContainer;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -113,6 +138,7 @@ public class HomeQRScanner extends Fragment {
         Log.i(TAG, "On create view");
         View root = inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
+        initView(root);
         mCodeScanner = new CodeScanner(getActivity(), scannerView);
         homeResultScanner = new HomeResultScanner(getActivity());
 
@@ -155,6 +181,7 @@ public class HomeQRScanner extends Fragment {
 
     /**
      * Show data when user scanned
+     *
      * @param result
      */
     private void showDataWhenScanned(Result result) {
@@ -186,5 +213,38 @@ public class HomeQRScanner extends Fragment {
             progressDialog.deleteProgressDialog();
         }
         mDialog.show();
+    }
+
+    /**
+     * Init View
+     */
+    private void initView(View view) {
+
+        // Result
+        mResultContainer = view.findViewById(R.id.home_scanned_result);
+        mResultCloseBtn = view.findViewById(R.id.scanned_result_close_btn);
+        mResultUserImage = view.findViewById(R.id.scanned_result_user_image);
+        mResultUserIcon = view.findViewById(R.id.scanned_result_socialnw_icon);
+        mResultUserName = view.findViewById(R.id.scanned_result_username);
+        mResultUserUrl = view.findViewById(R.id.scanned_result_user_url);
+        mResultCopyBtn = view.findViewById(R.id.scanned_result_copy_btn);
+
+        // Empty
+        mEmptyContainer = view.findViewById(R.id.home_scanned_empty);
+        mEmptyCopyBtn = view.findViewById(R.id.scanned_empty_copy_btn);
+        mEmptyUserUrl = view.findViewById(R.id.scanned_empty_user_url);
+        mEmptyCloseBtn = view.findViewById(R.id.scanned_empty_close_btn);
+
+        // Loading
+        mLoadingContainer = view.findViewById(R.id.home_scanned_loading);
+
+        // Hide
+        mResultContainer.setVisibility(View.GONE);
+        mEmptyContainer.setVisibility(View.GONE);
+        mLoadingContainer.setVisibility(View.GONE);
+
+        // Close button events onclick
+        mEmptyCloseBtn.setOnClickListener(v -> mEmptyContainer.setVisibility(View.GONE));
+        mResultCloseBtn.setOnClickListener(v -> mResultContainer.setVisibility(View.GONE));
     }
 }

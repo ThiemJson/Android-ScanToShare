@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -240,4 +242,20 @@ public class Utils {
         resultBitmap = Bitmap.createScaledBitmap(bitmap, Math.round(newWidth), Math.round(newHeight), true);
         return resultBitmap;
     };
+
+    /**
+     * Is URL
+     */
+    public static Boolean isURL(String url){
+        try {
+            new URL(url).toURI();
+            return true;
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
