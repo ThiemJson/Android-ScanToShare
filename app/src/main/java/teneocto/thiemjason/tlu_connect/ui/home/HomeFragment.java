@@ -306,7 +306,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadDataFromSQLite() {
-
+        progressDialog.deleteProgressDialog();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -315,7 +315,7 @@ public class HomeFragment extends Fragment {
         mUserName.setText(String.format("%s %s", userDTO.getFirstName(), userDTO.getLastName()));
         mCompany.setText(userDTO.getCompany());
         Bitmap bitmap = Utils.getBitmapFromByteArray(userDTO.getImageBase64());
-        mMainImage.setImageBitmap(bitmap);
+        mMainImage.setImageBitmap(Utils.prettyBitmap(bitmap));
 
         if (progressDialog != null) {
             progressDialog.deleteProgressDialog();

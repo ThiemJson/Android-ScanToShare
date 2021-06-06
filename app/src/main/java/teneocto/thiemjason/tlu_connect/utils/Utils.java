@@ -221,4 +221,23 @@ public class Utils {
         result.setFirebaseId(userDTO.getFirebaseId());
         return result;
     }
+
+    /**
+     * Change Image Resolution
+     */
+    public static Bitmap prettyBitmap(Bitmap bitmap){
+        Bitmap resultBitmap = bitmap;
+        if(
+                (bitmap.getWidth() > 1080 && bitmap.getHeight() < 1080)
+                || (bitmap.getWidth() > 1080 && bitmap.getHeight() < 1080)
+                || (bitmap.getWidth() < 1080 && bitmap.getHeight() < 1080)
+        ){
+            return resultBitmap;
+        }
+        Double ratio = 1080.0 / bitmap.getWidth();
+        int newWidth = (int) Math.round(bitmap.getWidth() * ratio);
+        int newHeight = (int) Math.round(bitmap.getHeight() * ratio);
+        resultBitmap = Bitmap.createScaledBitmap(bitmap, Math.round(newWidth), Math.round(newHeight), true);
+        return resultBitmap;
+    };
 }

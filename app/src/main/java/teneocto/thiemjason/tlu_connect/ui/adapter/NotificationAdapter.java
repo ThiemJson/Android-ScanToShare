@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.util.Util;
+
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
@@ -44,7 +46,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Bitmap imageBitmap = Utils.getBitmapFromByteArray(arrayList.get(position).getImageBase64());
-        holder.mImage.setImageBitmap(imageBitmap);
+        holder.mImage.setImageBitmap(Utils.prettyBitmap(imageBitmap));
         holder.mContent.setText(arrayList.get(position).getContent());
         holder.mTitle.setText(arrayList.get(position).getTitle());
     }

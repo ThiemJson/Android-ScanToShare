@@ -48,7 +48,7 @@ public class HomeSliderAdapter extends RecyclerView.Adapter<HomeSliderAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SocialNetworkDTO socialNetworkDTO = Utils.getSocialNWDTOFromId(arraysListSharedDTO.get(position).getSocialNetWorkID());
         Bitmap imageBitmap = Utils.getBitmapFromByteArray(socialNetworkDTO.getImageBase64());
-        holder.image.setImageBitmap(imageBitmap);
+        holder.image.setImageBitmap(Utils.prettyBitmap(imageBitmap));
     }
 
     @Override

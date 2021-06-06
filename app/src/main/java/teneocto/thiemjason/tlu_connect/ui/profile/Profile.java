@@ -33,6 +33,7 @@ import java.util.Base64;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class Profile extends AppCompatActivity {
@@ -121,7 +122,10 @@ public class Profile extends AppCompatActivity {
             String imageBase64 = sharedViewModel.userDTO.getImageBase64();
             Bitmap imageBitmap = Utils.getBitmapFromByteArray(imageBase64);
 
-            mImagePicker.setImageBitmap(imageBitmap);
+            mImagePicker.setImageBitmap(Utils.prettyBitmap(imageBitmap));
+
+            Log.i(AppConst.TAG_RegisterProfileViewModel, " ==> Resolution height" + imageBitmap.getHeight());
+            Log.i(AppConst.TAG_RegisterProfileViewModel, " ==> Resolution width" + imageBitmap.getWidth());
 
             if (progressDialog != null) {
                 progressDialog.deleteProgressDialog();
@@ -222,6 +226,7 @@ public class Profile extends AppCompatActivity {
         startActivityForResult(intent, SELECT_PHOTO);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -229,6 +234,15 @@ public class Profile extends AppCompatActivity {
             uri = data.getData();
             mImagePicker.setImageURI(uri);
             sharedViewModel.hideShowBtnTool.setValue(true);
+
+            // Update user profile
+            BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
+            Bitmap bitmap = drawable.getBitmap();
+
+            byte[] imageBase64 = Utils.getBitmapAsByteArray(Utils.prettyBitmap(bitmap));
+            Log.i(AppConst.TAG_RegisterProfileViewModel, " ==> Resolution height" + bitmap.getHeight());
+            Log.i(AppConst.TAG_RegisterProfileViewModel, " ==> Resolution width" + bitmap.getWidth());
+            sharedViewModel.userDTO.setImageBase64(Base64.getEncoder().encodeToString(imageBase64));
         }
     }
 
@@ -280,12 +294,6 @@ public class Profile extends AppCompatActivity {
             return;
         }
 
-        // Update user profile
-        BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
-        byte[] imageBase64 = Utils.getBitmapAsByteArray(bitmap);
-
-        sharedViewModel.userDTO.setImageBase64(Base64.getEncoder().encodeToString(imageBase64));
         sharedViewModel.updateUserInformation(true);
         // Submit data
     }
@@ -334,12 +342,6 @@ public class Profile extends AppCompatActivity {
                 return;
             }
 
-            // Update user profile
-            BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
-            Bitmap bitmap = drawable.getBitmap();
-            byte[] imageBase64 = Utils.getBitmapAsByteArray(bitmap);
-
-            sharedViewModel.userDTO.setImageBase64(Base64.getEncoder().encodeToString(imageBase64));
             sharedViewModel.updateUserInformation(false);
             // Submit data
         });

@@ -79,7 +79,7 @@ public class RegisterProfile extends AppCompatActivity {
             mCompany.setText(Utils.registerUserDTO.getCompany());
 
             Bitmap imageBitmap = Utils.getBitmapFromByteArray(Utils.registerUserDTO.getImageBase64());
-            mImagePicker.setImageBitmap(imageBitmap);
+            mImagePicker.setImageBitmap(Utils.prettyBitmap(imageBitmap));
         }
 
         mBackButton.setOnClickListener(v -> backButton());
@@ -173,7 +173,7 @@ public class RegisterProfile extends AppCompatActivity {
         userDTO.setId(Utils.getRandomUUID());
         BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
-        byte[] imageBase64 = Utils.getBitmapAsByteArray(bitmap);
+        byte[] imageBase64 = Utils.getBitmapAsByteArray(Utils.prettyBitmap(bitmap));
         userDTO.setImageBase64(Base64.getEncoder().encodeToString(imageBase64));
         mRegisterProfileViewModel.setUser(userDTO);
     }

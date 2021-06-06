@@ -57,7 +57,7 @@ public class RegisterSocialNetworkAdapter extends RecyclerView.Adapter<RegisterS
 
         SocialNetworkDTO socialNetworkDTO = Utils.getSocialNWDTOFromId(sharedDTOArrays.get(position).getSocialNetWorkID());
         Bitmap imageBitmap = Utils.getBitmapFromByteArray(socialNetworkDTO.getImageBase64());
-        holder.logo.setImageBitmap(imageBitmap);
+        holder.logo.setImageBitmap(Utils.prettyBitmap(imageBitmap));
     }
 
     @Override

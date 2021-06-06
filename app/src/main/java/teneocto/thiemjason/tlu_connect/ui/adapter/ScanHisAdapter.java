@@ -50,7 +50,7 @@ public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHold
         holder.mUsername.setText(String.format("%s %s", mArrayList.get(position).getFirstName(), mArrayList.get(position).getLastName()));
 
         Bitmap imageBitmap = Utils.getBitmapFromByteArray(mArrayList.get(position).getImageBase64());
-        holder.mUserImage.setImageBitmap(imageBitmap);
+        holder.mUserImage.setImageBitmap(Utils.prettyBitmap(imageBitmap));
     }
 
     @Override
