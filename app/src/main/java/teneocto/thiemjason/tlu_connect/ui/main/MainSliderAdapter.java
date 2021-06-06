@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.uimodels.UIMainSliderItemDTO;
 
+/**
+ * Main Slider adapter
+ */
 public class MainSliderAdapter extends RecyclerView.Adapter<MainSliderAdapter.ViewHolder> {
     public ArrayList<UIMainSliderItemDTO> UIMainSliderItemDTOS;
     public ViewPager2 mViewPager2;

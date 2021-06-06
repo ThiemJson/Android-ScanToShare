@@ -23,13 +23,20 @@ import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
-public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHolder> {
+/**
+ * Register Shared Information Adapter
+ */
+public class RegisterSocialNetworkAdapter extends RecyclerView.Adapter<RegisterSocialNetworkAdapter.ViewHolder> {
+
     OnItemClickListener onItemClickListener;
+
     public ArrayList<SharedDTO> sharedDTOArrays;
+
     OnEditTextChange onEditTextChange;
+
     Context context;
 
-    public RegisterAdapter(Context context, ArrayList<SharedDTO> sharedDTOArrays) {
+    public RegisterSocialNetworkAdapter(Context context, ArrayList<SharedDTO> sharedDTOArrays) {
         this.context = context;
         this.sharedDTOArrays = sharedDTOArrays;
     }
@@ -60,7 +67,9 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView logo;
+
         ImageView delete;
+
         EditText editText;
 
         public ViewHolder(@NonNull View itemView) {
@@ -93,13 +102,13 @@ public class RegisterAdapter extends RecyclerView.Adapter<RegisterAdapter.ViewHo
     }
 
     /**
-     * Inteface handler when user click on list item
+     * Interface handler when user click on list item
      */
     public interface OnItemClickListener {
         void onDelete(View view, int position);
     }
 
-    public void setOnItemClickListener(final RegisterAdapter.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(final RegisterSocialNetworkAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 

@@ -21,6 +21,9 @@ import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * Handle Database SQLite
+ */
 public class DBHelper extends SQLiteOpenHelper {
     private Context context;
     private static String TAG = "SQLite Helper";

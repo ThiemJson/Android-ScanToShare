@@ -27,6 +27,9 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 
+/**
+ * Support Activity
+ */
 public class Support extends AppCompatActivity {
     WebView webView;
     Button mButton;

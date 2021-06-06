@@ -19,11 +19,19 @@ import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.adapter.BottomSheetAdapter;
 import teneocto.thiemjason.tlu_connect.ui.uimodels.UIBottomSheetItemDTO;
 
+/**
+ * BOTTOM SHEET FRAGMENT
+ */
 public class BottomSheetFragment extends BottomSheetDialogFragment {
+
     Context context;
+
     ArrayList<UIBottomSheetItemDTO> UIBottomSheetItemDTOS;
+
     OnItemClick listener;
+
     RecyclerView recyclerView;
+
     BottomSheetAdapter adapter;
 
     public BottomSheetFragment(Context context, OnItemClick listener) {

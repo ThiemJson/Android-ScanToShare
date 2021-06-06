@@ -8,6 +8,9 @@ import android.widget.Button;
 
 import teneocto.thiemjason.tlu_connect.R;
 
+/**
+ * Policies Amd Term
+ */
 public class PoliciesAndTerm extends AppCompatActivity {
     Button mBackButton;
 

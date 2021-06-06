@@ -32,6 +32,9 @@ import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * Firebase Messaging Service
+ */
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -46,6 +49,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
     }
 
+    /**
+     * Create Channel
+     */
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Firebase message channel";
@@ -58,6 +64,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
     }
 
+    /**
+     * Get message and show
+     * @param title Title
+     * @param content Content
+     */
     private void getMessage(String title, String content) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AppConst.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
@@ -70,6 +81,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         notificationManager.notify(999, builder.build());
     }
 
+    /**
+     * Store NOTIFICATION to Firebase Realtime Database
+     * @param remoteMessage Remote Messaging
+     * @throws IOException Exception
+     */
     private void storeNotificationToFirebase(RemoteMessage remoteMessage) throws IOException {
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
         Glide.with(getApplicationContext())

@@ -47,7 +47,7 @@
         <activity android:name=".ui.policies.PoliciesAndTerm" />
         <activity android:name=".ui.support.Support" />
         <activity android:name=".ui.scanninghistory.ScanningHistory" />
-        <activity android:name=".ui.imageslider.ImageSliderTest" />
+        <activity android:name=".ui.testimageslider.ImageSliderTest" />
         <activity android:name=".ui.profile.Profile" />
         <activity android:name=".ui.register.RegisterSocialNetwork" />
         <activity android:name=".ui.notification.Notification" />

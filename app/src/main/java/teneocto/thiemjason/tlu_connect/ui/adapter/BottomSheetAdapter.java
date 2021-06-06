@@ -15,15 +15,21 @@ import java.util.ArrayList;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.uimodels.UIBottomSheetItemDTO;
 
+/**
+ * Adapter BOTTOM SHEET
+ */
 public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.ViewHolder> {
+
     Context context;
+
     ArrayList<UIBottomSheetItemDTO> mUIBottomSheetItemDTOS;
+
     OnItemClickListener onItemClickListener;
 
     /**
      * Constructor
-     * @param context
-     * @param UIBottomSheetItemDTOS
+     * @param context Context
+     * @param UIBottomSheetItemDTOS Botton Sheet DTOs
      */
     public BottomSheetAdapter(Context context, ArrayList<UIBottomSheetItemDTO> UIBottomSheetItemDTOS){
         this.context = context;
@@ -68,7 +74,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     }
 
     /**
-     * Inteface handler when user click on list item
+     * Interface handler when user click on list item
      */
     public interface OnItemClickListener {
         void onItemClick(View view , int position);

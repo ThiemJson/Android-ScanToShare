@@ -39,14 +39,21 @@ import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * Loading Activity
+ */
 public class Launcher extends AppCompatActivity {
+
     private static String TAG = "Launcher";
+
     private BroadcastReceiver mNetworkReceiver;
     private DBHelper dbHelper;
+
     private FirebaseDatabase firebaseDatabase;
+
     private DatabaseReference databaseReference;
+
     private FirebaseDBExample firebaseDBExample;
-    private CustomProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -181,6 +188,9 @@ public class Launcher extends AppCompatActivity {
         });
     }
 
+    /**
+     * Setting up user from Firebase
+     */
     private void setUpUserDTOFromFirebaseDatabase() {
         databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
         Utils.userDTOArrayList = new ArrayList<>();
@@ -205,6 +215,9 @@ public class Launcher extends AppCompatActivity {
         });
     }
 
+    /**
+     * App started
+     */
     private void appStart() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

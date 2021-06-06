@@ -22,6 +22,9 @@ import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.notification.Notification;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
 
+/**
+ * DELETED
+ */
 public class Home extends AppCompatActivity {
     TabLayout mTabLayout;
     ViewPager mViewPager;

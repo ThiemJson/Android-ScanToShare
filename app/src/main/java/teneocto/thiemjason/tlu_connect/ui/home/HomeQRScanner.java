@@ -29,9 +29,13 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
  * create an instance of this fragment.
  */
 public class HomeQRScanner extends Fragment {
+
     private CodeScanner mCodeScanner;
+
     private Dialog mDialog;
+
     private HomeResultScanner homeResultScanner;
+
     private CustomProgressDialog progressDialog;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -149,6 +153,10 @@ public class HomeQRScanner extends Fragment {
         super.onPause();
     }
 
+    /**
+     * Show data when user scanned
+     * @param result
+     */
     private void showDataWhenScanned(Result result) {
         mDialog = new Dialog(getActivity());
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -19,6 +19,9 @@ import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * Notification Adatper
+ */
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     NotificationAdapter.OnItemClickListener onItemClickListener;
     ArrayList<teneocto.thiemjason.tlu_connect.models.NotificationDTO> arrayList;
@@ -53,7 +56,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mImage;
+
         TextView mTitle;
+
         TextView mContent;
 
         ImageView mView;

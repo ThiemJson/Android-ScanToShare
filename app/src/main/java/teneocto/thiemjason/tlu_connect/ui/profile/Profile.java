@@ -36,31 +36,49 @@ import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class Profile extends AppCompatActivity {
+
+    /**
+     * Activity components
+     */
     TabLayout mTabLayout;
+
     ViewPager mViewPager;
+
     MainAdapter mAdapter;
+
     ImageView mImagePicker;
 
     int SELECT_PHOTO = 1;
+
     Uri uri;
 
-    // View Model
+    /**
+     * Profile view models
+     */
     ProfileSharedViewModel sharedViewModel;
+
     CustomProgressDialog progressDialog;
 
-    // Tab bar buttons
+    /**
+     * Tab bar buttons
+     */
     Button mCancelBtn;
+
     Button mSaveBtn;
 
-    // Confirm dialog
+    /**
+     * Confirm Dialog
+     */
     Button dialogSaveBtn;
+
     Button dialogNotSaveBtn;
+
     Dialog confirmDialog;
+
     Dialog saveBtnDialog;
 
     /**
      * Constructor
-     *
      * @param savedInstanceState
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -233,7 +251,6 @@ public class Profile extends AppCompatActivity {
      * OK -> Commit data changed
      * Cancel => Cancel data changed
      */
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void showConfirmDialog() {
         confirmDialog = new Dialog(this);
@@ -250,6 +267,9 @@ public class Profile extends AppCompatActivity {
     }
 
 
+    /**
+     * CONFIRM DIALOG SAVE - BUTTON
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void confirmDialogSaveBtn() {
         confirmDialog.dismiss();
@@ -270,6 +290,9 @@ public class Profile extends AppCompatActivity {
         // Submit data
     }
 
+    /**
+     * CONFIRM DIALOG CANCEL BUTTON
+     */
     private void confirmDialogCancelBtn() {
         confirmDialog.dismiss();
         progressDialog = new CustomProgressDialog(this, "");
@@ -278,6 +301,9 @@ public class Profile extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * TOOL BAR SAVE BUTTON
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void toolBarSaveBtn() {
         if (saveBtnDialog != null) {
@@ -319,6 +345,9 @@ public class Profile extends AppCompatActivity {
         });
     }
 
+    /**
+     * TOOL BAR CANCEL BUTTON
+     */
     private void toolBarCancelBtn() {
         sharedViewModel.revertData();
     }

@@ -20,7 +20,11 @@ import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * Slider Adapter hept to change main slider
+ */
 public class HomeSliderAdapter extends RecyclerView.Adapter<HomeSliderAdapter.ViewHolder> {
+
     public ArrayList<SharedDTO> arraysListSharedDTO;
 
     public HomeSliderAdapter(ArrayList<SharedDTO> arraysListSharedDTO, ViewPager2 viewPager2) {

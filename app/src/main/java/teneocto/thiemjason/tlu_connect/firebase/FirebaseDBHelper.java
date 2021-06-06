@@ -11,6 +11,9 @@ import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.ui.scanninghistory.ScanningHistory;
 
+/**
+ *
+ */
 public class FirebaseDBHelper {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;

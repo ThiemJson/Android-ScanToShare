@@ -4,6 +4,9 @@ import android.app.Activity;
 
 import androidx.fragment.app.FragmentActivity;
 
+/**
+ * Result of Scanned
+ */
 public class HomeResultScanner {
     Activity activity;
 

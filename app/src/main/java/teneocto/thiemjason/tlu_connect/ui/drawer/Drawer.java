@@ -27,12 +27,21 @@ import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
 import teneocto.thiemjason.tlu_connect.ui.scanninghistory.ScanningHistory;
 import teneocto.thiemjason.tlu_connect.ui.support.Support;
 
+/**
+ * Home Activity with left navigation
+ */
 public class Drawer extends AppCompatActivity {
+
     static String TAG = "Drawer ";
+
     DrawerLayout mDrawerLayout;
+
     NavigationView mNavigationView;
+
     NavController mNavController;
+
     DrawerController mDrawerController;
+
     Button mNotification;
 
     @Override

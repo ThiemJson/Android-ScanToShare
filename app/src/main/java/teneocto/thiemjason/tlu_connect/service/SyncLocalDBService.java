@@ -29,20 +29,36 @@ import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * LOCAL Service
+ */
 public class SyncLocalDBService extends Service {
+    /**
+     * Flag check
+     */
     public MutableLiveData<Integer> isFetched = new MutableLiveData<Integer>();
 
-    // Firebase tool
+    /**
+     * Firebase Database
+     */
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-    // SQLite tool
+    /**
+     * SQLite Database Helper
+     */
     private DBHelper dbHelper;
 
-    // Data set
+    /**
+     * DATA SET
+     */
     private ArrayList<UserDTO> userDTOList = new ArrayList<>();
+
     private ArrayList<SharedDTO> sharedDTOList = new ArrayList<>();
+
     private ArrayList<SocialNetworkDTO> socialNetworkDTOList = new ArrayList<>();
+
     private ArrayList<ScanningHistoryDTO> scanningHistoryDTOList = new ArrayList<>();
+
     private ArrayList<NotificationDTO> notificationDTOList = new ArrayList<>();
 
 
@@ -82,6 +98,9 @@ public class SyncLocalDBService extends Service {
         return null;
     }
 
+    /**
+     * Load data from Firebase
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadDataFromFirebase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -93,6 +112,9 @@ public class SyncLocalDBService extends Service {
         syncSocialNW();
     }
 
+    /**
+     * Sync Notification
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void syncNotification() {
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.NOTIFICATION_TABLE_NAME);
@@ -107,6 +129,7 @@ public class SyncLocalDBService extends Service {
 
                 }
 
+                // Store data
                 dbHelper.deleteRecord(DBConst.NOTIFICATION_TABLE_NAME);
                 if (notificationDTOList.size() != 0) {
                     // Sync data
@@ -133,6 +156,9 @@ public class SyncLocalDBService extends Service {
         });
     }
 
+    /**
+     * Sync Scanning History
+     */
     private void syncScanningHistory() {
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SCAN_TABLE_NAME);
         databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -172,6 +198,9 @@ public class SyncLocalDBService extends Service {
         });
     }
 
+    /**
+     * Sync User Shared
+     */
     private void syncShared() {
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SHARED_TABLE_NAME);
         databaseReference.child(AppConst.USER_UID_Static).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -207,6 +236,9 @@ public class SyncLocalDBService extends Service {
         });
     }
 
+    /**
+     * Sync User Notification
+     */
     private void syncUser() {
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.USER_TABLE_NAME);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -243,6 +275,9 @@ public class SyncLocalDBService extends Service {
         });
     }
 
+    /**
+     * Sync User Social Network
+     */
     private void syncSocialNW() {
         DatabaseReference databaseReference = firebaseDatabase.getReference(DBConst.SN_TABLE_NAME);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

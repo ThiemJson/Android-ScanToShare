@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import teneocto.thiemjason.tlu_connect.R;
 
+/**
+ * NETWORK RECEIVER
+ */
 public class NetworkReceiver extends BroadcastReceiver {
     private static String TAG = "BroadcastReceiver";
 
@@ -27,6 +30,11 @@ public class NetworkReceiver extends BroadcastReceiver {
         }
     }
 
+    /**
+     * Check Internet connection
+     * @param context Context
+     * @return Boolean
+     */
     private boolean isInternetConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

@@ -12,15 +12,25 @@ import android.widget.Toast;
 
 import teneocto.thiemjason.tlu_connect.R;
 
+/**
+ * UI: Showing app about information
+ */
 public class AboutDialog implements View.OnClickListener {
+
     Button mCloseButton;
+
     Button mViewLicenses;
+
     TextView mViewDev;
+
     Dialog mDialog;
+
     Context context;
 
     public void showDialog(Activity activity) {
         context = activity;
+
+        // Init Dialog
         mDialog = new Dialog(activity);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.setContentView(R.layout.about_dialog);

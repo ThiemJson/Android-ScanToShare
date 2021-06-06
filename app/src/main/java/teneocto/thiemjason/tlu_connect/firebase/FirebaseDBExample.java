@@ -19,6 +19,9 @@ import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * Handler FIREBASE DATA SEEDER
+ */
 public class FirebaseDBExample {
     Context context;
 
@@ -26,6 +29,9 @@ public class FirebaseDBExample {
         this.context = context;
     }
 
+    /**
+     * Data seeder
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void FirebaseDataSeeder() {
         NOTIFICATION_initFirebaseDB();
@@ -34,6 +40,9 @@ public class FirebaseDBExample {
         SOCIAL_NETWORK_initFirebaseDB();
     }
 
+    /**
+     * Seeder USER_data
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void USER_initFirebaseDB() {
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
@@ -51,6 +60,9 @@ public class FirebaseDBExample {
         firebaseDBHelper.USER_Insert(userDTO);
     }
 
+    /**
+     * Seeder Notification data
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NOTIFICATION_initFirebaseDB() {
         NotificationDTO notificationDTO = new NotificationDTO(
@@ -64,6 +76,9 @@ public class FirebaseDBExample {
         firebaseDBHelper.Notification_Insert(notificationDTO);
     }
 
+    /**
+     * Seeder Social Network data
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void SOCIAL_NETWORK_initFirebaseDB() {
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
@@ -117,6 +132,9 @@ public class FirebaseDBExample {
         firebaseDBHelper.SN_Insert(twitter);
     }
 
+    /**
+     * Seeder scanning history data
+     */
     public void SCANNING_HISTORY_initFirebaseDB() {
         ScanningHistoryDTO scanningHistoryDTO = new ScanningHistoryDTO(
                 Utils.getRandomUUID(), Utils.getUserUUID(context), AppConst.USER_UID_Static
@@ -125,6 +143,9 @@ public class FirebaseDBExample {
         firebaseDBHelper.Scanning_History_Insert(scanningHistoryDTO);
     }
 
+    /**
+     * Seeder user information shared
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void SHARED_initFirebaseDB() {
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();

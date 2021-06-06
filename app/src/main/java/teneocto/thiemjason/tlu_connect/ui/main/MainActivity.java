@@ -54,19 +54,25 @@ import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Activity components
+     */
     ViewPager2 mViewPager;
-    Handler mSliderHandler = new Handler();
-    AdView adView;
 
-    // Button
+    Handler mSliderHandler = new Handler();
+
     Button mSkip;
 
-    // Facebook Authentication
-    LoginButton loginButton;
-    CallbackManager mCallbackManager;
-    FirebaseAuth mAuth;
-
     private CustomProgressDialog mProgressDialog;
+
+    /**
+     * Facebook Authentication
+     */
+    LoginButton loginButton;
+
+    CallbackManager mCallbackManager;
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         mSkip = findViewById(R.id.btn_main_ac_skip);
         mAuth = FirebaseAuth.getInstance();
 
+        // Set onclick listener
         loginButton.setOnClickListener(v -> connectFacebook());
         mSkip.setOnClickListener(v -> skip());
     }
@@ -100,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.twiiter, "Create your Profile", "Set up your basic personal information to share with another"));
 
         mViewPager.setAdapter(new MainSliderAdapter(UIMainSliderItemDTOS, mViewPager));
-
         mViewPager.setClipToPadding(false);
         mViewPager.setClipChildren(false);
         mViewPager.setOffscreenPageLimit(3);
@@ -189,27 +195,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handle Facebook Access Token
+     * @param token Facebook Token
+     */
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(AppConst.TAG_MainActivity, "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(AppConst.TAG_MainActivity, "signInWithCredential:success");
                         FirebaseUser user = mAuth.getCurrentUser();
 
+                        // Debugs
                         Log.i(AppConst.TAG_MainActivity, "handleFacebookAccessToken:" + token);
                         Log.i(AppConst.TAG_MainActivity, "current user uid:" + mAuth.getCurrentUser().getUid());
                         Log.i(AppConst.TAG_MainActivity, "current user email:" + mAuth.getCurrentUser().getEmail());
                         Log.i(AppConst.TAG_MainActivity, "current user display name:" + mAuth.getCurrentUser().getDisplayName());
                         Log.i(AppConst.TAG_MainActivity, "current user image url:" + mAuth.getCurrentUser().getPhotoUrl());
                         registerWithFacebook(token);
+
                     } else {
+
                         // If sign in fails, display a message to the user.
                         Log.w(AppConst.TAG_MainActivity, "signInWithCredential:failure", task.getException());
                         Toast.makeText(MainActivity.this, "Authentication with Facebook failure", Toast.LENGTH_SHORT).show();
+
                         if (mProgressDialog != null) {
                             mProgressDialog.deleteProgressDialog();
                         }
@@ -217,6 +233,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Register Facebook
+     * @param token Access Token
+     */
     private void registerWithFacebook(AccessToken token) {
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(mAuth.getCurrentUser().getEmail());
@@ -247,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseAuth.getInstance().signOut();
                     LoginManager.getInstance().logOut();
 
+                    // Start new activity
                     Intent intent = new Intent(getApplicationContext(), Drawer.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
@@ -264,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Check if use have facebook account
      *
-     * @param userID
+     * @param userID User ID
      */
     private void isHaveFacebookAccount(String userID) {
 

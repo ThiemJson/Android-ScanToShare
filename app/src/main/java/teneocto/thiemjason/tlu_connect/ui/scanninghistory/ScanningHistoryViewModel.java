@@ -21,8 +21,18 @@ import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * Scanning History View Models
+ */
 public class ScanningHistoryViewModel extends ViewModel {
+    /**
+     * Data
+     */
     public ArrayList<UserDTO> mUserScanned = new ArrayList<>();
+
+    /**
+     * Flag check
+     */
     public MutableLiveData<Boolean> isFetched = new MutableLiveData<Boolean>();
 
     /**

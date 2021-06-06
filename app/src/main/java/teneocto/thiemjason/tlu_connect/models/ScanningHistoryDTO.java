@@ -1,8 +1,11 @@
 package teneocto.thiemjason.tlu_connect.models;
 
 public class ScanningHistoryDTO {
+
     private String id;
+
     private String localUserID;
+
     private String remoteUserID;
 
     public ScanningHistoryDTO() {

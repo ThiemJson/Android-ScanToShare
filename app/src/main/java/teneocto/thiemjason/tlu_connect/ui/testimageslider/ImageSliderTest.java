@@ -1,4 +1,4 @@
-package teneocto.thiemjason.tlu_connect.ui.imageslider;
+package teneocto.thiemjason.tlu_connect.ui.testimageslider;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

@@ -24,25 +24,36 @@ import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterProfile extends AppCompatActivity {
+    /**
+     * View models
+     */
     private RegisterProfileViewModel mRegisterProfileViewModel;
+
+    /**
+     * Components
+     */
     private UserDTO userDTO;
-    public static String TAG = "RegisterProfile";
+
     ImageView mImagePicker;
+
     int SELECT_PHOTO = 1;
+
     Uri uri;
 
-    // Buttons
     Button mBackButton;
+
     Button mNext;
 
-    // Elements
     EditText mFirstName;
+
     EditText mLastName;
+
     EditText mEmail;
+
     EditText mPosition;
+
     EditText mCompany;
 
-    // Progressbar
     ProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)

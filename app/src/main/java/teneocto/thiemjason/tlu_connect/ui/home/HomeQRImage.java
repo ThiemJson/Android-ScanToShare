@@ -60,31 +60,45 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
  * create an instance of this fragment.
  */
 public class HomeQRImage extends Fragment {
+
+    /**
+     * Data arrays
+     */
     public ArrayList<SharedDTO> sharedDTOArrays;
+
     public ViewPager2 viewPager2;
+
     public Gson gson;
 
     // Firebase
-    FirebaseDBHelper firebaseDBHelper;
     FirebaseDatabase firebaseDatabase;
+
     DatabaseReference databaseReference;
 
     // Element
     TextView itemName;
+
     TextView itemUrl;
+
     ImageView qrImage;
+
     View emptyImage;
+
     View mRULContainer;
+
     Button mShareImageBtn;
+
     LinearLayout sliderContainer;
+
     FloatingActionButton mAddSN;
 
-    // Back - Forward button
     ImageView backButton;
+
     ImageView forwardButton;
 
     // URL container
     private ClipboardManager mClipboard;
+
     private ClipData mClipData;
 
     // Adapter
@@ -133,7 +147,7 @@ public class HomeQRImage extends Fragment {
     }
 
     /**
-     * Life cycle
+     * ===================================> Life cycle
      */
     @Override
     public void onStart() {
@@ -186,8 +200,8 @@ public class HomeQRImage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_slider_contaiter, container, false);
-
         sharedDTOArrays = new ArrayList<>();
+
         itemName = view.findViewById(R.id.home_slider_item_name);
         qrImage = view.findViewById(R.id.home_qr_image);
         itemUrl = view.findViewById(R.id.home_url_text);
@@ -197,11 +211,10 @@ public class HomeQRImage extends Fragment {
         sliderContainer = view.findViewById(R.id.home_slider_linearlayout);
         viewPager2 = view.findViewById(R.id.home_view_slider_container);
         mAddSN = view.findViewById(R.id.home_btn_register_social_add);
-
-        // Back - Forward button
         backButton = view.findViewById(R.id.home_back_arrow);
         forwardButton = view.findViewById(R.id.home_forward_arrow);
 
+        // On Click
         mRULContainer.setOnClickListener(v -> copyDataToClipboard());
         mShareImageBtn.setOnClickListener(v -> shareImage(container.getContext()));
         mAddSN.setOnClickListener(v -> {
@@ -209,6 +222,7 @@ public class HomeQRImage extends Fragment {
             startActivity(intent);
         });
 
+        // Init data
         this.loadDataFromFirebase();
         this.initSlider();
         return view;
@@ -235,6 +249,7 @@ public class HomeQRImage extends Fragment {
             page.setScaleX(1f + r * 0.2f);
         });
 
+        // View papers
         viewPager2.setPageTransformer(compositePageTransformer);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -245,13 +260,16 @@ public class HomeQRImage extends Fragment {
             }
         });
 
-
+        // Slider buttons
         backButton.setOnClickListener(v -> backButtonOnLick());
         forwardButton.setOnClickListener(v -> forwardButtonOnLick());
 
         hideShowHomeComponent();
     }
 
+    /**
+     * Hide or show components
+     */
     private void hideShowHomeComponent() {
         if (sharedDTOArrays.size() == 0) {
             this.qrImage.setVisibility(View.GONE);
@@ -291,6 +309,9 @@ public class HomeQRImage extends Fragment {
         viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
     }
 
+    /**
+     * Handle page when user slided
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void pageChange() {
         int position = viewPager2.getCurrentItem();
@@ -304,6 +325,9 @@ public class HomeQRImage extends Fragment {
         qrImage.setImageBitmap(qrgEncoder.getBitmap());
     }
 
+    /**
+     * Copy data to clipboard when user click on URL Container
+     */
     private void copyDataToClipboard() {
         ClipboardManager _clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Nothing", itemUrl.getText());
@@ -311,6 +335,10 @@ public class HomeQRImage extends Fragment {
         Toast.makeText(getActivity(), "Copy to clipboard", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Handle user share QR Image
+     * @param context context
+     */
     private void shareImage(Context context) {
         int position = viewPager2.getCurrentItem();
         QRGEncoder qrgEncoder = Utils.generateQRCodeFromContent(getActivity(), sharedDTOArrays.get(position).getUrl());
@@ -350,6 +378,9 @@ public class HomeQRImage extends Fragment {
         });
     }
 
+    /**
+     * Load data form SQLite
+     */
     private void loadDataFromSQLite() {
     }
 }

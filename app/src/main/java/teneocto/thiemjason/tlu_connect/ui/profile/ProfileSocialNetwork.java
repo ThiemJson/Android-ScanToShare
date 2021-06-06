@@ -19,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
-import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
+import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterSocialNetworkAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
@@ -30,17 +30,21 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
  * create an instance of this fragment.
  */
 public class ProfileSocialNetwork extends Fragment {
+    /**
+     * Components
+     */
     RecyclerView mSocialRecyclerView;
     View mEmptyImage;
-    RegisterAdapter mSocialAdapter;
+    RegisterSocialNetworkAdapter mSocialAdapter;
     FloatingActionButton mFloatingButton;
     BottomSheetFragment mBottomSheetFragment;
 
-    // View model
+    /**
+     * View models
+     */
     ProfileSharedViewModel viewModel;
     String tempText = "";
 
-    // Handle for edit text auto fill
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -120,13 +124,13 @@ public class ProfileSocialNetwork extends Fragment {
     }
 
     private void initRecycleView() {
-        this.mSocialAdapter = new RegisterAdapter(getActivity(), viewModel.sharedDTOLiveData);
+        this.mSocialAdapter = new RegisterSocialNetworkAdapter(getActivity(), viewModel.sharedDTOLiveData);
         this.mSocialRecyclerView.setAdapter(this.mSocialAdapter);
         this.mSocialRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         this.mFloatingButton.setOnClickListener(v -> fabOnClick());
 
-        mSocialAdapter.setOnEditTextChange(new RegisterAdapter.OnEditTextChange() {
+        mSocialAdapter.setOnEditTextChange(new RegisterSocialNetworkAdapter.OnEditTextChange() {
             @Override
             public void beforeTextChanged(int position, String text) {
                 tempText = text;

@@ -13,6 +13,9 @@ import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterSocialNetworkViewModel extends ViewModel {
+    /**
+     * Data
+     */
     public ArrayList<SharedDTO> sharedDTOArrays = new ArrayList<SharedDTO>();
     public String errorField = "";
 

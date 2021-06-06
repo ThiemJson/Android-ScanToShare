@@ -19,6 +19,9 @@ import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
+/**
+ * Notification ViewModels
+ */
 public class NotificationViewModel extends ViewModel {
     public ArrayList<NotificationDTO> notificationDTOArrayList = new ArrayList<>();
     public MutableLiveData<Boolean>  isFetched = new MutableLiveData<>();
@@ -52,6 +55,11 @@ public class NotificationViewModel extends ViewModel {
         });
     }
 
+    /**
+     * Check Notification Duplicate
+     * @param _notificationDTO Notification DTO
+     * @return Boolean
+     */
     private Boolean checkNotificationDuplicate(NotificationDTO _notificationDTO) {
         for (NotificationDTO notificationDTO : notificationDTOArrayList) {
             if (notificationDTO.getId().equals(_notificationDTO.getId())) {

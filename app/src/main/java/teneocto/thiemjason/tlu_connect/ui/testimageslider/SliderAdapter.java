@@ -1,4 +1,4 @@
-package teneocto.thiemjason.tlu_connect.ui.imageslider;
+package teneocto.thiemjason.tlu_connect.ui.testimageslider;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -40,6 +40,12 @@ public class Utils {
      */
     public static Boolean isUserUpdatedData = false;
 
+    /**
+     * Generate QRGEncoder form content
+     * @param activity Activity
+     * @param content Content
+     * @return QRGEncoder
+     */
     public static QRGEncoder generateQRCodeFromContent(Activity activity, String content) {
         DisplayMetrics lDisplayMetrics = activity.getResources().getDisplayMetrics();
         int widthPixels = lDisplayMetrics.widthPixels;
@@ -49,51 +55,84 @@ public class Utils {
         return new QRGEncoder(content, null, QRGContents.Type.TEXT, qrCodeContentWidth);
     }
 
+    /**
+     * Get Byte base64 from Bitmap
+     * @param bitmap Bitmap
+     * @return byte[]
+     */
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
         return outputStream.toByteArray();
     }
 
+    /**
+     * Get Bitmap from byte[]
+     * @param byteBase64 bytp[] base64
+     * @return Bitmap
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Bitmap getBitmapFromByteArray(String byteBase64) {
         byte[] imageBase64 = Base64.getDecoder().decode(byteBase64);
         return BitmapFactory.decodeByteArray(imageBase64, 0, imageBase64.length, null);
     }
 
-    public static QRGEncoder generateQRCodeFromContent(Context context, String content) {
-        DisplayMetrics lDisplayMetrics = context.getResources().getDisplayMetrics();
-        int widthPixels = lDisplayMetrics.widthPixels;
-        int heightPixels = lDisplayMetrics.heightPixels;
-        Integer qrCodeContentWidth = (int) Math.round(widthPixels * 1);
-        return new QRGEncoder(content, null, QRGContents.Type.TEXT, qrCodeContentWidth);
-    }
-
+    /**
+     * Get Social Network form UD
+     * @param id ID
+     * @return Social Network DTO
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static SocialNetworkDTO getSocialNWDTOFromId(String id) {
         return Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getId().equals(id)).collect(Collectors.toList()).get(0);
     }
 
+    /**
+     * Get Social Network form name
+     * @param name ID
+     * @return Social Network DTO
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static SocialNetworkDTO getSocialNWDTOFromName(String name) {
         return Utils.socialNetworkDTOArrayList.stream().filter(x -> x.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
 
+    /**
+     * Get UserDTO from
+     * @param id ID
+     * @return UserDTO
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static UserDTO getUserDTOFromId(String id) {
         return Utils.userDTOArrayList.stream().filter(x -> x.getId().equals(id)).collect(Collectors.toList()).get(0);
     }
 
+    /**
+     * Serialize QREncoder
+     * @param qrgEncoder QRGEncoder
+     * @return String
+     */
     public static String serializeQREncoder(QRGEncoder qrgEncoder) {
         Gson gson = new Gson();
         return gson.toJson(qrgEncoder);
     }
 
+    /**
+     * Deserialize QREncoder
+     * @param qrEncoder QREncdoer
+     * @return QRGEncoder
+     */
     public static QRGEncoder deserialQREncoder(String qrEncoder) {
         Gson gson = new Gson();
         return gson.fromJson(qrEncoder, QRGEncoder.class);
     }
 
+    /**
+     * Get Image Uri form Bitmap
+     * @param inContext context
+     * @param inImage image Bitmap
+     * @return Uri
+     */
     public static Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -101,10 +140,20 @@ public class Utils {
         return Uri.parse(path);
     }
 
+    /**
+     * Random ID
+     * @return String
+     */
     public static String getRandomUUID() {
         return UUID.randomUUID().toString();
     }
 
+    /**
+     * Set data to Shared Preferences
+     * @param context Context
+     * @param key Key
+     * @param data Value
+     */
     public static void setPrefer(Context context, String key, String data) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -112,26 +161,34 @@ public class Utils {
         editor.apply();
     }
 
+    /**
+     * Get data from Shared Preferences
+     * @param context Context
+     * @param key Key
+     * @return value
+     */
     public static String getPrefer(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
         String text = sharedPreferences.getString(key, "");
         return text;
     }
 
+    /**
+     * Get User UUID from Shared Preferences
+     * @param context Context
+     * @return String
+     */
     public static String getUserUUID(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
         String text = sharedPreferences.getString(AppConst.USER_UID, "");
         return text;
     }
 
-    public static Bitmap getFacebookProfilePicture(String grapUrl) throws IOException {
-        URL imageURL = new URL(grapUrl + "?type=large");
-        Bitmap bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
-
-        return bitmap;
-    }
-
-    //    String userID, String socialNetWorkID, String url
+    /**
+     * Clone SharedDTO List from another Arrays List ( Help to disable Deep Copy )
+     * @param arrayList ArrayList
+     * @return SharedDTO ArrayList
+     */
     public static ArrayList<SharedDTO> cloneSharedDTO(ArrayList<SharedDTO> arrayList) {
         ArrayList<SharedDTO> result = new ArrayList<>();
         for (SharedDTO sharedDTO : arrayList) {
@@ -145,6 +202,11 @@ public class Utils {
         return result;
     }
 
+    /**
+     * Clone UserDTO from another
+     * @param userDTO UserDTO
+     * @return UserDTO
+     */
     public static UserDTO cloneUserDTO(UserDTO userDTO) {
         UserDTO result = new UserDTO(
                 userDTO.getId(),

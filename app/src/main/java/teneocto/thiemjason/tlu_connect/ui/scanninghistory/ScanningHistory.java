@@ -21,16 +21,24 @@ import teneocto.thiemjason.tlu_connect.ui.adapter.ScanHisAdapter;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 
+/**
+ * Scanning History Activity
+ */
 public class ScanningHistory extends AppCompatActivity {
+    /**
+     * Components
+     */
     Button mBackButton;
     RecyclerView mRecycleView;
     ScanHisAdapter mAdapter;
     AdView adView;
     View mEmptyImage;
-
-    // View model
-    ScanningHistoryViewModel viewModel;
     CustomProgressDialog progressDialog;
+
+    /**
+     * View models
+     */
+    ScanningHistoryViewModel viewModel;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -57,6 +65,9 @@ public class ScanningHistory extends AppCompatActivity {
         });
     }
 
+    /**
+     * Hide or Show Empty Image
+     */
     private void hideEmptyImage() {
         if (viewModel.mUserScanned.size() == 0) {
             mEmptyImage.setVisibility(View.VISIBLE);
@@ -65,12 +76,18 @@ public class ScanningHistory extends AppCompatActivity {
         }
     }
 
+    /**
+     * init view
+     */
     void initView() {
         mBackButton = findViewById(R.id.scanning_menu_icon);
         mBackButton.setOnClickListener(v -> finish());
         mEmptyImage = findViewById(R.id.scanning_history_empty);
     }
 
+    /**
+     * Init Google Ads Mob
+     */
     private void initialAds() {
         MobileAds.initialize(this, initializationStatus -> {
         });
@@ -79,6 +96,9 @@ public class ScanningHistory extends AppCompatActivity {
         adView.loadAd(adRequest);
     }
 
+    /**
+     * Init Recycle View
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initRecycleView() {
         mRecycleView = findViewById(R.id.scanning_his_recycle_view);
@@ -99,6 +119,10 @@ public class ScanningHistory extends AppCompatActivity {
         });
     }
 
+    /**
+     * Handle when user delete item
+     * @param position Position
+     */
     private void deleteItem(int position) {
         Log.i(AppConst.TAG_ScanningHistory, "Selected position: " + position);
         Log.i(AppConst.TAG_ScanningHistory, "Arrays size: " + viewModel.mUserScanned.size());
@@ -109,6 +133,10 @@ public class ScanningHistory extends AppCompatActivity {
         this.hideEmptyImage();
     }
 
+    /**
+     * Handle when user show item
+     * @param position Position
+     */
     private void viewItem(int position) {
         Log.i(AppConst.TAG_ScanningHistory, "Selected position: " + position);
         Log.i(AppConst.TAG_ScanningHistory, "Arrays size: " + viewModel.mUserScanned.size());

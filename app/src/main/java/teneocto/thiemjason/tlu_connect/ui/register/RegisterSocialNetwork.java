@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
-import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterAdapter;
+import teneocto.thiemjason.tlu_connect.ui.adapter.RegisterSocialNetworkAdapter;
 import teneocto.thiemjason.tlu_connect.ui.bottomactionsheet.BottomSheetFragment;
 import teneocto.thiemjason.tlu_connect.ui.drawer.Drawer;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
@@ -38,7 +38,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
 
     // Main recycle view
     RecyclerView mRecyclerView;
-    RegisterAdapter mRegisterAdapter;
+    RegisterSocialNetworkAdapter mRegisterSocialNetworkAdapter;
     View mEmpty;
 
     // Buttons
@@ -91,11 +91,11 @@ public class RegisterSocialNetwork extends AppCompatActivity {
      */
     private void initRecycleView() {
         this.mRecyclerView = findViewById(R.id.register_social_recycle_view);
-        this.mRegisterAdapter = new RegisterAdapter(this, viewModel.sharedDTOArrays);
-        this.mRecyclerView.setAdapter(this.mRegisterAdapter);
+        this.mRegisterSocialNetworkAdapter = new RegisterSocialNetworkAdapter(this, viewModel.sharedDTOArrays);
+        this.mRecyclerView.setAdapter(this.mRegisterSocialNetworkAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mRegisterAdapter.setOnEditTextChange(new RegisterAdapter.OnEditTextChange() {
+        mRegisterSocialNetworkAdapter.setOnEditTextChange(new RegisterSocialNetworkAdapter.OnEditTextChange() {
             @Override
             public void beforeTextChanged(int position, String text) {
 
@@ -112,14 +112,14 @@ public class RegisterSocialNetwork extends AppCompatActivity {
                 viewModel.sharedDTOArrays.get(position).setUrl(text);
             }
         });
-        mRegisterAdapter.setOnItemClickListener((view, position) -> {
+        mRegisterSocialNetworkAdapter.setOnItemClickListener((view, position) -> {
             viewModel.sharedDTOArrays.remove(position);
             Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: position " + position);
             Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: viewmodel" + viewModel.sharedDTOArrays.size());
-            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: adapter " + mRegisterAdapter.sharedDTOArrays.size());
+            Log.i(AppConst.TAG_RegisterSocialNetworkViewModel, " tesssttt: adapter " + mRegisterSocialNetworkAdapter.sharedDTOArrays.size());
 
-            mRegisterAdapter.notifyItemRemoved(position);
-            mRegisterAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOArrays.size());
+            mRegisterSocialNetworkAdapter.notifyItemRemoved(position);
+            mRegisterSocialNetworkAdapter.notifyItemRangeChanged(position, viewModel.sharedDTOArrays.size());
             hideShowEmptyImage();
         });
     }
@@ -148,7 +148,7 @@ public class RegisterSocialNetwork extends AppCompatActivity {
             sharedDTO = new SharedDTO(Utils.getRandomUUID(), AppConst.USER_UID_Static, Utils.getSocialNWDTOFromName("Facebook").getId(), "https://facebook.com/");
         }
         viewModel.addShared(sharedDTO);
-        this.mRegisterAdapter.notifyItemInserted(viewModel.sharedDTOArrays.size());
+        this.mRegisterSocialNetworkAdapter.notifyItemInserted(viewModel.sharedDTOArrays.size());
         hideShowEmptyImage();
     }
 

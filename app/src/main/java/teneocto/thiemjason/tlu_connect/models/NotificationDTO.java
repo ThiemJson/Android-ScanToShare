@@ -2,11 +2,17 @@ package teneocto.thiemjason.tlu_connect.models;
 
 public class NotificationDTO {
     private String id;
+
     private String userID;
+
     private String content;
+
     private String title;
+
     private String imageBase64;
+
     private String url;
+
 
     public NotificationDTO() {
     }

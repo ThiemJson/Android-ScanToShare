@@ -1,8 +1,11 @@
 package teneocto.thiemjason.tlu_connect.models;
 
 public class SocialNetworkDTO {
+
     private String id;
+
     private String name;
+
     private String imageBase64;
 
     public SocialNetworkDTO() {

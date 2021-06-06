@@ -19,9 +19,15 @@ import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
+/**
+ * Scanning History Adapter
+ */
 public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHolder> {
+
     ScanHisAdapter.OnItemClickListener onItemClickListener;
+
     private ArrayList<UserDTO> mArrayList;
+
     private Context context;
 
     public ScanHisAdapter(ArrayList<UserDTO> mArrayList, Context context) {
@@ -86,7 +92,7 @@ public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHold
     }
 
     /**
-     * Inteface handler when user click on list item
+     * Interface handler when user click on list item
      */
     public interface OnItemClickListener {
         void onDelete(View view, int position);

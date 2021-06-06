@@ -16,8 +16,13 @@ import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.support.Support;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
+/**
+ * WEB view of Notification
+ */
 public class NotificationWebView extends AppCompatActivity {
+
     private WebView mWebView;
+
     private Button mBackBtn;
 
     @Override
@@ -37,6 +42,9 @@ public class NotificationWebView extends AppCompatActivity {
         webViewInitial();
     }
 
+    /**
+     * Initial WebView
+     */
     private void webViewInitial() {
         Bundle bundle = getIntent().getExtras();
         String notificationURL = bundle.getString("URL");

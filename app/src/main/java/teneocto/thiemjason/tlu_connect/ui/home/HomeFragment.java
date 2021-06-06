@@ -44,24 +44,38 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    TabLayout tabLayout;
-    ViewPager viewPager;
+
+    /**
+     * Adapter
+     */
     HomeFragment.HomeAdapter adapter;
 
-    // Fragment
+    /**
+     * Fragments
+     */
+    TabLayout tabLayout;
+    ViewPager viewPager;
     HomeQRImage homeQRImage;
     HomeQRScanner homeQRScanner;
 
-    // Element
+    /**
+     * View elements of Fragment
+     */
     CircleImageView mMainImage;
     TextView mUserName;
     TextView mPosition;
     TextView mCompany;
 
-    // Database and Firebase
+    /**
+     * Database and Firebase
+     */
     DBHelper dbHelper;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
+    /**
+     * Progress Dialog
+     */
     CustomProgressDialog progressDialog;
 
 
@@ -115,13 +129,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
         if (this.homeQRScanner != null) {
             this.homeQRScanner.onPause();
         } else {
             Log.i(TAG, "On Pause => QR SCANNER NULL");
         }
-
         Log.i(TAG, "On Pause");
     }
 
@@ -184,6 +196,7 @@ public class HomeFragment extends Fragment {
      */
     void initTabLayout(View view, ViewGroup viewGroup, Bundle bundle) {
         Log.i(TAG, "On Init tablayout");
+
         tabLayout = view.findViewById(R.id.home_tablayout);
         viewPager = view.findViewById(R.id.home_view_paper);
         mMainImage = view.findViewById(R.id.home_profile_image);
@@ -191,23 +204,25 @@ public class HomeFragment extends Fragment {
         mCompany = view.findViewById(R.id.home_fragment_user_company);
         mPosition = view.findViewById(R.id.home_fragment_user_pos);
 
-        mMainImage.setOnClickListener(v -> startActivity(new Intent(viewGroup.getContext(), Profile.class)));
-
+        // Adapter
         adapter = new HomeFragment.HomeAdapter(getFragmentManager(), 12);
 
         HomeQRImage homeQRImage = new HomeQRImage();
         HomeQRScanner homeQRScanner = new HomeQRScanner();
-
         this.homeQRImage = homeQRImage;
         this.homeQRScanner = homeQRScanner;
         adapter.AddFragment(homeQRImage, "QR List");
         adapter.AddFragment(homeQRScanner, "Scan QR");
-
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
+        // Pause QR Scanner when init view
         homeQRScanner.onPause();
 
+        // Set onclick listener
+        mMainImage.setOnClickListener(v -> startActivity(new Intent(viewGroup.getContext(), Profile.class)));
+
+        // Adapter selected
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

@@ -22,18 +22,32 @@ import teneocto.thiemjason.tlu_connect.ui.adapter.NotificationAdapter;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
 
+/**
+ * UI; Activity Notification
+ */
 public class Notification extends AppCompatActivity {
+    /**
+     * Components
+     */
     Button mBackButton;
+
     AdView adView;
+
     View mEmptyImage;
 
-    // RecycleView
+    CustomProgressDialog progressDialog;
+
+    /**
+     * Recycle View
+     */
     NotificationAdapter mAdapter;
+
     RecyclerView mRecycleView;
 
-    // View model
+    /**
+     * View Models
+     */
     NotificationViewModel viewModel;
-    CustomProgressDialog progressDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -62,6 +76,9 @@ public class Notification extends AppCompatActivity {
         this.loadAd();
     }
 
+    /**
+     * Init recycle view
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initRecycleView() {
         mAdapter = new NotificationAdapter(viewModel.notificationDTOArrayList, this);
@@ -72,6 +89,9 @@ public class Notification extends AppCompatActivity {
 
     }
 
+    /**
+     * Hide or show empty image
+     */
     private void hideEmptyImage() {
         if (viewModel.notificationDTOArrayList.size() != 0) {
             mEmptyImage.setVisibility(View.GONE);
@@ -80,6 +100,10 @@ public class Notification extends AppCompatActivity {
         }
     }
 
+    /**
+     * View Notification when user click on show Notification
+     * @param position Position
+     */
     private void viewNotification(int position) {
         Log.i(AppConst.TAG_Notification, "Selected position: " + position);
         Log.i(AppConst.TAG_Notification, "Arrays size: " + viewModel.notificationDTOArrayList.size());
@@ -91,7 +115,7 @@ public class Notification extends AppCompatActivity {
     }
 
     /**
-     * Init ads
+     * Init Google AdsMob
      */
     void loadAd() {
         MobileAds.initialize(this, initializationStatus -> {

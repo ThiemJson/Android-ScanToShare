@@ -12,7 +12,14 @@ import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class RegisterProfileViewModel extends ViewModel {
+    /**
+     *
+     */
     public MutableLiveData<UserDTO> userDTO = new MutableLiveData<UserDTO>();
+
+    /**
+     * Flag check
+     */
     public MutableLiveData<Boolean> isVerify = new MutableLiveData<Boolean>();
 
     public void setUser(UserDTO user) {

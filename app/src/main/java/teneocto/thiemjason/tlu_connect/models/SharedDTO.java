@@ -1,9 +1,13 @@
 package teneocto.thiemjason.tlu_connect.models;
 
 public class SharedDTO {
+
     private String id;
+
     private String userID;
+
     private String socialNetWorkID;
+
     private String url;
 
     public SharedDTO(String id, String userID, String socialNetWorkID, String url) {

@@ -5,13 +5,21 @@ import com.bumptech.glide.util.Util;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 public class UserDTO {
+
     private String id;
+
     private String firebaseId;
+
     private String firstName;
+
     private String lastName;
+
     private String email;
+
     private String position;
+
     private String company;
+
     private String imageBase64;
 
     public UserDTO() {
