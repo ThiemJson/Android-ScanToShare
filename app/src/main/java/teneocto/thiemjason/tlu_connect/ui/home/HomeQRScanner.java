@@ -37,7 +37,8 @@ public class HomeQRScanner extends Fragment {
     private HomeResultScanner homeResultScanner;
 
     private CustomProgressDialog progressDialog;
-    
+
+    private HomeQRScannerViewModel viewModel;
     /**
      * Result
      */
@@ -137,8 +138,11 @@ public class HomeQRScanner extends Fragment {
                              Bundle savedInstanceState) {
         Log.i(TAG, "On create view");
         View root = inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
+
+        viewModel = new HomeQRScannerViewModel();
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
         initView(root);
+
         mCodeScanner = new CodeScanner(getActivity(), scannerView);
         homeResultScanner = new HomeResultScanner(getActivity());
 
@@ -219,7 +223,6 @@ public class HomeQRScanner extends Fragment {
      * Init View
      */
     private void initView(View view) {
-
         // Result
         mResultContainer = view.findViewById(R.id.home_scanned_result);
         mResultCloseBtn = view.findViewById(R.id.scanned_result_close_btn);
