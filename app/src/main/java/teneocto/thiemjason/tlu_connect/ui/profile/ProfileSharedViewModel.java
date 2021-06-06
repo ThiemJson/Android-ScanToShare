@@ -221,6 +221,9 @@ public class ProfileSharedViewModel extends ViewModel {
         Log.i(AppConst.TAG_ProfileSharedViewModel, "old shared: " + oldSharedDTOs.size());
         Log.i(AppConst.TAG_ProfileSharedViewModel, "new shared: " + sharedDTOLiveData.size());
 
+        // Old data
+        userDTO = Utils.cloneUserDTO(oldUserDTO);
+
         // Notify changed;
         userDataFetched.setValue(true);
 
@@ -247,6 +250,7 @@ public class ProfileSharedViewModel extends ViewModel {
                         }
 
                         // DONE
+                        hideShowBtnTool.setValue(false);
                         isDataUpdated.setValue(closeAfterUpdated);
                         Log.i(AppConst.TAG_ProfileSharedViewModel, "Updated information");
 
