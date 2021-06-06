@@ -329,13 +329,14 @@ public class Profile extends AppCompatActivity {
             progressDialog = new CustomProgressDialog(this, "");
             saveBtnDialog.dismiss();
             sharedViewModel.hideShowBtnTool.setValue(false);
-            sharedViewModel.updateUserInformation(false);
 
             // Update user profile
             BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
             Bitmap bitmap = drawable.getBitmap();
             byte[] imageBase64 = Utils.getBitmapAsByteArray(bitmap);
             sharedViewModel.userDTO.setImageBase64(Base64.getEncoder().encodeToString(imageBase64));
+
+            sharedViewModel.updateUserInformation(false);
 
             // For debugs
             for (SharedDTO sharedDTO : sharedViewModel.sharedDTOLiveData) {
