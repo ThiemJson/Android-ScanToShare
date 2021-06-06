@@ -326,24 +326,6 @@ public class Profile extends AppCompatActivity {
         });
 
         submit.setOnClickListener(v -> {
-//            progressDialog = new CustomProgressDialog(this, "");
-//
-//            sharedViewModel.hideShowBtnTool.setValue(false);
-//
-//            // Update user profile
-//            BitmapDrawable drawable = (BitmapDrawable) mImagePicker.getDrawable();
-//            Bitmap bitmap = drawable.getBitmap();
-//            byte[] imageBase64 = Utils.getBitmapAsByteArray(bitmap);
-//            sharedViewModel.userDTO.setImageBase64(Base64.getEncoder().encodeToString(imageBase64));
-//
-//            sharedViewModel.updateUserInformation(false);
-//
-//            // For debugs
-//            for (SharedDTO sharedDTO : sharedViewModel.sharedDTOLiveData) {
-//                Log.i("===> Update user: ", sharedDTO.getUrl());
-//            }
-//            Log.i("===> Update user: ", sharedViewModel.userDTO.getEmail());
-
             saveBtnDialog.dismiss();
             progressDialog = new CustomProgressDialog(this, "");
             if (!sharedViewModel.verifySocialNetworkInput()) {
