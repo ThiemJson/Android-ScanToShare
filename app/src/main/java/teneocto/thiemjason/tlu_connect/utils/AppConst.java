@@ -41,4 +41,13 @@ public class AppConst {
 
     // Service
     public static String SyncLocalDatabaseService = "SyncLocalDB";
+
+    // Scanned result
+    public static String Facebook = "Facebook";
+    public static String Snapchat = "Snapchat";
+    public static String LinkedIn = "LinkedIn";
+    public static String Twitter = "Twitter";
+    public static String Instagram = "Instagram";
+    public static String Unreachable = "Unreachable";
+
 }

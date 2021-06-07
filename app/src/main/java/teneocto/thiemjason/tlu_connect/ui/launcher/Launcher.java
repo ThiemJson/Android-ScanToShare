@@ -2,8 +2,10 @@ package teneocto.thiemjason.tlu_connect.ui.launcher;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -65,8 +67,8 @@ public class Launcher extends AppCompatActivity {
         // App initial
         this.appInitial();
         String userUUID = Utils.getUserUUID(this);
+        Log.i(AppConst.TAG_Launcher, " ==>> UUID + " + userUUID);
 
-        // Check user loggedIN
         if (userUUID == null || userUUID.equals("")) {
             Log.i(AppConst.TAG_Launcher, " ==>> LOGGED IN");
             this.setUpSocialNWFromFirebaseDatabase(false);
@@ -201,11 +203,12 @@ public class Launcher extends AppCompatActivity {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         Utils.userDTOArrayList.add(data.getValue(UserDTO.class));
                     }
-                    // Go to Home activity
-                    Intent intent = new Intent(getApplicationContext(), Drawer.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
                 }
+
+                // Go to Home activity
+                Intent intent = new Intent(getApplicationContext(), Drawer.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
 
             @Override
