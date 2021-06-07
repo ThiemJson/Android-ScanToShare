@@ -187,6 +187,14 @@ public class Utils {
     }
 
     /**
+     * Clear shared Prefer
+     */
+    public static void clearSharedPrefer(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+    }
+
+    /**
      * Clone SharedDTO List from another Arrays List ( Help to disable Deep Copy )
      * @param arrayList ArrayList
      * @return SharedDTO ArrayList

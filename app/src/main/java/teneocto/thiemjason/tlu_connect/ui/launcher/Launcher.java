@@ -64,6 +64,9 @@ public class Launcher extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
         firebaseDatabase = FirebaseDatabase.getInstance();
 
+        // For debugs
+//        Utils.clearSharedPrefer(this);
+
         // App initial
         this.appInitial();
         String userUUID = Utils.getUserUUID(this);
