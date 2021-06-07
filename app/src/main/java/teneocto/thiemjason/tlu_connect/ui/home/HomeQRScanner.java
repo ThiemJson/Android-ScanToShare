@@ -165,6 +165,8 @@ public class HomeQRScanner extends Fragment {
 
         mCodeScanner.setDecodeCallback(result -> getActivity().runOnUiThread(() -> viewModel.resultHandler(result)));
         scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
+
+        hideShowResultDialog(3);
         return root;
     }
 

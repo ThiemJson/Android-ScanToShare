@@ -7,6 +7,7 @@ public class AppConst {
     // User
     public static String USER_PASS = "password";
     public static String FB_accessToken = "fbtoken";
+    public static String USER_DEFAULT_IMAGE = "iVBORw0KGgoAAAANSUhEUgAABDgAAAWgCAIAAAA0MGRCAAAAAXNSR0IArs4c6QAAAANzQklUCAgI2";
 
     // Shared Preferences keys
     public static String USER_UID = "UserUID";

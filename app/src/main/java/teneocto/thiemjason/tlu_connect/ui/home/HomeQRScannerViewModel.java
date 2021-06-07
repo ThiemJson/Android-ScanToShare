@@ -79,7 +79,7 @@ public class HomeQRScannerViewModel extends ViewModel {
     /**
      * Data handler
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void resultHandler(Result result) {
         String resultString = result.getText();
 
@@ -195,44 +195,52 @@ public class HomeQRScannerViewModel extends ViewModel {
     /**
      * Facebook crawler
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void crawlerFacebook(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, getMobileURLFacebook(url), response -> {
             Document document = Jsoup.parse(response);
             if (document != null) {
-                Elements elements = document.select("#cover-name-root");
-                String userName = elements.get(0).getElementsByTag("h3").first().text();
+                String userName;
+                String userImage;
 
-                elements = document.select("img.profpic");
-                String imageSrc = elements.first().attr("src");
+                // Crawl User profile
+                Elements elementName = document.select("#cover-name-root");
+                Elements elementProfile = document.select("img.profpic");
 
-                new Thread(new Runnable() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void run() {
-                        try {
-                            URL newURL = new URL(imageSrc);
-                            Bitmap profilePic = BitmapFactory.decodeStream(newURL.openConnection().getInputStream());
+                try {
+                    userName = elementName.get(0).getElementsByTag("h3").first().text();
+                    userImage = elementProfile.first().attr("src");
+                } catch (Exception ex) {
+                    scannedResultDTO.setUrl(url);
+                    scannedResultDTO.setName("Unreachable " + AppConst.Facebook + " user");
+                    scannedResultDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
+                    scannedResultDTO.setId(Utils.getRandomUUID());
+                    isScanned.postValue(false);
+                    return;
+                }
 
-                            scannedResultDTO.setId(Utils.getRandomUUID());
-                            scannedResultDTO.setImageBase64(Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(Utils.prettyBitmap(profilePic))));
-                            scannedResultDTO.setName(userName);
-                            scannedResultDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
-                            scannedResultDTO.setUrl(url);
+                new Thread(() -> {
+                    try {
+                        URL newURL = new URL(userImage);
+                        Bitmap profilePic = BitmapFactory.decodeStream(newURL.openConnection().getInputStream());
 
-                            isScanned.postValue(true);
+                        scannedResultDTO.setId(Utils.getRandomUUID());
+                        scannedResultDTO.setImageBase64(Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(Utils.prettyBitmap(profilePic))));
+                        scannedResultDTO.setName(userName);
+                        scannedResultDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
+                        scannedResultDTO.setUrl(url);
+                        isScanned.postValue(true);
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
 
-                            scannedResultDTO.setUrl(url);
-                            scannedResultDTO.setName("Unreachable " + AppConst.Facebook + " user");
-                            scannedResultDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
-                            scannedResultDTO.setId(Utils.getRandomUUID());
-
-                            isScanned.postValue(false);
-                        }
+                        scannedResultDTO.setUrl(url);
+                        scannedResultDTO.setName("Unreachable " + AppConst.Facebook + " user");
+                        scannedResultDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
+                        scannedResultDTO.setId(Utils.getRandomUUID());
+                        isScanned.postValue(false);
                     }
                 }).start();
             }
@@ -243,27 +251,25 @@ public class HomeQRScannerViewModel extends ViewModel {
             scannedResultDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
             scannedResultDTO.setId(Utils.getRandomUUID());
             isScanned.postValue(false);
-            // Unreachable
         });
         requestQueue.add(stringRequest);
     }
 
     private String getMobileURLFacebook(String url) {
         String stringResult = url;
-
-        if (url.contains("wwww.")) {
+        if (url.contains("m.facebook")) {
+            return url;
+        } else if (url.contains("wwww.")) {
             stringResult = url.replace("wwww.", "m.");
         } else if ((!url.contains("wwww.")) && url.contains("facebook")) {
             stringResult = url.replace("facebook", "m.facebook");
         } else if ((!url.contains("wwww.")) && url.contains("fb")) {
             stringResult = url.replace("fb", "m.facebook");
         } else if (url.contains("/facebook.com")) {
-            stringResult = url.replace("/facebook.com/facebook.com", "/m.facebook.com");
+            stringResult = url.replace("/facebook.com", "/m.facebook.com");
         } else if (url.contains("/fb.com")) {
             stringResult = url.replace("/fb.com", "/m.facebook.com");
         }
-
         return stringResult;
-
     }
 }
