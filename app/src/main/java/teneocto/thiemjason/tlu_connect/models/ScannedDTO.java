@@ -1,6 +1,6 @@
 package teneocto.thiemjason.tlu_connect.models;
 
-public class ScannedResultDTO {
+public class ScannedDTO {
     private String name;
 
     private String id;
@@ -31,7 +31,7 @@ public class ScannedResultDTO {
         this.socialNWName = socialNWName;
     }
 
-    public ScannedResultDTO(String name, String id, String url, String socialNetWorkID, String imageBase64) {
+    public ScannedDTO(String name, String id, String url, String socialNetWorkID, String imageBase64) {
         this.name = name;
         this.id = id;
         this.url = url;
@@ -39,7 +39,7 @@ public class ScannedResultDTO {
         this.imageBase64 = imageBase64;
     }
 
-    public ScannedResultDTO() {
+    public ScannedDTO() {
 
     }
 

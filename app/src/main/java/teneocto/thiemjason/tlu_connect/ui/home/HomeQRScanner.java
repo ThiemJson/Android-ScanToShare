@@ -10,13 +10,11 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,12 +22,9 @@ import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
-import com.google.zxing.Result;
 
-import androidmads.library.qrgenearator.QRGEncoder;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
-import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -57,6 +52,7 @@ public class HomeQRScanner extends Fragment {
     ImageView mResultUserIcon;
     TextView mResultUserName;
     TextView mResultUserUrl;
+    TextView mResultWrongURL;
     Button mResultCopyBtn;
 
 
@@ -215,9 +211,10 @@ public class HomeQRScanner extends Fragment {
             if (aBoolean) {
 
                 mResultUserIcon.setImageResource(R.drawable.facebook);
-                mResultUserUrl.setText(viewModel.scannedResultDTO.getUrl());
-                mResultUserName.setText(viewModel.scannedResultDTO.getName());
-                Bitmap imageBitmap = Utils.getBitmapFromByteArray(viewModel.scannedResultDTO.getImageBase64());
+                mResultUserUrl.setText(viewModel.scannedDTO.getUrl());
+                mResultUserName.setText(viewModel.scannedDTO.getName());
+                mResultWrongURL.setVisibility(View.INVISIBLE);
+                Bitmap imageBitmap = Utils.getBitmapFromByteArray(viewModel.scannedDTO.getImageBase64());
                 mResultUserImage.setImageBitmap(imageBitmap);
 
                 hideShowResultDialog(3);
@@ -225,11 +222,11 @@ public class HomeQRScanner extends Fragment {
             }
 
             // Other
-            mResultUserIcon.setImageResource(viewModel.scannedResultDTO.getSocialNWIcon());
-            mResultUserUrl.setText(viewModel.scannedResultDTO.getUrl());
-            mResultUserName.setText(viewModel.scannedResultDTO.getName());
-            mResultUserIcon.setImageResource(viewModel.scannedResultDTO.getSocialNWIcon());
+            mResultUserUrl.setText(viewModel.scannedDTO.getUrl());
+            mResultUserName.setText(viewModel.scannedDTO.getName());
+            mResultUserIcon.setImageResource(viewModel.scannedDTO.getSocialNWIcon());
             mResultUserImage.setImageResource(R.drawable.blank);
+            mResultWrongURL.setVisibility(View.VISIBLE);
 
             hideShowResultDialog(3);
             return;
@@ -244,14 +241,14 @@ public class HomeQRScanner extends Fragment {
             ClipboardManager _clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Nothing", mResultUserUrl.getText());
             _clipboard.setPrimaryClip(clip);
-            Toast.makeText(getActivity(), "Copy to clipboard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Copy URL to clipboard", Toast.LENGTH_SHORT).show();
         });
 
         mEmptyCopyBtn.setOnClickListener(v -> {
             ClipboardManager _clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Nothing", mEmptyUserUrl.getText());
             _clipboard.setPrimaryClip(clip);
-            Toast.makeText(getActivity(), "Copy to clipboard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Copy URL to clipboard", Toast.LENGTH_SHORT).show();
         });
     }
 

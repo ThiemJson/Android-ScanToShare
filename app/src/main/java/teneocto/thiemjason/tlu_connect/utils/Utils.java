@@ -44,21 +44,23 @@ public class Utils {
 
     /**
      * Generate QRGEncoder form content
+     *
      * @param activity Activity
-     * @param content Content
+     * @param content  Content
      * @return QRGEncoder
      */
     public static QRGEncoder generateQRCodeFromContent(Activity activity, String content) {
-        DisplayMetrics lDisplayMetrics = activity.getResources().getDisplayMetrics();
-        int widthPixels = lDisplayMetrics.widthPixels;
-        int heightPixels = lDisplayMetrics.heightPixels;
-        Integer qrCodeContentWidth = (int) Math.round(widthPixels * 1);
+//        DisplayMetrics lDisplayMetrics = activity.getResources().getDisplayMetrics();
+//        int widthPixels = lDisplayMetrics.widthPixels;
+//        int heightPixels = lDisplayMetrics.heightPixels;
+//        Integer qrCodeContentWidth = (int) Math.round(widthPixels * 1);
 
-        return new QRGEncoder(content, null, QRGContents.Type.TEXT, qrCodeContentWidth);
+        return new QRGEncoder(content, null, QRGContents.Type.TEXT, 1080);
     }
 
     /**
      * Get Byte base64 from Bitmap
+     *
      * @param bitmap Bitmap
      * @return byte[]
      */
@@ -70,6 +72,7 @@ public class Utils {
 
     /**
      * Get Bitmap from byte[]
+     *
      * @param byteBase64 bytp[] base64
      * @return Bitmap
      */
@@ -81,6 +84,7 @@ public class Utils {
 
     /**
      * Get Social Network form UD
+     *
      * @param id ID
      * @return Social Network DTO
      */
@@ -91,6 +95,7 @@ public class Utils {
 
     /**
      * Get Social Network form name
+     *
      * @param name ID
      * @return Social Network DTO
      */
@@ -101,6 +106,7 @@ public class Utils {
 
     /**
      * Get UserDTO from
+     *
      * @param id ID
      * @return UserDTO
      */
@@ -110,29 +116,10 @@ public class Utils {
     }
 
     /**
-     * Serialize QREncoder
-     * @param qrgEncoder QRGEncoder
-     * @return String
-     */
-    public static String serializeQREncoder(QRGEncoder qrgEncoder) {
-        Gson gson = new Gson();
-        return gson.toJson(qrgEncoder);
-    }
-
-    /**
-     * Deserialize QREncoder
-     * @param qrEncoder QREncdoer
-     * @return QRGEncoder
-     */
-    public static QRGEncoder deserialQREncoder(String qrEncoder) {
-        Gson gson = new Gson();
-        return gson.fromJson(qrEncoder, QRGEncoder.class);
-    }
-
-    /**
      * Get Image Uri form Bitmap
+     *
      * @param inContext context
-     * @param inImage image Bitmap
+     * @param inImage   image Bitmap
      * @return Uri
      */
     public static Uri getImageUri(Context inContext, Bitmap inImage) {
@@ -144,6 +131,7 @@ public class Utils {
 
     /**
      * Random ID
+     *
      * @return String
      */
     public static String getRandomUUID() {
@@ -152,9 +140,10 @@ public class Utils {
 
     /**
      * Set data to Shared Preferences
+     *
      * @param context Context
-     * @param key Key
-     * @param data Value
+     * @param key     Key
+     * @param data    Value
      */
     public static void setPrefer(Context context, String key, String data) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppConst.SHARED_PREFER_CONTAINER, Context.MODE_PRIVATE);
@@ -165,8 +154,9 @@ public class Utils {
 
     /**
      * Get data from Shared Preferences
+     *
      * @param context Context
-     * @param key Key
+     * @param key     Key
      * @return value
      */
     public static String getPrefer(Context context, String key) {
@@ -177,6 +167,7 @@ public class Utils {
 
     /**
      * Get User UUID from Shared Preferences
+     *
      * @param context Context
      * @return String
      */
@@ -196,6 +187,7 @@ public class Utils {
 
     /**
      * Clone SharedDTO List from another Arrays List ( Help to disable Deep Copy )
+     *
      * @param arrayList ArrayList
      * @return SharedDTO ArrayList
      */
@@ -214,6 +206,7 @@ public class Utils {
 
     /**
      * Clone UserDTO from another
+     *
      * @param userDTO UserDTO
      * @return UserDTO
      */
@@ -235,13 +228,13 @@ public class Utils {
     /**
      * Change Image Resolution
      */
-    public static Bitmap prettyBitmap(Bitmap bitmap){
+    public static Bitmap prettyBitmap(Bitmap bitmap) {
         Bitmap resultBitmap = bitmap;
-        if(
+        if (
                 (bitmap.getWidth() > 1080 && bitmap.getHeight() < 1080)
-                || (bitmap.getWidth() > 1080 && bitmap.getHeight() < 1080)
-                || (bitmap.getWidth() < 1080 && bitmap.getHeight() < 1080)
-        ){
+                        || (bitmap.getWidth() > 1080 && bitmap.getHeight() < 1080)
+                        || (bitmap.getWidth() < 1080 && bitmap.getHeight() < 1080)
+        ) {
             return resultBitmap;
         }
         Double ratio = 1080.0 / bitmap.getWidth();
