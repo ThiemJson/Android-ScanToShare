@@ -241,21 +241,5 @@ public class Utils {
         int newHeight = (int) Math.round(bitmap.getHeight() * ratio);
         resultBitmap = Bitmap.createScaledBitmap(bitmap, Math.round(newWidth), Math.round(newHeight), true);
         return resultBitmap;
-    };
-
-    /**
-     * Is URL
-     */
-    public static Boolean isURL(String url){
-        try {
-            new URL(url).toURI();
-            return true;
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return false;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 }
