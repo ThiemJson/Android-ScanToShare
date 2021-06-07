@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -28,6 +29,7 @@ import com.google.zxing.Result;
 import androidmads.library.qrgenearator.QRGEncoder;
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -140,7 +142,8 @@ public class HomeQRScanner extends Fragment {
         Log.i(TAG, "On DestroyView");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -148,6 +151,7 @@ public class HomeQRScanner extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home_q_r_scanner, container, false);
 
         viewModel = new HomeQRScannerViewModel();
+        viewModel.context = getContext();
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
         initView(root);
         initViewModelListener();
@@ -161,6 +165,8 @@ public class HomeQRScanner extends Fragment {
 
         mCodeScanner.setDecodeCallback(result -> getActivity().runOnUiThread(() -> viewModel.resultHandler(result)));
         scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
+
+        hideShowResultDialog(3);
         return root;
     }
 
@@ -189,6 +195,7 @@ public class HomeQRScanner extends Fragment {
     /**
      * Handle view model listener
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initViewModelListener() {
 
         // Empty URL observe
@@ -201,6 +208,31 @@ public class HomeQRScanner extends Fragment {
             if (mBoolean) {
                 hideShowResultDialog(1);
             }
+        });
+
+        viewModel.isScanned.observe(getViewLifecycleOwner(), aBoolean -> {
+            // Facebook - Because only Facebook can be crawler
+            if (aBoolean) {
+
+                mResultUserIcon.setImageResource(R.drawable.facebook);
+                mResultUserUrl.setText(viewModel.scannedResultDTO.getUrl());
+                mResultUserName.setText(viewModel.scannedResultDTO.getName());
+                Bitmap imageBitmap = Utils.getBitmapFromByteArray(viewModel.scannedResultDTO.getImageBase64());
+                mResultUserImage.setImageBitmap(imageBitmap);
+
+                hideShowResultDialog(3);
+                return;
+            }
+
+            // Other
+            mResultUserIcon.setImageResource(viewModel.scannedResultDTO.getSocialNWIcon());
+            mResultUserUrl.setText(viewModel.scannedResultDTO.getUrl());
+            mResultUserName.setText(viewModel.scannedResultDTO.getName());
+            mResultUserIcon.setImageResource(viewModel.scannedResultDTO.getSocialNWIcon());
+            mResultUserImage.setImageResource(R.drawable.blank);
+
+            hideShowResultDialog(3);
+            return;
         });
     }
 
@@ -222,76 +254,6 @@ public class HomeQRScanner extends Fragment {
             Toast.makeText(getActivity(), "Copy to clipboard", Toast.LENGTH_SHORT).show();
         });
     }
-
-//    /**
-//     * Show data when user scanned
-//     *
-//     * @param result
-//     */
-//    private void showDataWhenScanned(Result result) {
-//        mDialog = new Dialog(getActivity());
-//        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        mDialog.setCancelable(true);
-//        mDialog.setContentView(R.layout.home_qr_code_result);
-//
-//        TextView mUsername = mDialog.findViewById(R.id.home_result_user_name);
-//        TextView mEmail = mDialog.findViewById(R.id.home_result_email);
-//        TextView mAddress = mDialog.findViewById(R.id.home_result_address);
-//        TextView mUrl = mDialog.findViewById(R.id.home_url_text);
-//
-//        ImageView mProfileImage = mDialog.findViewById(R.id.home_profile_image_result);
-//        ImageView mQRImage = mDialog.findViewById(R.id.home_result_qr_image);
-//
-//        Button mCancelBtn = mDialog.findViewById(R.id.home_result_cancel_btn);
-//        Button mSaveBtn = mDialog.findViewById(R.id.home_result_save_btn);
-//        Button mViewMore = mDialog.findViewById(R.id.home_result_viewmore_btn);
-//
-//        QRGEncoder qrgEncoder = Utils.generateQRCodeFromContent(getActivity(), result.getText());
-//        mQRImage.setImageBitmap(qrgEncoder.getBitmap());
-//        mUrl.setText(result.getText());
-//
-//        mCancelBtn.setOnClickListener(v -> homeResultScanner.onSaveUserClick());
-//        mViewMore.setOnClickListener(v -> homeResultScanner.onViewMoreClick());
-//
-//        if (progressDialog != null) {
-//            progressDialog.deleteProgressDialog();
-//        }
-//        mDialog.show();
-//    }*
-//     * Show data when user scanned
-//     *
-//     * @param result
-//     */
-//    private void showDataWhenScanned(Result result) {
-//        mDialog = new Dialog(getActivity());
-//        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        mDialog.setCancelable(true);
-//        mDialog.setContentView(R.layout.home_qr_code_result);
-//
-//        TextView mUsername = mDialog.findViewById(R.id.home_result_user_name);
-//        TextView mEmail = mDialog.findViewById(R.id.home_result_email);
-//        TextView mAddress = mDialog.findViewById(R.id.home_result_address);
-//        TextView mUrl = mDialog.findViewById(R.id.home_url_text);
-//
-//        ImageView mProfileImage = mDialog.findViewById(R.id.home_profile_image_result);
-//        ImageView mQRImage = mDialog.findViewById(R.id.home_result_qr_image);
-//
-//        Button mCancelBtn = mDialog.findViewById(R.id.home_result_cancel_btn);
-//        Button mSaveBtn = mDialog.findViewById(R.id.home_result_save_btn);
-//        Button mViewMore = mDialog.findViewById(R.id.home_result_viewmore_btn);
-//
-//        QRGEncoder qrgEncoder = Utils.generateQRCodeFromContent(getActivity(), result.getText());
-//        mQRImage.setImageBitmap(qrgEncoder.getBitmap());
-//        mUrl.setText(result.getText());
-//
-//        mCancelBtn.setOnClickListener(v -> homeResultScanner.onSaveUserClick());
-//        mViewMore.setOnClickListener(v -> homeResultScanner.onViewMoreClick());
-//
-//        if (progressDialog != null) {
-//            progressDialog.deleteProgressDialog();
-//        }
-//        mDialog.show();
-//    }
 
     /**
      * Init View
