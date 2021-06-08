@@ -66,7 +66,7 @@ public class Launcher extends AppCompatActivity {
 
         // For debugs ==============> "a0d945aa-8114-4ba0-af66-88637bdbb3e6"
 //        Utils.clearSharedPrefer(this);
-//        Utils.setPrefer(this, AppConst.USER_UID, "a0d945aa-8114-4ba0-af66-88637bdbb3e6");
+//        Utils.setPrefer(this, AppConst.USER_UID, "2e6c0fb4-6cc1-4795-a448-2cdc987f2db6");
         // For debugs ==============>
 
 
