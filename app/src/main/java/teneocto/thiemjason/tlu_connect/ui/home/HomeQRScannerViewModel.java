@@ -28,6 +28,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.firebase.FirebaseDBHelper;
 import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
@@ -225,6 +226,10 @@ public class HomeQRScannerViewModel extends ViewModel {
                         scannedDTO.setUrl(url);
                         isScanned.postValue(true);
 
+                        // Store
+                        scannedDTO.setUserId(Utils.getUserUUID(context));
+                        storeScanned(scannedDTO);
+
                     } catch (IOException e) {
                         e.printStackTrace();
 
@@ -275,5 +280,15 @@ public class HomeQRScannerViewModel extends ViewModel {
 
         Log.i(AppConst.TAG_QRScannedViewModel, "string result: " + stringResult);
         return stringResult;
+    }
+
+    /**
+     * Store scanned history into firebase database
+     *
+     * @param scannedDTO Scanned Histry
+     */
+    private void storeScanned(ScannedDTO scannedDTO) {
+        FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
+        firebaseDBHelper.Scanned_History_Insert(scannedDTO);
     }
 }

@@ -56,7 +56,7 @@ public class FirebaseDBHelper {
         }
     }
 
-    public boolean Scanning_History_Insert(ScannedDTO scannedDTO) {
+    public boolean Scanned_History_Insert(ScannedDTO scannedDTO) {
         try {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference(DBConst.SCAN_TABLE_NAME);

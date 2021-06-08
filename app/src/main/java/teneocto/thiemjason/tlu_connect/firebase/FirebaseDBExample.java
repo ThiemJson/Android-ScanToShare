@@ -16,7 +16,6 @@ import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
-import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -150,7 +149,7 @@ public class FirebaseDBExample {
                 "https://facebook.com/thiemtinhte"
         );
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
-        firebaseDBHelper.Scanning_History_Insert(scannedDTO);
+        firebaseDBHelper.Scanned_History_Insert(scannedDTO);
     }
 
     /**

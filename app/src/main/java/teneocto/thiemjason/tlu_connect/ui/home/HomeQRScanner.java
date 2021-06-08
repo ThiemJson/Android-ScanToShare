@@ -295,7 +295,7 @@ public class HomeQRScanner extends Fragment {
      * 2: Show Empty and hide both
      * 3: Show Result and hide both
      */
-    private void hideShowResultDialog(int flagCheck) {
+    public void hideShowResultDialog(int flagCheck) {
         switch (flagCheck) {
             // HIDE ALL
             case 0:

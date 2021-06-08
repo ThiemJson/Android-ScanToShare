@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/phetsarath"
-        android:text="History Scanning is Empty"
+        android:text="Scanned History is Empty"
         android:textColor="#d3d3d3"
         android:textFontWeight="700"
         android:textSize="18dp"

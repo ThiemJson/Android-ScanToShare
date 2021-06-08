@@ -17,7 +17,7 @@
                 <item
                     android:id="@+id/scanningHistoryFragment"
                     android:icon="@drawable/nav_history"
-                    android:title="Scanning History" />
+                    android:title="Scanned History" />
             </group>
         </menu>
     </item>
