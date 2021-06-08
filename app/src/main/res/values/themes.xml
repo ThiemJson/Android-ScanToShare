@@ -12,7 +12,7 @@
         <item name="colorSurface">@color/gray_light</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-        <item name="android:fontFamily">@font/phetsarath</item>
+        <item name="android:fontFamily">@font/lincol</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

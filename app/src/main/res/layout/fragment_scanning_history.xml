@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/phetsarath"
+            android:fontFamily="@font/lincol"
             android:text="Scanning history is Empty"
             android:textColor="#959191"
             android:textFontWeight="700"

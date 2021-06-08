@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/phetsarath"
+            android:fontFamily="@font/lincol"
             android:paddingTop="5dp"
             android:text="Loading..."
             android:textAllCaps="false"

@@ -39,7 +39,7 @@
             android:layout_gravity="center"
             android:layout_weight="7"
             android:background="@drawable/table_edittext"
-            android:fontFamily="@font/phetsarath"
+            android:fontFamily="@font/lincol"
             android:hint="Facebook URL"
             android:inputType="textNoSuggestions"
             android:maxLength="40"

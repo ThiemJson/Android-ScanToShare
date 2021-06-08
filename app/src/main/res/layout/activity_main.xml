@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/phetsarath"
+                android:fontFamily="@font/lincol"
                 android:gravity="center"
                 android:text="Welcome"
                 android:textAlignment="center"
@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/phetsarath"
+        android:fontFamily="@font/lincol"
         android:text="Use your Facebook to setup your profile"
         android:textColor="@color/white"
         android:textSize="13dp"
@@ -91,7 +91,7 @@
         android:paddingBottom="12dp"
         android:paddingTop="12dp"
         android:background="@drawable/custom_button_facbook"
-        android:fontFamily="@font/phetsarath"
+        android:fontFamily="@font/lincol"
         android:maxWidth="250dp"
         android:minWidth="200dp"
         android:text="Connect with Facebook"
@@ -112,7 +112,7 @@
     <!--        android:layout_marginBottom="17dp"-->
     <!--        android:width="250dp"-->
     <!--        android:background="@drawable/custom_button_facbook"-->
-    <!--        android:fontFamily="@font/phetsarath"-->
+    <!--        android:fontFamily="@font/lincol"-->
     <!--        android:maxWidth="250dp"-->
     <!--        android:minWidth="200dp"-->
     <!--        android:text="Connect with Facebook"-->
@@ -134,7 +134,7 @@
         android:layout_marginBottom="25dp"
         android:width="250dp"
         android:background="@drawable/custom_button"
-        android:fontFamily="@font/phetsarath"
+        android:fontFamily="@font/lincol"
         android:maxWidth="250dp"
         android:minWidth="200dp"
         android:text="SKIP"

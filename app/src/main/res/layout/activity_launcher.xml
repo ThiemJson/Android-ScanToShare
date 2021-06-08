@@ -32,7 +32,7 @@
         tools:layout_editor_absoluteX="164dp"
         android:textStyle="bold"
         tools:layout_editor_absoluteY="550dp"
-        android:fontFamily="@font/phetsarath"
+        android:fontFamily="@font/lincol"
         android:textColor="@color/white"
         android:textSize="32dp"
         />
