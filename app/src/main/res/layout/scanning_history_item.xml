@@ -22,22 +22,64 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/scanning_his_image"
+        <!--        <FrameLayout-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="45dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginStart="2dp"-->
+        <!--            android:layout_weight="2">-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="45dp"-->
+        <!--                android:layout_height="45dp"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:layout_marginStart="2dp"-->
+        <!--                android:layout_weight="2"-->
+        <!--                android:background="@drawable/corner_radius_image"-->
+        <!--                app:srcCompat="@drawable/blank" />-->
+        <!--        </FrameLayout>-->
+
+        <FrameLayout
             android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginStart="2dp"
-            android:layout_weight="2"
-            android:background="@drawable/corner_radius_image"
-            app:srcCompat="@drawable/user_example" />
+            android:layout_weight="2">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/scanning_his_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/blank"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/scanning_his_social"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/corner_radius_image"
+                android:src="@drawable/facebook"
+                android:translationZ="10dp"
+                app:riv_corner_radius="2dp"
+                app:srcCompat="@drawable/facebook" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
             android:orientation="vertical"
-            android:weightSum="2">
+            android:paddingStart="7dp"
+            android:weightSum="3">
 
             <TextView
                 android:id="@+id/scanning_his_username"
@@ -45,12 +87,14 @@
                 android:layout_height="0dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/phetsarath"
                 android:gravity="start"
                 android:singleLine="true"
                 android:text="Nguyen Cao Thiem"
                 android:textAllCaps="false"
                 android:textColor="@color/blue_primary"
-                android:textSize="15sp"
+                android:textFontWeight="700"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -58,19 +102,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/phetsarath"
                 android:gravity="start"
                 android:singleLine="true"
-                android:text="nguyencaothiem292@gmail.com"
+                android:text="https://facebook.com/user"
                 android:textAllCaps="false"
                 android:textColor="@color/gray_light"
-                android:textSize="13sp"
-                android:textStyle="italic" />
+                android:textSize="12sp"
+                android:textStyle="normal" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/scanning_his_view_btn"
             android:layout_width="10dp"
-            android:layout_height="24dp"
+            android:layout_height="22dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_baseline_pageview_24" />
@@ -83,7 +128,7 @@
         <ImageView
             android:id="@+id/scanning_his_delete_btn"
             android:layout_width="10dp"
-            android:layout_height="23dp"
+            android:layout_height="22dp"
             android:layout_gravity="center"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"

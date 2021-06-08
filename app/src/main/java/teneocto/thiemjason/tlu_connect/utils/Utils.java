@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -50,11 +52,6 @@ public class Utils {
      * @return QRGEncoder
      */
     public static QRGEncoder generateQRCodeFromContent(Activity activity, String content) {
-//        DisplayMetrics lDisplayMetrics = activity.getResources().getDisplayMetrics();
-//        int widthPixels = lDisplayMetrics.widthPixels;
-//        int heightPixels = lDisplayMetrics.heightPixels;
-//        Integer qrCodeContentWidth = (int) Math.round(widthPixels * 1);
-
         return new QRGEncoder(content, null, QRGContents.Type.TEXT, 1080);
     }
 

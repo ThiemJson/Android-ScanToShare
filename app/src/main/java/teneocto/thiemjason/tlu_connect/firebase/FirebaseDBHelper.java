@@ -5,11 +5,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
-import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
+import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
-import teneocto.thiemjason.tlu_connect.ui.scanninghistory.ScanningHistory;
 
 /**
  *
@@ -57,11 +56,11 @@ public class FirebaseDBHelper {
         }
     }
 
-    public boolean Scanning_History_Insert(ScanningHistoryDTO scanningHistoryDTO) {
+    public boolean Scanning_History_Insert(ScannedDTO scannedDTO) {
         try {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference(DBConst.SCAN_TABLE_NAME);
-            databaseReference.child(scanningHistoryDTO.getLocalUserID() + "").child(scanningHistoryDTO.getId() + "").setValue(scanningHistoryDTO);
+            databaseReference.child(scannedDTO.getUserId() + "").child(scannedDTO.getId() + "").setValue(scannedDTO);
             return true;
         } catch (Exception e) {
             return false;

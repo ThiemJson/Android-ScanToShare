@@ -30,6 +30,7 @@ public class AppConst {
     public static String TAG_MainActivity = "==>  Main Activity";
     public static String TAG_Notification_web_view = " ==> Notification web view";
     public static String TAG_ProfileSharedViewModel = " ==> Profile shared viewmodel";
+    public static String TAG_QRScannedViewModel = " ==> QR Scanned View model";
 
     // Regex
     public static String REGEX_Normal = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";

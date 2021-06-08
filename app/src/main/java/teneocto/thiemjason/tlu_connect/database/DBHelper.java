@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
-import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
+import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
@@ -89,12 +89,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean SCANNING_HISTORY_Insert(ScanningHistoryDTO scanningHistoryDTO) {
+    public boolean SCANNING_HISTORY_Insert(ScannedDTO scannedDTO) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DBConst.SCAN_ID, scanningHistoryDTO.getId());
-        contentValues.put(DBConst.SCAN_LOCAL_USER_ID, scanningHistoryDTO.getLocalUserID());
-        contentValues.put(DBConst.SCAN_REMOTE_USER_ID, scanningHistoryDTO.getRemoteUserID());
+        contentValues.put(DBConst.SCAN_ID, scannedDTO.getId());
+        contentValues.put(DBConst.SCAN_USER_IMAGE, scannedDTO.getImageBase64());
+        contentValues.put(DBConst.SCAN_SOCIAL_NETWORK_ID, scannedDTO.getSocialNetWorkID());
+        contentValues.put(DBConst.SCAN_USER_NAME, scannedDTO.getName());
         long result = sqLiteDatabase.insert(DBConst.SCAN_TABLE_NAME, null, contentValues);
         return result != -1;
     }
@@ -216,22 +217,25 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList<ScanningHistoryDTO> SCANNING_HISTORY_Query() {
+    public ArrayList<ScannedDTO> SCANNING_HISTORY_Query() {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ArrayList<ScanningHistoryDTO> arrayList = new ArrayList<>();
+        ArrayList<ScannedDTO> arrayList = new ArrayList<>();
 
-        String selection = DBConst.SCAN_LOCAL_USER_ID + " = ?";
+        String selection = DBConst.SCAN_USER_ID + " = ?";
         String[] selectionArgs = {Utils.getUserUUID(context) + ""};
 
         Cursor cursor = sqLiteDatabase.query(DBConst.SCAN_TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                ScanningHistoryDTO scanningHistoryDTO = new ScanningHistoryDTO(
+                ScannedDTO scannedDTO = new ScannedDTO(
                         cursor.getString(0),
                         cursor.getString(1),
-                        cursor.getString(2)
-                );
-                arrayList.add(scanningHistoryDTO);
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5)
+                        );
+                arrayList.add(scannedDTO);
             } while (cursor.moveToNext());
         }
         cursor.close();

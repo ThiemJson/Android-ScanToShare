@@ -24,7 +24,10 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
+import teneocto.thiemjason.tlu_connect.ui.home.HomeQRScannerViewModel;
 import teneocto.thiemjason.tlu_connect.ui.progressdialog.CustomProgressDialog;
+import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -35,10 +38,6 @@ import teneocto.thiemjason.tlu_connect.utils.Utils;
 public class HomeQRScanner extends Fragment {
 
     private CodeScanner mCodeScanner;
-
-    private Dialog mDialog;
-
-    private HomeResultScanner homeResultScanner;
 
     private CustomProgressDialog progressDialog;
 
@@ -153,7 +152,6 @@ public class HomeQRScanner extends Fragment {
         initViewModelListener();
 
         mCodeScanner = new CodeScanner(getActivity(), scannerView);
-        homeResultScanner = new HomeResultScanner(getActivity());
 
         if (mCodeScanner == null) {
             Log.i(TAG, " NULL OBJECT");
@@ -162,7 +160,6 @@ public class HomeQRScanner extends Fragment {
         mCodeScanner.setDecodeCallback(result -> getActivity().runOnUiThread(() -> viewModel.resultHandler(result)));
         scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
 
-        hideShowResultDialog(3);
         return root;
     }
 
@@ -196,6 +193,8 @@ public class HomeQRScanner extends Fragment {
 
         // Empty URL observe
         viewModel.emptyURL.observe(getViewLifecycleOwner(), s -> {
+            Log.i(AppConst.TAG_QRScannedViewModel,viewModel.emptyURL.getValue());
+            Log.i(AppConst.TAG_QRScannedViewModel," empty URL");
             mEmptyUserUrl.setText(viewModel.emptyURL.getValue());
             hideShowResultDialog(2);
         });
@@ -264,6 +263,7 @@ public class HomeQRScanner extends Fragment {
         mResultUserName = view.findViewById(R.id.scanned_result_username);
         mResultUserUrl = view.findViewById(R.id.scanned_result_user_url);
         mResultCopyBtn = view.findViewById(R.id.scanned_result_copy_btn);
+        mResultWrongURL = view.findViewById(R.id.scanned_result_wrong_url_text);
 
         // Empty
         mEmptyContainer = view.findViewById(R.id.home_scanned_empty);

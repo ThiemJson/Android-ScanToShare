@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
@@ -51,8 +52,10 @@ public class HomeQRScannerViewModel extends ViewModel {
             return true;
         } catch (URISyntaxException e) {
             e.printStackTrace();
+            Log.i(AppConst.TAG_QRScannedViewModel, " is Not string");
             return false;
         } catch (MalformedURLException e) {
+            Log.i(AppConst.TAG_QRScannedViewModel, " is Not string");
             e.printStackTrace();
             return false;
         }
@@ -67,12 +70,14 @@ public class HomeQRScannerViewModel extends ViewModel {
 
         // Check URL Invalid ?
         if (!isURL(resultString)) {
+            Log.i(AppConst.TAG_QRScannedViewModel, "URL wrong");
             emptyURL.setValue(resultString);
             return;
         }
 
         // Check is social network
         if (urlFilter(resultString).equals(AppConst.Facebook)) {
+            Log.i(AppConst.TAG_QRScannedViewModel, "is Facebook");
             showLoading.setValue(true);
             crawlerFacebook(resultString);
             return;
@@ -80,7 +85,7 @@ public class HomeQRScannerViewModel extends ViewModel {
 
         if (urlFilter(resultString).equals(AppConst.Instagram)) {
             showLoading.setValue(true);
-
+            Log.i(AppConst.TAG_QRScannedViewModel, "is Instagram");
             scannedDTO.setUrl(resultString);
             scannedDTO.setName("Unreachable " + AppConst.Instagram + " user");
             scannedDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Instagram).getId());
@@ -93,7 +98,7 @@ public class HomeQRScannerViewModel extends ViewModel {
 
         if (urlFilter(resultString).equals(AppConst.Twitter)) {
             showLoading.setValue(true);
-
+            Log.i(AppConst.TAG_QRScannedViewModel, "is twitter");
             scannedDTO.setUrl(resultString);
             scannedDTO.setName("Unreachable " + AppConst.Twitter + " user");
             scannedDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Twitter).getId());
@@ -106,7 +111,7 @@ public class HomeQRScannerViewModel extends ViewModel {
 
         if (urlFilter(resultString).equals(AppConst.Snapchat)) {
             showLoading.setValue(true);
-
+            Log.i(AppConst.TAG_QRScannedViewModel, "is Snapchat");
             scannedDTO.setUrl(resultString);
             scannedDTO.setName("Unreachable " + AppConst.Snapchat + " user");
             scannedDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Snapchat).getId());
@@ -199,7 +204,11 @@ public class HomeQRScannerViewModel extends ViewModel {
                     scannedDTO.setName("Unreachable " + AppConst.Facebook + " user");
                     scannedDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
                     scannedDTO.setId(Utils.getRandomUUID());
+                    scannedDTO.setSocialNWIcon(R.drawable.facebook);
                     isScanned.postValue(false);
+
+                    Log.i(AppConst.TAG_QRScannedViewModel, " parse HTML false");
+                    Log.i(AppConst.TAG_QRScannedViewModel, getMobileURLFacebook(url));
                     return;
                 }
 
@@ -212,6 +221,7 @@ public class HomeQRScannerViewModel extends ViewModel {
                         scannedDTO.setImageBase64(Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(Utils.prettyBitmap(profilePic))));
                         scannedDTO.setName(userName);
                         scannedDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
+                        scannedDTO.setSocialNWIcon(R.drawable.facebook);
                         scannedDTO.setUrl(url);
                         isScanned.postValue(true);
 
@@ -222,7 +232,11 @@ public class HomeQRScannerViewModel extends ViewModel {
                         scannedDTO.setName("Unreachable " + AppConst.Facebook + " user");
                         scannedDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
                         scannedDTO.setId(Utils.getRandomUUID());
+                        scannedDTO.setSocialNWIcon(R.drawable.facebook);
                         isScanned.postValue(false);
+
+                        Log.i(AppConst.TAG_QRScannedViewModel, getMobileURLFacebook(url));
+                        Log.i(AppConst.TAG_QRScannedViewModel, " query IMAGE False");
                     }
                 }).start();
             }
@@ -233,25 +247,33 @@ public class HomeQRScannerViewModel extends ViewModel {
             scannedDTO.setSocialNetWorkID(Utils.getSocialNWDTOFromName(AppConst.Facebook).getId());
             scannedDTO.setId(Utils.getRandomUUID());
             isScanned.postValue(false);
+            Log.i(AppConst.TAG_QRScannedViewModel, "get HTML False");
+            Log.i(AppConst.TAG_QRScannedViewModel, getMobileURLFacebook(url));
         });
         requestQueue.add(stringRequest);
     }
 
     private String getMobileURLFacebook(String url) {
         String stringResult = url;
-        if (url.contains("m.facebook")) {
-            return url;
-        } else if (url.contains("wwww.")) {
-            stringResult = url.replace("wwww.", "m.");
-        } else if ((!url.contains("wwww.")) && url.contains("facebook")) {
-            stringResult = url.replace("facebook", "m.facebook");
-        } else if ((!url.contains("wwww.")) && url.contains("fb")) {
-            stringResult = url.replace("fb", "m.facebook");
-        } else if (url.contains("/facebook.com")) {
-            stringResult = url.replace("/facebook.com", "/m.facebook.com");
-        } else if (url.contains("/fb.com")) {
-            stringResult = url.replace("/fb.com", "/m.facebook.com");
+        if ((stringResult.charAt(stringResult.length() - 1) + "").equals("/")) {
+            stringResult = stringResult.substring(0, stringResult.length() - 1);
         }
+
+        if (stringResult.contains("m.facebook")) {
+            return stringResult;
+        } else if (stringResult.contains("wwww.")) {
+            stringResult = stringResult.replace("wwww.", "m.");
+        } else if ((!stringResult.contains("wwww.")) && stringResult.contains("facebook")) {
+            stringResult = stringResult.replace("www.facebook", "m.facebook");
+        } else if ((!stringResult.contains("wwww.")) && stringResult.contains("fb")) {
+            stringResult = stringResult.replace("fb", "m.facebook");
+        } else if (stringResult.contains("/facebook.com")) {
+            stringResult = stringResult.replace("/facebook.com", "/m.facebook.com");
+        } else if (stringResult.contains("/fb.com")) {
+            stringResult = stringResult.replace("/fb.com", "/m.facebook.com");
+        }
+
+        Log.i(AppConst.TAG_QRScannedViewModel, "string result: " + stringResult);
         return stringResult;
     }
 }
