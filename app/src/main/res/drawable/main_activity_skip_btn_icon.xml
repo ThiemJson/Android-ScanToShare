@@ -1,0 +1,8 @@
+<layer-list android:paddingEnd="50dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/button_normal"
+        android:gravity="fill" />
+    <item
+        android:drawable="@drawable/ic_baseline_keyboard_arrow_right_24"
+        android:gravity="center" />
+</layer-list>

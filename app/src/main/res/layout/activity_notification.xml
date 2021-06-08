@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
-                    android:fontFamily="@font/phetsarath"
+                    android:fontFamily="@font/lincol"
                     android:gravity="center"
                     android:text="Notification"
                     android:textAlignment="center"

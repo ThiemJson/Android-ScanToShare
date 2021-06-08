@@ -14,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/phetsarath"
+        android:fontFamily="@font/lincol"
         android:gravity="center"
         android:text="Tap plus button to add \n your Social Network"
         android:textColor="#d3d3d3"

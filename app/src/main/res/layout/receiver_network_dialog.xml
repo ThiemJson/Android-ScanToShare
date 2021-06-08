@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:fontFamily="@font/phetsarath"
+        android:fontFamily="@font/lincol"
         android:gravity="center"
         android:text="Please check your internet connection"
         android:textAlignment="center"

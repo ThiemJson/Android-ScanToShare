@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
-                    android:fontFamily="@font/phetsarath"
+                    android:fontFamily="@font/lincol"
                     android:gravity="center"
                     android:text="@string/app_name"
                     android:textAlignment="center"
@@ -112,7 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/phetsarath"
+                android:fontFamily="@font/lincol"
                 android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:text="NguyenCaoThiem"
@@ -125,7 +125,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/phetsarath"
+                android:fontFamily="@font/lincol"
                 android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:text="Developer"
@@ -136,7 +136,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/phetsarath"
+                android:fontFamily="@font/lincol"
                 android:singleLine="true"
                 android:text="Teneocto Technologies CO, LTD."
                 android:textAllCaps="false"

@@ -36,7 +36,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/phetsarath"
+                android:fontFamily="@font/lincol"
                 android:text="TLU Connect"
                 android:textAllCaps="false"
                 android:textFontWeight="700"
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/phetsarath"
+                android:fontFamily="@font/lincol"
                 android:text="Version: 1.0.0"
                 android:textAllCaps="false"
                 android:textSize="15dp"
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/phetsarath"
+                android:fontFamily="@font/lincol"
                 android:text="Developed by: "
                 android:textAllCaps="false"
                 android:textSize="15dp"

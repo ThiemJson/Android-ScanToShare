@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/phetsarath"
+            android:fontFamily="@font/lincol"
             android:paddingTop="3dp"
             android:text="Profile URL"
             android:textAlignment="center"
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/phetsarath"
+            android:fontFamily="@font/lincol"
             android:gravity="center"
             android:paddingBottom="3dp"
             android:text="https://facebook.com/thiemtinhte"
