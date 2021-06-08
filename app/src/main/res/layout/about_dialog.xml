@@ -6,10 +6,10 @@
     android:background="@drawable/about_dialog_background">
 
     <LinearLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:padding="10dp"
         android:weightSum="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,10 +37,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lincol"
-                android:text="TLU Connect"
+                android:text="@string/app_name"
                 android:textAllCaps="false"
+                android:textColor="@color/blue_primary"
                 android:textFontWeight="700"
-                android:textSize="20dp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -91,26 +92,28 @@
                     android:id="@+id/about_view_licenses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:text="VIEW LICENSES"
+                    android:layout_weight="1.2"
+                    android:background="@null"
+                    android:fontFamily="@font/lincol"
+                    android:text="View Licenses"
                     android:textAllCaps="false"
                     android:textColor="@color/blue_primary"
                     android:textFontWeight="700"
-                    android:textSize="12dp"
+                    android:textSize="13.2sp"
                     android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/about_view_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:text="CLOSE"
+                    android:layout_weight="0.8"
+                    android:background="@null"
+                    android:fontFamily="@font/lincol"
+                    android:text="Close"
                     android:textAllCaps="false"
                     android:textColor="@color/blue_primary"
                     android:textFontWeight="700"
-                    android:textSize="12dp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
