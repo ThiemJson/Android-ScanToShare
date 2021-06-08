@@ -24,7 +24,7 @@
             android:text="Profile URL"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/black"
+            android:textColor="@color/textblack"
             android:textFontWeight="700"
             android:textSize="14sp"
             android:textStyle="bold|italic" />

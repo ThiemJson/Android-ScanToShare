@@ -22,7 +22,7 @@
         android:text="QR List is empty."
         android:textColor="#d3d3d3"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
