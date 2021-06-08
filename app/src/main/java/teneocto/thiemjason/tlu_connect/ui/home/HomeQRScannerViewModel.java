@@ -281,6 +281,7 @@ public class HomeQRScannerViewModel extends ViewModel {
 //        Log.i(AppConst.TAG_QRScannedViewModel, "string result: " + stringResult);
         int position = url.indexOf(".com/");
         String username = url.substring(position + 5);
+        Log.i(AppConst.TAG_QRScannedViewModel, "https://m.facebook.com/" + username);
         return "https://m.facebook.com/" + username;
     }
 
