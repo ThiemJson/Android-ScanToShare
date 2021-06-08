@@ -24,7 +24,7 @@ import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.notification.Notification;
 import teneocto.thiemjason.tlu_connect.ui.policies.PoliciesAndTerm;
 import teneocto.thiemjason.tlu_connect.ui.profile.Profile;
-import teneocto.thiemjason.tlu_connect.ui.scanninghistory.ScanningHistory;
+import teneocto.thiemjason.tlu_connect.ui.scannedhistory.ScannedHistory;
 import teneocto.thiemjason.tlu_connect.ui.support.Support;
 
 /**
@@ -82,7 +82,7 @@ public class Drawer extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), Profile.class));
                         break;
                     case R.id.scanningHistoryFragment:
-                        startActivity(new Intent(getApplicationContext(), ScanningHistory.class));
+                        startActivity(new Intent(getApplicationContext(), ScannedHistory.class));
                         break;
                     case R.id.policiesAndTermFragment:
                         startActivity(new Intent(getApplicationContext(), PoliciesAndTerm.class));

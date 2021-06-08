@@ -22,7 +22,7 @@ import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
- * Notification Adatper
+ * Notification Adapter
  */
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     NotificationAdapter.OnItemClickListener onItemClickListener;

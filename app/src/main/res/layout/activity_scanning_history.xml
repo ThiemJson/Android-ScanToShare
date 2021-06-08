@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.scanninghistory.ScanningHistory">
+    tools:context=".ui.scannedhistory.ScannedHistory">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/scanning_history_Toolbar"
@@ -48,7 +48,7 @@
                     android:layout_weight="2"
                     android:fontFamily="@font/phetsarath"
                     android:gravity="center"
-                    android:text="Scanning History"
+                    android:text="Scanned History"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scanning_history_Toolbar"
-        tools:context=".ui.scanninghistory.ScanningHistory">
+        tools:context=".ui.scannedhistory.ScannedHistory">
 
         <LinearLayout
             android:id="@+id/scanning_his_search_bar_container"

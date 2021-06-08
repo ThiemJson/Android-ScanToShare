@@ -9,7 +9,7 @@
     android:paddingTop="12dp"
     android:paddingEnd="12dp"
     android:paddingBottom="12dp"
-    tools:context=".ui.scanninghistory.ScanningHistory">
+    tools:context=".ui.scannedhistory.ScannedHistory">
 
     <LinearLayout
         android:id="@+id/scanning_his_search_bar_container"

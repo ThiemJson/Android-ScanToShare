@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.database.DBHelper;
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
-import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
+import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
@@ -57,7 +57,7 @@ public class SyncLocalDBService extends Service {
 
     private ArrayList<SocialNetworkDTO> socialNetworkDTOList = new ArrayList<>();
 
-    private ArrayList<ScanningHistoryDTO> scanningHistoryDTOList = new ArrayList<>();
+    private ArrayList<ScannedDTO> scannedDTOArrayList = new ArrayList<>();
 
     private ArrayList<NotificationDTO> notificationDTOList = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public class SyncLocalDBService extends Service {
         userDTOList = null;
         sharedDTOList = null;
         socialNetworkDTOList = null;
-        scanningHistoryDTOList = null;
+        scannedDTOArrayList = null;
         notificationDTOList = null;
         isFetched = null;
         Log.i(AppConst.TAG_SyncLocalDBService, " service destroyed");
@@ -167,20 +167,20 @@ public class SyncLocalDBService extends Service {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
-                        ScanningHistoryDTO scanningHistoryDTO = data.getValue(ScanningHistoryDTO.class);
-                        scanningHistoryDTOList.add(scanningHistoryDTO);
-                        Log.i(AppConst.SyncLocalDatabaseService, "SCANNING HIT FETCH: " + data.getValue(ScanningHistoryDTO.class).getRemoteUserID());
+                        ScannedDTO scannedDTO = data.getValue(ScannedDTO.class);
+                        scannedDTOArrayList.add(scannedDTO);
+                        Log.i(AppConst.SyncLocalDatabaseService, "SCANNING HIT FETCH: " + data.getValue(ScannedDTO.class).getName());
                     }
                 }
 
                 // Sync data
                 dbHelper.deleteRecord(DBConst.SCAN_TABLE_NAME);
-                if (scanningHistoryDTOList.size() == 0) {
+                if (scannedDTOArrayList.size() == 0) {
 
                 } else {
-                    for (ScanningHistoryDTO scanningHistoryDTO : scanningHistoryDTOList) {
-                        dbHelper.SCANNING_HISTORY_Insert(scanningHistoryDTO);
-                        Log.i(AppConst.SyncLocalDatabaseService, "ScanningHis DATA INSERT: " + scanningHistoryDTO.getLocalUserID());
+                    for (ScannedDTO scannedDTO : scannedDTOArrayList) {
+                        dbHelper.SCANNING_HISTORY_Insert(scannedDTO);
+                        Log.i(AppConst.SyncLocalDatabaseService, "ScanningHis DATA INSERT: " + scannedDTO.getUserId());
                     }
                 }
 

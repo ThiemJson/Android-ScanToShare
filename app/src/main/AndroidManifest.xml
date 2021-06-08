@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TLUConnect">
-        <activity android:name=".ui.notification.NotificationWebView"></activity>
+        <activity android:name=".ui.scannedhistory.ScannedHistoryWebView"></activity>
+        <activity android:name=".ui.notification.NotificationWebView" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -46,7 +47,7 @@
         <activity android:name=".ui.drawer.Drawer" />
         <activity android:name=".ui.policies.PoliciesAndTerm" />
         <activity android:name=".ui.support.Support" />
-        <activity android:name=".ui.scanninghistory.ScanningHistory" />
+        <activity android:name=".ui.scannedhistory.ScannedHistory" />
         <activity android:name=".ui.testimageslider.ImageSliderTest" />
         <activity android:name=".ui.profile.Profile" />
         <activity android:name=".ui.register.RegisterSocialNetwork" />

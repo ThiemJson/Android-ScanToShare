@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.R;
+import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
@@ -26,11 +27,11 @@ public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHold
 
     ScanHisAdapter.OnItemClickListener onItemClickListener;
 
-    private ArrayList<UserDTO> mArrayList;
+    private ArrayList<ScannedDTO> mArrayList;
 
     private Context context;
 
-    public ScanHisAdapter(ArrayList<UserDTO> mArrayList, Context context) {
+    public ScanHisAdapter(ArrayList<ScannedDTO> mArrayList, Context context) {
         this.mArrayList = mArrayList;
         this.context = context;
     }
@@ -46,8 +47,11 @@ public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mEmail.setText(mArrayList.get(position).getEmail());
-        holder.mUsername.setText(String.format("%s %s", mArrayList.get(position).getFirstName(), mArrayList.get(position).getLastName()));
+        holder.mUrl.setText(mArrayList.get(position).getUrl());
+        holder.mUsername.setText(String.format("%s", mArrayList.get(position).getName()));
+
+        Bitmap socialImageBitmap = Utils.getBitmapFromByteArray(Utils.getSocialNWDTOFromId(mArrayList.get(position).getSocialNetWorkID()).getImageBase64());
+        holder.mUserSocial.setImageBitmap(socialImageBitmap);
 
         Bitmap imageBitmap = Utils.getBitmapFromByteArray(mArrayList.get(position).getImageBase64());
         holder.mUserImage.setImageBitmap(Utils.prettyBitmap(imageBitmap));
@@ -60,8 +64,9 @@ public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView mUsername;
-        TextView mEmail;
+        TextView mUrl;
         ImageView mUserImage;
+        ImageView mUserSocial;
 
         ImageView mDelete;
         ImageView mView;
@@ -71,9 +76,10 @@ public class ScanHisAdapter extends RecyclerView.Adapter<ScanHisAdapter.ViewHold
 
             mUserImage = itemView.findViewById(R.id.scanning_his_image);
             mUsername = itemView.findViewById(R.id.scanning_his_username);
-            mEmail = itemView.findViewById(R.id.scanning_his_email);
+            mUrl = itemView.findViewById(R.id.scanning_his_email);
             mDelete = itemView.findViewById(R.id.scanning_his_delete_btn);
             mView = itemView.findViewById(R.id.scanning_his_view_btn);
+            mUserSocial = itemView.findViewById(R.id.scanning_his_social);
 
             mDelete.setOnClickListener(this);
             mView.setOnClickListener(this);

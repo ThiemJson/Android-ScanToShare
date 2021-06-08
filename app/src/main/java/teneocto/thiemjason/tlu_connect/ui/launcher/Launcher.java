@@ -64,11 +64,15 @@ public class Launcher extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        // For debugs
+        // For debugs ==============>
 //        Utils.clearSharedPrefer(this);
+        Utils.setPrefer(this, AppConst.USER_UID, "a0d945aa-8114-4ba0-af66-88637bdbb3e6");
+        // For debugs ==============>
+
 
         // App initial
         this.appInitial();
+
         String userUUID = Utils.getUserUUID(this);
         Log.i(AppConst.TAG_Launcher, " ==>> UUID + " + userUUID);
 
@@ -83,7 +87,7 @@ public class Launcher extends AppCompatActivity {
         this.setUpSocialNWFromFirebaseDatabase(true);
         AppConst.USER_UID_Static = Utils.getUserUUID(this);
         this.setUpUserDTOFromFirebaseDatabase();
-        this.startSyncLocalDBService();
+//        this.startSyncLocalDBService();
 
         // SEED DATA
         //  firebaseDBExample = new FirebaseDBExample(this);

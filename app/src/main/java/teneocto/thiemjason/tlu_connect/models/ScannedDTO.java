@@ -5,6 +5,8 @@ public class ScannedDTO {
 
     private String id;
 
+    private String userId;
+
     private String url;
 
     private String socialNetWorkID;
@@ -31,9 +33,10 @@ public class ScannedDTO {
         this.socialNWName = socialNWName;
     }
 
-    public ScannedDTO(String name, String id, String url, String socialNetWorkID, String imageBase64) {
+    public ScannedDTO(String id, String userID, String socialNetWorkID, String name, String imageBase64, String url) {
         this.name = name;
         this.id = id;
+        this.userId = userID;
         this.url = url;
         this.socialNetWorkID = socialNetWorkID;
         this.imageBase64 = imageBase64;
@@ -41,6 +44,14 @@ public class ScannedDTO {
 
     public ScannedDTO() {
 
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {

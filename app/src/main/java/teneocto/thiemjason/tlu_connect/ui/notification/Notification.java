@@ -66,7 +66,7 @@ public class Notification extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             hideEmptyImage();
 
-            if(progressDialog != null){
+            if (progressDialog != null) {
                 progressDialog.deleteProgressDialog();
             }
         });
@@ -102,15 +102,15 @@ public class Notification extends AppCompatActivity {
 
     /**
      * View Notification when user click on show Notification
+     *
      * @param position Position
      */
     private void viewNotification(int position) {
         Log.i(AppConst.TAG_Notification, "Selected position: " + position);
         Log.i(AppConst.TAG_Notification, "Arrays size: " + viewModel.notificationDTOArrayList.size());
-        // TODO
 
         Intent viewNotificationIntent = new Intent(this, NotificationWebView.class);
-        viewNotificationIntent.putExtra("URL", viewModel.notificationDTOArrayList.get(position).getUrl());
+        viewNotificationIntent.putExtra(AppConst.NOTIFICATION_url, viewModel.notificationDTOArrayList.get(position).getUrl());
         startActivity(viewNotificationIntent);
     }
 

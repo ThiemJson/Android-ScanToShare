@@ -1,4 +1,4 @@
-package teneocto.thiemjason.tlu_connect.ui.scanninghistory;
+package teneocto.thiemjason.tlu_connect.ui.scannedhistory;
 
 import android.os.Build;
 
@@ -16,19 +16,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.database.DBConst;
-import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
-import teneocto.thiemjason.tlu_connect.models.UserDTO;
+import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
-import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
  * Scanning History View Models
  */
-public class ScanningHistoryViewModel extends ViewModel {
+public class ScannedHistoryViewModel extends ViewModel {
     /**
      * Data
      */
-    public ArrayList<UserDTO> mUserScanned = new ArrayList<>();
+    public ArrayList<ScannedDTO> mUserScanned = new ArrayList<>();
 
     /**
      * Flag check
@@ -47,9 +45,8 @@ public class ScanningHistoryViewModel extends ViewModel {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
-                        ScanningHistoryDTO scanningHistoryDTO = data.getValue(ScanningHistoryDTO.class);
-                        UserDTO userDTO = Utils.getUserDTOFromId(scanningHistoryDTO.getRemoteUserID());
-                        mUserScanned.add(userDTO);
+                        ScannedDTO scannedDTO = data.getValue(ScannedDTO.class);
+                        mUserScanned.add(scannedDTO);
                     }
                     isFetched.setValue(true);
                 }

@@ -12,11 +12,10 @@ import java.util.Base64;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.models.NotificationDTO;
-import teneocto.thiemjason.tlu_connect.models.ScanningHistoryDTO;
+import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
 import teneocto.thiemjason.tlu_connect.models.SharedDTO;
 import teneocto.thiemjason.tlu_connect.models.SocialNetworkDTO;
 import teneocto.thiemjason.tlu_connect.models.UserDTO;
-import teneocto.thiemjason.tlu_connect.utils.AppConst;
 import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
@@ -46,7 +45,7 @@ public class FirebaseDBExample {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void USER_initFirebaseDB() {
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
-        Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.example);
+        Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.blank);
         byte[] imageBase64 = Utils.getBitmapAsByteArray(imageBitmap);
         UserDTO userDTO = new UserDTO(
                 Utils.getUserUUID(context),
@@ -70,7 +69,7 @@ public class FirebaseDBExample {
                 Utils.getUserUUID(context),
                 "Cập nhật ứng dụng lên phiên bản 1.0.1, chính sửa các lỗi hiện đang hiện hữu tại đăng nhập bằng Facebook",
                 "Cập nhật phiên bản mới",
-                Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(((BitmapDrawable) context.getResources().getDrawable(R.drawable.example)).getBitmap()))
+                Base64.getEncoder().encodeToString(Utils.getBitmapAsByteArray(((BitmapDrawable) context.getResources().getDrawable(R.drawable.blank)).getBitmap()))
         );
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
         firebaseDBHelper.Notification_Insert(notificationDTO);
@@ -135,12 +134,22 @@ public class FirebaseDBExample {
     /**
      * Seeder scanning history data
      */
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void SCANNING_HISTORY_initFirebaseDB() {
-        ScanningHistoryDTO scanningHistoryDTO = new ScanningHistoryDTO(
-                Utils.getRandomUUID(), Utils.getUserUUID(context), AppConst.USER_UID_Static
+        Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.blank);
+        byte[] imageBase64 = Utils.getBitmapAsByteArray(imageBitmap);
+
+        ScannedDTO scannedDTO = new ScannedDTO(
+                Utils.getRandomUUID(),
+                Utils.getUserUUID(context),
+                Utils.getSocialNWDTOFromName("Facebook").getId(),
+                "Nguyen Cao Thiem",
+                Base64.getEncoder().encodeToString(imageBase64),
+                "https://facebook.com/thiemtinhte"
         );
         FirebaseDBHelper firebaseDBHelper = new FirebaseDBHelper();
-        firebaseDBHelper.Scanning_History_Insert(scanningHistoryDTO);
+        firebaseDBHelper.Scanned_History_Insert(scannedDTO);
     }
 
     /**

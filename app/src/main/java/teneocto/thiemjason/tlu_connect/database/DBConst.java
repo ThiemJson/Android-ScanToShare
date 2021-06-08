@@ -17,8 +17,11 @@ public class DBConst {
     // TABLE - SCANNING_HISTORY
     public static String SCAN_TABLE_NAME = "SCANNING_HISTORY";
     public static String SCAN_ID = "SCANNING_HISTORY_ID";
-    public static String SCAN_LOCAL_USER_ID = "SCANNING_LOCAL_USER_ID";
-    public static String SCAN_REMOTE_USER_ID = "SCANNING_REMOTE_USER_ID";
+    public static String SCAN_USER_ID = "SCANNING_USER_ID";
+    public static String SCAN_SOCIAL_NETWORK_ID = "SCANNING_SOCIAL_NETWORK_ID";
+    public static String SCAN_URL = "SCANNING_URL";
+    public static String SCAN_USER_NAME = "SCANNING_USER_NAME";
+    public static String SCAN_USER_IMAGE = "SCANNING_USER_IMAGE";
 
     // TABLE - NOTIFICATION
     public static String NOTIFICATION_TABLE_NAME = "NOTIFICATION";

@@ -131,6 +131,7 @@ public class HomeFragment extends Fragment {
         super.onPause();
         if (this.homeQRScanner != null) {
             this.homeQRScanner.onPause();
+            this.homeQRScanner.hideShowResultDialog(0);
         } else {
             Log.i(TAG, "On Pause => QR SCANNER NULL");
         }
@@ -146,9 +147,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(tabLayout != null){
-            if(tabLayout.getSelectedTabPosition() == 1){
-                if(this.homeQRScanner != null){
+        if (tabLayout != null) {
+            if (tabLayout.getSelectedTabPosition() == 1) {
+                if (this.homeQRScanner != null) {
                     homeQRScanner.startPreview();
                 }
             }
