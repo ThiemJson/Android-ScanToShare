@@ -259,27 +259,29 @@ public class HomeQRScannerViewModel extends ViewModel {
     }
 
     private String getMobileURLFacebook(String url) {
-        String stringResult = url;
-        if ((stringResult.charAt(stringResult.length() - 1) + "").equals("/")) {
-            stringResult = stringResult.substring(0, stringResult.length() - 1);
-        }
-
-        if (stringResult.contains("m.facebook")) {
-            return stringResult;
-        } else if (stringResult.contains("wwww.")) {
-            stringResult = stringResult.replace("wwww.", "m.");
-        } else if ((!stringResult.contains("wwww.")) && stringResult.contains("facebook")) {
-            stringResult = stringResult.replace("www.facebook", "m.facebook");
-        } else if ((!stringResult.contains("wwww.")) && stringResult.contains("fb")) {
-            stringResult = stringResult.replace("fb", "m.facebook");
-        } else if (stringResult.contains("/facebook.com")) {
-            stringResult = stringResult.replace("/facebook.com", "/m.facebook.com");
-        } else if (stringResult.contains("/fb.com")) {
-            stringResult = stringResult.replace("/fb.com", "/m.facebook.com");
-        }
-
-        Log.i(AppConst.TAG_QRScannedViewModel, "string result: " + stringResult);
-        return stringResult;
+//        String stringResult = url;
+//        if ((stringResult.charAt(stringResult.length() - 1) + "").equals("/")) {
+//            stringResult = stringResult.substring(0, stringResult.length() - 1);
+//        }
+//
+//        if (stringResult.contains("m.facebook")) {
+//            return stringResult;
+//        } else if (stringResult.contains("wwww.")) {
+//            stringResult = stringResult.replace("wwww.", "m.");
+//        } else if ((!stringResult.contains("wwww.")) && stringResult.contains("facebook")) {
+//            stringResult = stringResult.replace("www.facebook", "m.facebook");
+//        } else if ((!stringResult.contains("wwww.")) && stringResult.contains("fb")) {
+//            stringResult = stringResult.replace("fb", "m.facebook");
+//        } else if (stringResult.contains("/facebook.com")) {
+//            stringResult = stringResult.replace("/facebook.com", "/m.facebook.com");
+//        } else if (stringResult.contains("/fb.com")) {
+//            stringResult = stringResult.replace("/fb.com", "/m.facebook.com");
+//        }
+//
+//        Log.i(AppConst.TAG_QRScannedViewModel, "string result: " + stringResult);
+        int position = url.indexOf(".com/");
+        String username = url.substring(position + 5);
+        return "https://m.facebook.com/" + username;
     }
 
     /**
