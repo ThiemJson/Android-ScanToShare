@@ -65,7 +65,7 @@ public class Launcher extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         // For debugs ==============> "a0d945aa-8114-4ba0-af66-88637bdbb3e6"
-//        Utils.clearSharedPrefer(this);
+        Utils.clearSharedPrefer(this);
 //        Utils.setPrefer(this, AppConst.USER_UID, "a0d945aa-8114-4ba0-af66-88637bdbb3e6");
         // For debugs ==============>
 

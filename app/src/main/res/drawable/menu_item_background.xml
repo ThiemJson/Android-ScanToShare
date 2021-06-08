@@ -5,4 +5,10 @@
             <stroke android:color="@color/white"/>
         </shape>
     </item>
+    <item
+        android:drawable="@color/blue_primary"
+        android:gravity="fill" />
+    <item
+        android:drawable="@drawable/ic_baseline_keyboard_arrow_right_24"
+        android:gravity="center" />
 </layer-list>
