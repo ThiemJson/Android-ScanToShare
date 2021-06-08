@@ -31,6 +31,7 @@ public class AppConst {
     public static String TAG_Notification_web_view = " ==> Notification web view";
     public static String TAG_ProfileSharedViewModel = " ==> Profile shared viewmodel";
     public static String TAG_QRScannedViewModel = " ==> QR Scanned View model";
+    public static String TAG_ScannedWebView = " ==> Scanned Web view";
 
     // Regex
     public static String REGEX_Normal = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
@@ -52,4 +53,7 @@ public class AppConst {
     public static String Instagram = "Instagram";
     public static String Unreachable = "Unreachable";
 
+    // PutExtra
+    public static String NOTIFICATION_url = "NotificationURL";
+    public static String SCANNED_userUrl = "ScannedUserURL";
 }

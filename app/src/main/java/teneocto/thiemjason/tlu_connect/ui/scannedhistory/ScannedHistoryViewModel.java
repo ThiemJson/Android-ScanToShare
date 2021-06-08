@@ -1,4 +1,4 @@
-package teneocto.thiemjason.tlu_connect.ui.scanninghistory;
+package teneocto.thiemjason.tlu_connect.ui.scannedhistory;
 
 import android.os.Build;
 
@@ -17,14 +17,12 @@ import java.util.ArrayList;
 
 import teneocto.thiemjason.tlu_connect.database.DBConst;
 import teneocto.thiemjason.tlu_connect.models.ScannedDTO;
-import teneocto.thiemjason.tlu_connect.models.UserDTO;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
-import teneocto.thiemjason.tlu_connect.utils.Utils;
 
 /**
  * Scanning History View Models
  */
-public class ScanningHistoryViewModel extends ViewModel {
+public class ScannedHistoryViewModel extends ViewModel {
     /**
      * Data
      */

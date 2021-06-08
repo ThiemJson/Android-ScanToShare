@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_policies_and_term" />
     <fragment
         android:id="@+id/scanningHistoryFragment"
-        android:name="teneocto.thiemjason.tlu_connect.ui.scanninghistory.ScanningHistoryFragment"
+        android:name="teneocto.thiemjason.tlu_connect.ui.scannedhistory.ScanningHistoryFragment"
         android:label="Scanning History"
         tools:layout="@layout/fragment_scanning_history" />
     <activity

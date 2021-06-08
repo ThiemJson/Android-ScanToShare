@@ -1,4 +1,4 @@
-package teneocto.thiemjason.tlu_connect.ui.notification;
+package teneocto.thiemjason.tlu_connect.ui.scannedhistory;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,16 +10,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
 
 import teneocto.thiemjason.tlu_connect.R;
-import teneocto.thiemjason.tlu_connect.ui.support.Support;
+import teneocto.thiemjason.tlu_connect.ui.notification.NotificationWebView;
 import teneocto.thiemjason.tlu_connect.utils.AppConst;
 
-/**
- * WEB view of Notification
- */
-public class NotificationWebView extends AppCompatActivity {
+public class ScannedHistoryWebView extends AppCompatActivity {
 
     private WebView mWebView;
 
@@ -28,16 +24,11 @@ public class NotificationWebView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification_web_view);
+        setContentView(R.layout.activity_scanned_history_web_view);
 
-        mWebView = findViewById(R.id.noti_web_view);
-        mBackBtn = findViewById(R.id.noti_menu_back);
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mWebView = findViewById(R.id.scanned_web_view);
+        mBackBtn = findViewById(R.id.scanned_webview_menu_back);
+        mBackBtn.setOnClickListener(v -> finish());
 
         webViewInitial();
     }
@@ -47,23 +38,25 @@ public class NotificationWebView extends AppCompatActivity {
      */
     private void webViewInitial() {
         Bundle bundle = getIntent().getExtras();
-        String notificationURL = bundle.getString(AppConst.NOTIFICATION_url);
-        Log.i(AppConst.TAG_Notification_web_view, notificationURL);
+        String userURL = bundle.getString(AppConst.SCANNED_userUrl);
+        Log.i(AppConst.TAG_ScannedWebView, userURL);
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
         mWebView.setWebViewClient(new Callback());
-        mWebView.loadUrl(notificationURL);
-
-        mBackBtn = findViewById(R.id.noti_menu_back);
-        mBackBtn.setOnClickListener(v -> finish());
+        mWebView.loadUrl(userURL);
     }
 
     public static class Callback extends WebViewClient {
         @Override
         public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
             return super.shouldOverrideKeyEvent(view, event);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
         }
     }
 }
