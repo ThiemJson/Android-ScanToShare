@@ -49,11 +49,15 @@
         <activity android:name=".ui.support.Support" />
         <activity android:name=".ui.scannedhistory.ScannedHistory" />
         <activity android:name=".ui.testimageslider.ImageSliderTest" />
-        <activity android:name=".ui.profile.Profile" />
+        <activity
+            android:name=".ui.profile.Profile"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.register.RegisterSocialNetwork" />
         <activity android:name=".ui.notification.Notification" />
         <activity android:name=".ui.home.Home" />
-        <activity android:name=".ui.register.RegisterProfile" />
+        <activity
+            android:name=".ui.register.RegisterProfile"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.launcher.Launcher">
             <intent-filter>

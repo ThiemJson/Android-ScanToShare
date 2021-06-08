@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.support.Support;
@@ -25,6 +26,8 @@ public class NotificationWebView extends AppCompatActivity {
 
     private Button mBackBtn;
 
+    private ProgressBar mLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +35,9 @@ public class NotificationWebView extends AppCompatActivity {
 
         mWebView = findViewById(R.id.noti_web_view);
         mBackBtn = findViewById(R.id.noti_menu_back);
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mLoading = findViewById(R.id.notification_web_view_loading_spinner);
+
+        mBackBtn.setOnClickListener(v -> finish());
 
         webViewInitial();
     }
@@ -53,17 +53,16 @@ public class NotificationWebView extends AppCompatActivity {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        mWebView.setWebViewClient(new Callback());
+        mWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mLoading.setVisibility(View.GONE);
+            }
+        });
         mWebView.loadUrl(notificationURL);
 
         mBackBtn = findViewById(R.id.noti_menu_back);
         mBackBtn.setOnClickListener(v -> finish());
-    }
-
-    public static class Callback extends WebViewClient {
-        @Override
-        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
-            return super.shouldOverrideKeyEvent(view, event);
-        }
     }
 }

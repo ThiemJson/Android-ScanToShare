@@ -10,6 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import teneocto.thiemjason.tlu_connect.R;
 import teneocto.thiemjason.tlu_connect.ui.notification.NotificationWebView;
@@ -21,6 +22,8 @@ public class ScannedHistoryWebView extends AppCompatActivity {
 
     private Button mBackBtn;
 
+    private ProgressBar mLoadingSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,7 @@ public class ScannedHistoryWebView extends AppCompatActivity {
 
         mWebView = findViewById(R.id.scanned_web_view);
         mBackBtn = findViewById(R.id.scanned_webview_menu_back);
+        mLoadingSpinner = findViewById(R.id.scanned_web_view_loading_spinner);
         mBackBtn.setOnClickListener(v -> finish());
 
         webViewInitial();
@@ -44,19 +48,13 @@ public class ScannedHistoryWebView extends AppCompatActivity {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        mWebView.setWebViewClient(new Callback());
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mLoadingSpinner.setVisibility(View.GONE);
+            }
+        });
         mWebView.loadUrl(userURL);
-    }
-
-    public static class Callback extends WebViewClient {
-        @Override
-        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
-            return super.shouldOverrideKeyEvent(view, event);
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-        }
     }
 }
