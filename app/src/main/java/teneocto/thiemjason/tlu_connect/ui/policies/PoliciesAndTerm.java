@@ -24,11 +24,6 @@ public class PoliciesAndTerm extends AppCompatActivity {
 
     void initView() {
         mBackButton = findViewById(R.id.policies_menu_icon);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mBackButton.setOnClickListener(v -> finish());
     }
 }

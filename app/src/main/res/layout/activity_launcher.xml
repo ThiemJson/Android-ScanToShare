@@ -29,6 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TLU CONNECT"
+        android:textAllCaps="false"
+        android:textFontWeight="700"
         tools:layout_editor_absoluteX="164dp"
         android:textStyle="bold"
         tools:layout_editor_absoluteY="550dp"
