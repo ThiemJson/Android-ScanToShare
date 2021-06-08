@@ -99,12 +99,12 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.main_slider_container);
 
         ArrayList<UIMainSliderItemDTO> UIMainSliderItemDTOS = new ArrayList<>();
-        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider2, "Add your Social Network link", "Add social network you arr using and want to share with another"));
-        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider3, "Scan another profile and share your own", "Scan another user's QR code to quickly retrieve the necessary information"));
-        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider1, "Create your Profile", "Set up your basic personal information to share with another"));
-        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider2, "Add your Social Network link", "Add social network you arr using and want to share with another"));
-        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider3, "Scan another profile and share your own", "Scan another user's QR code to quickly retrieve the necessary information"));
-        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider1, "Create your Profile", "Set up your basic personal information to share with another"));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider2, "Add your Social Network link", "Add social network you are using and want to share with another."));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider3, "Scan another profile and share your own", "Scan another user's QR code to quickly retrieve the necessary information."));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider1, "Create your Profile", "Set up your basic personal information to share with another."));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider2, "Add your Social Network link", "Add social network you are using and want to share with another."));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider3, "Scan another profile and share your own", "Scan another user's QR code to quickly retrieve the necessary information."));
+        UIMainSliderItemDTOS.add(new UIMainSliderItemDTO(R.drawable.homeslider1, "Create your Profile", "Set up your basic personal information to share with another."));
 
         mViewPager.setAdapter(new MainSliderAdapter(UIMainSliderItemDTOS, mViewPager));
         mViewPager.setClipToPadding(false);
