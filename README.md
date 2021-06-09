@@ -2,6 +2,8 @@
 # Scan QR code to share social network URL
 
 ![Nothing](https://github.com/ThiemJson/Android-TLUConnect/blob/master/Screenshots/Post%201080x1350.png?raw=true)
+![Nothing](https://github.com/ThiemJson/Android-ScanToShare/blob/master/Screenshots/Screenshot_1623164918.png?raw=true)
+![Nothing](https://github.com/ThiemJson/Android-ScanToShare/blob/master/Screenshots/Screenshot_1623164926.png?raw=true)
 ![Nothing](https://github.com/ThiemJson/Android-TLUConnect/blob/master/Screenshots/bd443190a5d8518608c924.jpg?raw=true)
 ![Nothing](https://github.com/ThiemJson/Android-TLUConnect/blob/master/Screenshots/000642d7d69f22c17b8e26.jpg?raw=true)
 ![Nothing](https://github.com/ThiemJson/Android-TLUConnect/blob/master/Screenshots/1d809e5e0a16fe48a70728.jpg?raw=true)
