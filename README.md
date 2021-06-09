@@ -1,5 +1,5 @@
 # Android- Scan to Share
-# Bài tập lớn Lập trình PTUDDD
+# Scan QR code to share social network URL
 
 ![Nothing](https://github.com/ThiemJson/Android-TLUConnect/blob/master/Screenshots/Post%201080x1350.png?raw=true)
 ![Nothing](https://github.com/ThiemJson/Android-TLUConnect/blob/master/Screenshots/bd443190a5d8518608c924.jpg?raw=true)
