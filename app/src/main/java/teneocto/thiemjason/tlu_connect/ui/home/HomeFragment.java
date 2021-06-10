@@ -109,6 +109,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        container.getContext();
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         progressDialog = new CustomProgressDialog(getContext(), "");
         Log.i(TAG, "On View Create");
