@@ -1,5 +1,7 @@
 # Android- Scan to Share
 # Scan QR code to share social network URL
+# Link Google Play Store: https://play.google.com/store/apps/details?id=teneocto.thiemjason.tlu_connect
+
 
 ![Nothing](https://github.com/ThiemJson/Android-TLUConnect/blob/master/Screenshots/Post%201080x1350.png?raw=true)
 ![Nothing](https://github.com/ThiemJson/Android-ScanToShare/blob/master/Screenshots/Screenshot_1623164918.png?raw=true)
