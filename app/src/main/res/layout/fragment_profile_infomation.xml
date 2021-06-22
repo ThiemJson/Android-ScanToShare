@@ -172,7 +172,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.65"
                     android:width="0dp"
                     android:fontFamily="@font/lincol"
                     android:gravity="center_vertical"
@@ -184,20 +184,19 @@
                     android:textSize="13sp" />
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/profile_email"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:layout_marginEnd="6dp"
-                    android:layout_weight="2"
+                    android:layout_weight="2.35"
                     android:width="0dp"
                     android:background="@drawable/table_edittext"
                     android:hint="Enter your email address"
-                    android:maxLength="30"
+                    android:maxLength="40"
                     android:singleLine="true"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/gray_light"
+                    android:textColor="@color/gray_dark"
                     android:textColorHint="@drawable/table_edittext_hint"
                     android:textSize="13sp" />
             </LinearLayout>
