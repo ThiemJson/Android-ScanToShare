@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Handle Facebook Access Token
+     *
      * @param token Facebook Token
      */
     private void handleFacebookAccessToken(AccessToken token) {
@@ -235,11 +236,18 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Register Facebook
+     *
      * @param token Access Token
      */
     private void registerWithFacebook(AccessToken token) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(mAuth.getCurrentUser().getEmail());
+
+        String userEmail = mAuth.getCurrentUser().getEmail();
+        if (userEmail == null || userEmail.equals("")) {
+            userEmail = "Your email";
+        }
+
+        userDTO.setEmail(userEmail);
         userDTO.setLastName("");
         userDTO.setFirstName(mAuth.getCurrentUser().getDisplayName());
         userDTO.setFirebaseId(mAuth.getCurrentUser().getUid());
